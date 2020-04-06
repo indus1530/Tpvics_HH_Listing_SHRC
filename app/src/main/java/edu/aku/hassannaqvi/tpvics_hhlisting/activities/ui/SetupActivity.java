@@ -11,7 +11,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -20,6 +19,8 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.validatorcrawler.aliazaz.Clear;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,6 +54,12 @@ public class SetupActivity extends Activity {
     RadioButton hh04g;
     @BindView(R.id.hh04h)
     RadioButton hh04h;
+    @BindView(R.id.hh12)
+    RadioGroup hh12;
+    @BindView(R.id.hh12a)
+    RadioButton hh12a;
+    @BindView(R.id.hh12b)
+    RadioButton hh12b;
     @BindView(R.id.hh05)
     Switch hh05;
     @BindView(R.id.hh06)
@@ -61,6 +68,8 @@ public class SetupActivity extends Activity {
     TextView hh07;
     @BindView(R.id.fldGrpHH04)
     LinearLayout fldGrpHH04;
+    @BindView(R.id.fldGrpHH12)
+    LinearLayout fldGrpHH12;
     @BindView(R.id.btnAddHousehold)
     Button btnAddHousehold;
     @BindView(R.id.btnChangePSU)
@@ -106,61 +115,63 @@ public class SetupActivity extends Activity {
 
         hh03.setTextColor(Color.RED);
         hh03.setText(StructureNumber);
-        hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
+        hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
 
 
-        hh04.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+        hh04.setOnCheckedChangeListener((group, checkedId) -> {
 
-                if (hh04a.isChecked()) {
-                    //Moved to Add next Family button: MainApp.hh07txt = String.valueOf((char) MainApp.hh07txt.charAt(0) + 1);
-                    MainApp.hh07txt = "1";
+            if (hh04a.isChecked()) {
+                //Moved to Add next Family button: MainApp.hh07txt = String.valueOf((char) MainApp.hh07txt.charAt(0) + 1);
+                MainApp.hh07txt = "1";
+            } else {
+                MainApp.hh07txt = "";
+            }
 
-
+            if (hh04g.isChecked() || hh04h.isChecked()) {
+                Clear.clearAllFields(fldGrpHH12);
+                fldGrpHH12.setVisibility(View.GONE);
+                btnAddHousehold.setVisibility(View.GONE);
+                btnChangPSU.setVisibility(View.VISIBLE);
+                if (hh04g.isChecked()) {
+                    btnChangPSU.setText("Logout");
                 } else {
-                    MainApp.hh07txt = "";
+                    btnChangPSU.setText("Change Enumeration Block");
                 }
-
-                hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
-                if (hh04a.isChecked()) {
-                    fldGrpHH04.setVisibility(View.VISIBLE);
-                    btnAddHousehold.setVisibility(View.GONE);
-                } else {
-                    fldGrpHH04.setVisibility(View.GONE);
-                    hh05.setChecked(false);
-                    hh06.setText(null);
-                    btnAddHousehold.setVisibility(View.VISIBLE);
-                }
-                if (hh04g.isChecked() || hh04h.isChecked()) {
-                    btnAddHousehold.setVisibility(View.GONE);
-                    btnChangPSU.setVisibility(View.VISIBLE);
-                    if (hh04g.isChecked()) {
-                        btnChangPSU.setText("Logout");
-                    } else {
-                        btnChangPSU.setText("Change Enumeration Block");
-                    }
-                } else {
-                    btnChangPSU.setVisibility(View.GONE);
-
-                }
+            } else {
+                fldGrpHH12.setVisibility(View.VISIBLE);
+                btnChangPSU.setVisibility(View.GONE);
             }
         });
-        hh05.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    MainApp.hh07txt = "1";
-                    hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
-                    hh06.setVisibility(View.VISIBLE);
-                    hh06.requestFocus();
 
-                } else {
-                    MainApp.hh07txt = "1";
-                    hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
-                    hh06.setVisibility(View.GONE);
-                    hh06.setText(null);
-                }
+        hh12.setOnCheckedChangeListener((group, checkedId) -> {
+
+            MainApp.hh07txt = "1";
+
+            hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
+            if (hh12a.isChecked()) {
+                fldGrpHH04.setVisibility(View.VISIBLE);
+                btnAddHousehold.setVisibility(View.GONE);
+            } else {
+                Clear.clearAllFields(fldGrpHH04);
+                fldGrpHH04.setVisibility(View.GONE);
+                hh05.setChecked(false);
+                hh06.setText(null);
+                btnAddHousehold.setVisibility(View.VISIBLE);
+            }
+        });
+
+        hh05.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                MainApp.hh07txt = "1";
+                hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
+                hh06.setVisibility(View.VISIBLE);
+                hh06.requestFocus();
+
+            } else {
+                MainApp.hh07txt = "1";
+                hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
+                hh06.setVisibility(View.GONE);
+                hh06.setText(null);
             }
         });
 
@@ -226,6 +237,21 @@ public class SetupActivity extends Activity {
                 break;
             case R.id.hh04b:
                 MainApp.lc.setHh04("2");
+                break;
+            case R.id.hh04c:
+                MainApp.lc.setHh04("3");
+                break;
+            case R.id.hh04d:
+                MainApp.lc.setHh04("4");
+                break;
+            case R.id.hh04e:
+                MainApp.lc.setHh04("5");
+                break;
+            case R.id.hh04f:
+                MainApp.lc.setHh04("6");
+                break;
+            case R.id.hh0496:
+                MainApp.lc.setHh04("96");
                 break;
             case R.id.hh04g:
                 MainApp.lc.setHh04("8");
@@ -305,8 +331,16 @@ public class SetupActivity extends Activity {
         } else {
             hh04b.setError(null);
         }
+        if (hh12.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please one option", Toast.LENGTH_LONG).show();
+            hh12b.setError("Please one option");
+            Log.i(TAG, "Please one option");
+            return false;
+        } else {
+            hh12b.setError(null);
+        }
 
-        if (hh04a.isChecked()) {
+        if (hh12a.isChecked()) {
 
             if (hh05.isChecked() && hh06.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please enter number", Toast.LENGTH_LONG).show();

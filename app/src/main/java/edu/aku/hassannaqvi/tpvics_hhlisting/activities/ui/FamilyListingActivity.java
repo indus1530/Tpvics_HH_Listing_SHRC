@@ -16,8 +16,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -153,17 +151,13 @@ public class FamilyListingActivity extends Activity {
 
         if (formValidation()) {
 
-            try {
-                SaveDraft();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            SaveDraft();
             if (UpdateDB()) {
-                if (familyFlag) {
-                    MainApp.hh07txt = String.valueOf(Integer.valueOf(MainApp.hh07txt) + 1);
-                } else {
+                if (familyFlag)
+                    MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
+                else {
 
-                    MainApp.hh07txt = String.valueOf(Integer.valueOf(MainApp.hh07txt) + 1);
+                    MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
 
                     familyFlag = true;
                 }
@@ -178,7 +172,7 @@ public class FamilyListingActivity extends Activity {
 
     }
 
-    private void SaveDraft() throws JSONException {
+    private void SaveDraft() {
 
         MainApp.lc.setHh07(MainApp.hh07txt);
         MainApp.lc.setHh08a1("1");
@@ -255,7 +249,7 @@ public class FamilyListingActivity extends Activity {
             }
         }*/
 
-        if (Integer.valueOf(hh16.getText().toString()) < 1) {
+        if (Integer.parseInt(hh16.getText().toString()) < 1) {
             Toast.makeText(this, "Invalid Value!", Toast.LENGTH_SHORT).show();
             hh16.setError("Invalid Value!");
             Log.i(TAG, "Invalid Value!");
@@ -265,7 +259,7 @@ public class FamilyListingActivity extends Activity {
         }
 
 
-        if (Integer.valueOf(hh16.getText().toString()) <= (Integer.valueOf(hh11.getText().toString().isEmpty() ? "0" : hh11.getText().toString()))) {
+        if (Integer.parseInt(hh16.getText().toString()) <= (Integer.parseInt(hh11.getText().toString().isEmpty() ? "0" : hh11.getText().toString()))) {
             Toast.makeText(this, "Invalid Count!", Toast.LENGTH_SHORT).show();
             hh16.setError("Invalid Count!");
             Log.i(TAG, "(hh16): Invalid Count! ");
@@ -282,13 +276,9 @@ public class FamilyListingActivity extends Activity {
     void onBtnAddFamilyClick() {
         if (formValidation()) {
 
-            try {
-                SaveDraft();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            SaveDraft();
             if (UpdateDB()) {
-                MainApp.hh07txt = String.valueOf(Integer.valueOf(MainApp.hh07txt) + 1);
+                MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
                 MainApp.lc.setHh07(MainApp.hh07txt);
                 MainApp.fCount++;
 
@@ -305,11 +295,7 @@ public class FamilyListingActivity extends Activity {
     void onBtnAddHouseholdClick() {
         if (formValidation()) {
 
-            try {
-                SaveDraft();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            SaveDraft();
             if (UpdateDB()) {
                 MainApp.fCount = 0;
                 MainApp.fTotal = 0;
@@ -319,7 +305,6 @@ public class FamilyListingActivity extends Activity {
                 finish();
                 Intent fA = new Intent(this, SetupActivity.class);
                 startActivity(fA);
-
             }
         }
 
@@ -327,18 +312,11 @@ public class FamilyListingActivity extends Activity {
 
     private boolean UpdateDB() {
         DatabaseHelper db = new DatabaseHelper(this);
-
         long updcount = db.addForm(MainApp.lc);
-
         MainApp.lc.setID(String.valueOf(updcount));
-
         if (updcount != 0) {
-
-            MainApp.lc.setUID(
-                    (MainApp.lc.getDeviceID() + MainApp.lc.getID()));
-
+            MainApp.lc.setUID((MainApp.lc.getDeviceID() + MainApp.lc.getID()));
             db.updateListingUID();
-
         } else {
             Toast.makeText(this, "Updating Database... ERROR!", Toast.LENGTH_SHORT).show();
         }

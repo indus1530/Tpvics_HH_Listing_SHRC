@@ -108,18 +108,14 @@ public class MainActivity extends MenuActivity {
     LinearLayout adminBlock;
     @BindView(R.id.lllstwarning)
     LinearLayout lllstwarning;
-
     @BindView(R.id.fldGrpMain01)
     LinearLayout fldGrpMain01;
-
     @BindView(R.id.lstwarning)
     RadioGroup lstwarning;
-
     @BindView(R.id.lstwarninga)
     RadioButton lstwarninga;
     @BindView(R.id.lstwarningb)
     RadioButton lstwarningb;
-
 
     SharedPreferences sharedPref;
     SharedPreferences sharedPrefInfo;
@@ -147,6 +143,7 @@ public class MainActivity extends MenuActivity {
                 query.setFilterById(sharedPrefDownload.getLong("refID", 0));
 
                 downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                assert downloadManager != null;
                 Cursor cursor = downloadManager.query(query);
                 if (cursor.moveToFirst()) {
                     int colIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
@@ -155,8 +152,8 @@ public class MainActivity extends MenuActivity {
                         editorDownload.putBoolean("flag", true);
                         editorDownload.commit();
 
-                        Toast.makeText(context, "UEN-Midline Linelisting APP downloaded!!", Toast.LENGTH_SHORT).show();
-                        lblAppVersion.setText("UEN-Midline Linelisting APP New Version " + newVer + "  Downloaded.");
+                        Toast.makeText(context, "UEN-TPVICS Linelisting APP downloaded!!", Toast.LENGTH_SHORT).show();
+                        lblAppVersion.setText("UEN-TPVICS Linelisting APP New Version " + newVer + "  Downloaded.");
 
                         ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -268,19 +265,19 @@ public class MainActivity extends MenuActivity {
                 file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName, versionAppContract.getPathname());
 
                 if (file.exists()) {
-                    lblAppVersion.setText("UEN-Midline Linelisting APP New Version " + newVer + "  Downloaded.");
+                    lblAppVersion.setText("UEN-TPVICS Linelisting APP New Version " + newVer + "  Downloaded.");
                     showDialog(newVer, preVer);
                 } else {
                     NetworkInfo networkInfo = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
 
-                        lblAppVersion.setText("UEN-Midline Linelisting APP New Version " + newVer + " Downloading..");
+                        lblAppVersion.setText("UEN-TPVICS Linelisting APP New Version " + newVer + " Downloading..");
                         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
                         Uri uri = Uri.parse(MainApp._UPDATE_URL + versionAppContract.getPathname());
                         DownloadManager.Request request = new DownloadManager.Request(uri);
                         request.setDestinationInExternalPublicDir(fileName, versionAppContract.getPathname())
                                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setTitle("Downloading UEN-Midline new App ver." + newVer);
+                                .setTitle("Downloading UEN-TPVICS new App ver." + newVer);
                         refID = downloadManager.enqueue(request);
 
                         editorDownload.putLong("refID", refID);
@@ -288,7 +285,7 @@ public class MainActivity extends MenuActivity {
                         editorDownload.commit();
 
                     } else {
-                        lblAppVersion.setText("UEN-Midline Linelisting APP New Version " + newVer + "  Available..\n(Can't download.. Internet connectivity issue!!)");
+                        lblAppVersion.setText("UEN-TPVICS Linelisting APP New Version " + newVer + "  Available..\n(Can't download.. Internet connectivity issue!!)");
                     }
                 }
 
@@ -408,13 +405,13 @@ public class MainActivity extends MenuActivity {
         if (!txtPSU.getText().toString().isEmpty()) {
 
             txtPSU.setError(null);
-            boolean loginFlag;
-            int clus = Integer.valueOf(txtPSU.getText().toString().substring(3, 6));
+            boolean loginFlag = true;
+            /*int clus = Integer.parseInt(txtPSU.getText().toString().substring(3, 6));
             if (clus < 500) {
                 loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user"));
             } else {
                 loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user");
-            }
+            }*/
             if (loginFlag) {
                 DatabaseHelper db = new DatabaseHelper(this);
                 EnumBlockContract enumBlockContract = db.getEnumBlock(txtPSU.getText().toString());
@@ -648,8 +645,8 @@ public class MainActivity extends MenuActivity {
 
             return new AlertDialog.Builder(getActivity())
                     .setIcon(R.drawable.exclamation)
-                    .setTitle("UEN-Midline-2018 Line Listing APP is available!")
-                    .setMessage("UEN-Midline Line Listing App " + newVer + " is now available. Your are currently using older version " + preVer + ".\nInstall new version to use this app.")
+                    .setTitle("UEN-TPVICS-2020 Line Listing APP is available!")
+                    .setMessage("UEN-TPVICS Line Listing App " + newVer + " is now available. Your are currently using older version " + preVer + ".\nInstall new version to use this app.")
                     .setPositiveButton("INSTALL!!",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {

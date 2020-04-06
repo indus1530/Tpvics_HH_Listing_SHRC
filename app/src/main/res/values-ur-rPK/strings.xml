@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UEN-Midline Linelisting</string>
+    <string name="app_name">TPVICS Linelisting</string>
     <string name="hh02"> کلسٹر کوڈ  </string>
     <string name="hh03"> اسٹرکچر نمبر </string>
     <string name="hh04"> تعمیراتی ساخت </string>
     <string name="hh04a"> رہائشی </string>
-    <string name="hh04b"> ‏غیر رہائشی </string>
+    <string name="hh04b"> دکان/مارکیٹ/پلازا </string>
+    <string name="hh04c"> مسجد/چرچ/مندر </string>
+    <string name="hh04d"> اسکول/کالج/یونیورسٹی </string>
+    <string name="hh04e"> مرکز صحت </string>
+    <string name="hh04f">  زیر تعمیر </string>
+    <string name="hh0496"> دیگر </string>
     <string name="hh04g"> عارظی  طور پر لسٹنگ بند کریں  </string>
     <string name="hh04h"> مزید عمارت نہیں (کلسٹر مکمل ہوگیا) </string>
     <string name="confirmcity"> کیا آپ اُوپر دیئے گئے شہر/گاوُں میں موجود ہیں؟ </string>
@@ -15,9 +20,10 @@
     <string name="hh08"> خاندان کے سربراہ کا نام </string>
     <string name="hh09"> موبائل نمبر </string>
     <string name="hh10a"> تعداد </string>
-    <string name="hh10">   کیا اس گھر میں کوئی شادی شدہ خواتین رہ رہی ہیں جن کی عمر 15 سے 49 سال کے درمیان ہے اور 5 سال سے کم عمر کے بچے ہیں؟ </string>
+    <string name="hh10"> کیا اس گھر میں 5 سال سے کم عمر کے بچے ہیں؟ </string>
     <string name="hh16"> افراد کی تعداد </string>
     <string name="hh17"> کیا اس گھر میں مذید کوئی خاندان رہائش پزیر ہے </string>
+    <string name="hh12"> کیا یہ جگہ رہائشی مقاصد کے لئے استعمال کی جا رہی ہے؟ </string>
     <string name="na101a"> ضلعہ </string>
     <string name="na101b">  تحصیل / تعلُقہ </string>
     <string name="na101c"> یونین کونسل </string>

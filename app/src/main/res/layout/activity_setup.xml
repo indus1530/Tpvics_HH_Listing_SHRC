@@ -55,7 +55,7 @@
         <TextView
             android:id="@+id/hh03"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="24dp"
             android:layout_weight="3"
             android:background="@null"
@@ -93,6 +93,41 @@
                 android:text="@string/hh04b" />
 
             <RadioButton
+                android:id="@+id/hh04c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/hh04c" />
+
+            <RadioButton
+                android:id="@+id/hh04d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/hh04d" />
+
+            <RadioButton
+                android:id="@+id/hh04e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/hh04e" />
+
+            <RadioButton
+                android:id="@+id/hh04f"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/hh04f" />
+
+            <RadioButton
+                android:id="@+id/hh0496"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/hh0496" />
+
+            <RadioButton
                 android:id="@+id/hh04g"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,66 +144,99 @@
         </RadioGroup>
 
         <LinearLayout
-            android:id="@+id/fldGrpHH04"
+            android:id="@+id/fldGrpHH12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/hh12" />
+
+            <RadioGroup
+                android:id="@+id/hh12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/hh12a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/hh12b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/fldGrpHH04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
 
-                <!--Are there more than one Families?-->
+                    <!--Are there more than one Families?-->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_weight="70"
+                        android:text="@string/hh05" />
+
+                    <Switch
+                        android:id="@+id/hh05"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_weight="30"
+                        android:textOff="@string/no"
+                        android:textOn="@string/yes" />
+                </LinearLayout>
+
+                <!--How many Families?-->
+                <EditText
+                    android:id="@+id/hh06"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:digits="1234567890"
+                    android:hint="@string/hh06"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:visibility="gone" />
+
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/hh07"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:layout_weight="70"
-                    android:text="@string/hh05" />
+                    android:text="@string/hh07"
+                    android:typeface="serif" />
 
-                <Switch
-                    android:id="@+id/hh05"
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/btnAddChild"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:layout_weight="30"
-                    android:textOff="@string/no"
-                    android:textOn="@string/yes" />
+                    android:text="Add Household" />
             </LinearLayout>
 
-            <!--How many Families?-->
-            <EditText
-                android:id="@+id/hh06"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:digits="1234567890"
-                android:hint="@string/hh06"
-                android:inputType="number"
-                android:maxLength="2"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/hh07"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/hh07"
-                android:typeface="serif" />
-
-            <Button
-                android:id="@+id/btnAddChild"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Add Household" />
         </LinearLayout>
-
-        <!--Family Letter-->
 
         <Button
             android:id="@+id/btnAddHousehold"
@@ -183,7 +251,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Change PSU Number"
+            android:text="Change Enumeration Block"
             android:visibility="gone" />
     </LinearLayout>
 

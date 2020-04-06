@@ -40,10 +40,10 @@ import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VerticesContract.SingleVer
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // The name of database.
-    public static final String DATABASE_NAME = "uenml-hhl.db";
-    public static final String PROJECT_NAME = "uenml-hhl-2019";
+    public static final String DATABASE_NAME = "tpvics-hhl.db";
+    public static final String PROJECT_NAME = "tpvics-hhl-2019";
     public static final String DB_NAME = DATABASE_NAME.replace(".db", "-copy.db");
-    public static final String FOLDER_NAME = "DMU-UEN-MidlinePAKHHL";
+    public static final String FOLDER_NAME = "DMU-TPVICS_HHL";
     public static final String SQL_CREATE_BL_RANDOM = "CREATE TABLE " + singleRandomHH.TABLE_NAME + "("
             + singleRandomHH.COLUMN_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT,"
             + singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + " TEXT,"
@@ -193,9 +193,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(EnumBlockTable.TABLE_NAME, null, null);
         try {
-            JSONArray jsonArray = Enumlist;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObjectCC = jsonArray.getJSONObject(i);
+            for (int i = 0; i < Enumlist.length(); i++) {
+                JSONObject jsonObjectCC = Enumlist.getJSONObject(i);
 
                 EnumBlockContract Vc = new EnumBlockContract();
                 Vc.Sync(jsonObjectCC);
@@ -208,7 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 db.insert(EnumBlockTable.TABLE_NAME, null, values);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         } finally {
             db.close();
         }
@@ -224,6 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 if (mCursor.moveToFirst()) {
                     MainApp.DIST_ID = mCursor.getString(mCursor.getColumnIndex(UsersContract.UsersTable.DIST_ID));
+                    mCursor.close();
                 }
                 return true;
             }

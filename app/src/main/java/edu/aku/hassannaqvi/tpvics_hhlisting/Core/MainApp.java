@@ -30,15 +30,13 @@ import edu.aku.hassannaqvi.tpvics_hhlisting.Other.TypefaceUtil;
 public class MainApp extends Application {
 
     // GPS Related Field Variables
-
-    public static final Integer _PORT = 443; // Port - with colon (:)
-    //public static final String _IP = "http://f38158";// .TEST server
-    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
-    public static final String _HOST_URL = MainApp._IP + "/uen_ml/api/";
+    public static final String _IP = "http://f38158";// .TEST server
+    //    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
+    public static final String _HOST_URL = MainApp._IP + "/tpvics/api/";
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds
     private static final int TWO_MINUTES = 1000 * 60 * 2;
-    public static String _UPDATE_URL = MainApp._IP + "/uen_ml/app/listings/sn/";
+    public static String _UPDATE_URL = MainApp._IP + "/tpvics/app/listings/";
     public static String DeviceURL = "devices.php";
 
     public static String TAG = "MainApp";
@@ -94,7 +92,7 @@ public class MainApp extends Application {
 
     public static Boolean PSUExist(String psuCode) {
         Log.d(TAG, "PSUExist: " + psuCode);
-        MainApp.hh03txt = Integer.valueOf(sharedPref.getString(psuCode, "0"));
+        MainApp.hh03txt = Integer.parseInt(sharedPref.getString(psuCode, "0"));
         Log.d(TAG, "PSUExist (Test): " + sharedPref.getString(psuCode, "0"));
 
         MainApp.tabCheck = sharedPref.getString("T" + psuCode, "");
@@ -132,8 +130,8 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("App", "Creating...");
-//        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/JameelNooriNastaleeq.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/MBLateefi.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/JameelNooriNastaleeq.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
+//        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/MBLateefi.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         // Declare and Initialize GPS collection module
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
