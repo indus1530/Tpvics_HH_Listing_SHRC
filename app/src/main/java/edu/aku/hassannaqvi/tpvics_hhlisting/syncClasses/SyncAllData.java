@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Sync;
+package edu.aku.hassannaqvi.tpvics_hhlisting.syncClasses;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,9 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting.adapters.Upload_list_adapter;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.SyncModel;
 
 /**
  * Created by ali.azaz on 3/14/2018.

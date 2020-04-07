@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Get;
+package edu.aku.hassannaqvi.tpvics_hhlisting.getClasses;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,13 +19,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.UsersContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VersionAppContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting.adapters.SyncListAdapter;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.UsersContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VersionAppContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.SyncModel;
 
 /**
  * Created by ali.azaz on 7/14/2017.

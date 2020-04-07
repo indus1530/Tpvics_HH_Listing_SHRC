@@ -55,18 +55,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VersionAppContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VerticesContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.AndroidDatabaseManager;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.map.MapsActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.menu.MenuActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.ui.SetupActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VersionAppContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VerticesContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.AndroidDatabaseManager;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 
 public class MainActivity extends MenuActivity {
 

@@ -22,11 +22,11 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.AndroidDatabaseManager;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.WifiDirect.WiFiDirectActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.sync.SyncActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.AndroidDatabaseManager;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
 
 public class MenuActivity extends AppCompatActivity {
 

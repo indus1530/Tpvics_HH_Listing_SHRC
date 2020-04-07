@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Core;
+package edu.aku.hassannaqvi.tpvics_hhlisting.core;
 
 import android.Manifest;
 import android.app.Application;
@@ -19,9 +19,9 @@ import androidx.core.app.ActivityCompat;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.SignupContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.TypefaceUtil;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.SignupContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.TypefaceUtil;
 
 /**
  * Created by hassan.naqvi on 10/15/2016.

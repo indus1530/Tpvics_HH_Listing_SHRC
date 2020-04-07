@@ -19,11 +19,11 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.randomListAdapter;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.menu.MenuActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.randomListAdapter;
 
 public class RandomizationActivity extends MenuActivity {
 

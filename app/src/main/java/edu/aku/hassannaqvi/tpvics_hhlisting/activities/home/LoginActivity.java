@@ -63,12 +63,12 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VersionAppContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.ui.SignupActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VersionAppContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 
 /**
  * A login screen that offers login via email/password.

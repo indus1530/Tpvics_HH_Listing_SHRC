@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Contracts;
+package edu.aku.hassannaqvi.tpvics_hhlisting.contracts;
 
 import android.database.Cursor;
 import android.provider.BaseColumns;
@@ -11,50 +11,48 @@ import org.json.JSONObject;
  */
 public class ListingContract {
 
-    public String ID;
-    public String UID;
-    public String hhDT;
-    public String enumCode;
-    public String clusterCode;
-    public String enumStr;
-    public String hh01;
-    public String hh02;
-    public String hh03;
-    public String hh04;
-    public String hh04other;
-    public String hh05;
-    public String hh06;
-    public String hh07;
-    public String hh07n;
-    public String hh08a1;
-    public String hh08;
-    public String hh09;
-    public String hh09a1;
-    public String hh10;
-    public String hh11;
-    public String hh12;
-    public String hh13;
-    public String hh14;
-    public String hh15;
-    public String hh16;
-    public String hhadd;
-    public String isNewHH;
-    public String counter;
-    public String DeviceID;
-    public String GPSLat;
-    public String GPSLng;
-    public String GPSTime;
-    public String GPSAcc;
-    public String GPSAlt;
-    public String AppVer;
-    public String tagId;
-
-    public String isRandom;
-    public String resCount;
-    public String childCount;
+    private String ID;
+    private String UID;
+    private String hhDT;
+    private String enumCode;
+    private String clusterCode;
+    private String enumStr;
+    private String hh01;
+    private String hh02;
+    private String hh03;
+    private String hh04;
+    private String hh04other;
+    private String hh05;
+    private String hh06;
+    private String hh07;
+    private String hh07n;
+    private String hh08a1;
+    private String hh08;
+    private String hh09;
+    private String hh09a1;
+    private String hh10;
+    private String hh11;
+    private String hh12;
+    private String hh13;
+    private String hh14;
+    private String hh15;
+    private String hh16;
+    private String hhadd;
+    private String isNewHH;
+    private String counter;
+    private String DeviceID;
+    private String GPSLat;
+    private String GPSLng;
+    private String GPSTime;
+    private String GPSAcc;
+    private String GPSAlt;
+    private String AppVer;
+    private String tagId;
+    private String isRandom;
+    private String resCount;
+    private String childCount;
     public String randCount;
-    public String totalhh;
-
+    private String totalhh;
     private String username; // User Name
 
     public ListingContract() {
@@ -415,7 +413,7 @@ public class ListingContract {
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put("projectname", "UEN-Midline-LINELISTING");
+        json.put("projectname", "TPVICS2020-LINELISTING");
         json.put(ListingEntry._ID, this.ID);
         json.put(ListingEntry.COLUMN_NAME_UID, this.UID);
         json.put(ListingEntry.COLUMN_NAME_HHDATETIME, this.hhDT);
@@ -454,8 +452,8 @@ public class ListingContract {
         json.put(ListingEntry.COLUMN_TAGID, this.tagId);
         json.put(ListingEntry.COLUMN_ISNEWHH, this.isNewHH);
         json.put(ListingEntry.COLUMN_RANDOMIZED, this.isRandom);
-        if (!this.counter.equals("") && this.counter != null) {
-            json.put(ListingEntry.COLUMN_COUNTER, this.counter.equals("") ? JSONObject.NULL : new JSONObject(this.counter));
+        if (!this.counter.equals("")) {
+            json.put(ListingEntry.COLUMN_COUNTER, new JSONObject(this.counter));
         }
 
         return json;
@@ -565,11 +563,9 @@ public class ListingContract {
         public static final String _ID = "_id";
         public static final String COLUMN_NAME_UID = "uid";
         public static final String COLUMN_NAME_HHDATETIME = "hhdt";
-
         public static final String COLUMN_NAME_ENUMCODE = "enumcode";
         public static final String COLUMN_NAME_CLUSTERCODE = "clustercode";
         public static final String COLUMN_NAME_ENUMSTR = "enumstr";
-
         public static final String COLUMN_NAME_HH01 = "chkconfirm";
         public static final String COLUMN_NAME_HH02 = "hh02";
         public static final String COLUMN_NAME_HH03 = "hh03";

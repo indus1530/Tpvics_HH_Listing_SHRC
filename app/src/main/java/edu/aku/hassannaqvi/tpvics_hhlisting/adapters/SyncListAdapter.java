@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.SyncListAdapterBinding;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.SyncModel;
 
 public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncListViewHolder> {
     List<SyncModel> synclist;

@@ -21,9 +21,10 @@
     <string name="hh09"> موبائل نمبر </string>
     <string name="hh10a"> تعداد </string>
     <string name="hh10"> کیا اس گھر میں 5 سال سے کم عمر کے بچے ہیں؟ </string>
+    <string name="hh12"> کیا اس گھر میں 12 سے 23 مہینے کی عمر کے بچے ہیں؟ </string>
     <string name="hh16"> افراد کی تعداد </string>
     <string name="hh17"> کیا اس گھر میں مذید کوئی خاندان رہائش پزیر ہے </string>
-    <string name="hh12"> کیا یہ جگہ رہائشی مقاصد کے لئے استعمال کی جا رہی ہے؟ </string>
+    <string name="hh14"> کیا یہ جگہ رہائشی مقاصد کے لئے استعمال کی جا رہی ہے؟ </string>
     <string name="na101a"> ضلعہ </string>
     <string name="na101b">  تحصیل / تعلُقہ </string>
     <string name="na101c"> یونین کونسل </string>

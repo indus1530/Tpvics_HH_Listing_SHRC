@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Core;
+package edu.aku.hassannaqvi.tpvics_hhlisting.core;
 
 //all required import files
 

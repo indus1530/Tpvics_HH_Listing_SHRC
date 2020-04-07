@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Sync;
+package edu.aku.hassannaqvi.tpvics_hhlisting.syncClasses;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,8 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 
 import static android.content.Context.MODE_PRIVATE;
 

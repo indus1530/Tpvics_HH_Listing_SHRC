@@ -28,17 +28,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Get.GetAllData;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Sync.SyncAllData;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Sync.SyncDevice;
 import edu.aku.hassannaqvi.tpvics_hhlisting.adapters.SyncListAdapter;
 import edu.aku.hassannaqvi.tpvics_hhlisting.adapters.Upload_list_adapter;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.ActivitySyncBinding;
+import edu.aku.hassannaqvi.tpvics_hhlisting.getClasses.GetAllData;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.SyncModel;
+import edu.aku.hassannaqvi.tpvics_hhlisting.syncClasses.SyncAllData;
+import edu.aku.hassannaqvi.tpvics_hhlisting.syncClasses.SyncDevice;
 
 public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDevicInterface {
     SharedPreferences.Editor editor;

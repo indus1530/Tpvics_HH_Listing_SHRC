@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Other;
+package edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses;
 
 public class SyncModel {
     String tableName;

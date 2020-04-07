@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Other.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.UploadListAdapterBinding;
+import edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses.SyncModel;
 
 public class Upload_list_adapter extends RecyclerView.Adapter<Upload_list_adapter.UploadListViewHolder> {
     List<SyncModel> uploadlist;

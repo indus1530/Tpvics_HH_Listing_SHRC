@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Other;
+package edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses;
 
 import android.content.Context;
 import android.view.GestureDetector;
@@ -17,9 +17,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.RandomizationActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
 
 /**
  * Created by ali.azaz on 13/04/2017.

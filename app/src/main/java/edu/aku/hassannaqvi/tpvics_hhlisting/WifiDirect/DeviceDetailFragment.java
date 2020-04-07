@@ -30,9 +30,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.WifiDirect.DeviceListFragment.DeviceActionListener;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device

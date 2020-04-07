@@ -155,21 +155,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/hh12" />
+                android:text="@string/hh14" />
 
             <RadioGroup
-                android:id="@+id/hh12"
+                android:id="@+id/hh14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/hh12a"
+                    android:id="@+id/hh14a"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/yes" />
 
                 <RadioButton
-                    android:id="@+id/hh12b"
+                    android:id="@+id/hh14b"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/no" />

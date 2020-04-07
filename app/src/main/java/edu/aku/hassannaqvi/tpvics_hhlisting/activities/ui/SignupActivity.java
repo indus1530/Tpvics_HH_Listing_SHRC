@@ -17,11 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.SignupContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.LoginActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.SignupContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.ActivitySignupBinding;
 import edu.aku.hassannaqvi.tpvics_hhlisting.validation.ValidatorClass;
 

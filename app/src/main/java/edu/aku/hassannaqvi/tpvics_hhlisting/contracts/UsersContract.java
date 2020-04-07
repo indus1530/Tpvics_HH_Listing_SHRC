@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Contracts;
+package edu.aku.hassannaqvi.tpvics_hhlisting.contracts;
 
 import android.database.Cursor;
 import android.provider.BaseColumns;

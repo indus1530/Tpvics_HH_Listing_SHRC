@@ -28,12 +28,12 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.LoginActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.MainActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 
 public class SetupActivity extends Activity {
 
@@ -54,12 +54,12 @@ public class SetupActivity extends Activity {
     RadioButton hh04g;
     @BindView(R.id.hh04h)
     RadioButton hh04h;
-    @BindView(R.id.hh12)
-    RadioGroup hh12;
-    @BindView(R.id.hh12a)
-    RadioButton hh12a;
-    @BindView(R.id.hh12b)
-    RadioButton hh12b;
+    @BindView(R.id.hh14)
+    RadioGroup hh14;
+    @BindView(R.id.hh14a)
+    RadioButton hh14a;
+    @BindView(R.id.hh14b)
+    RadioButton hh14b;
     @BindView(R.id.hh05)
     Switch hh05;
     @BindView(R.id.hh06)
@@ -143,12 +143,12 @@ public class SetupActivity extends Activity {
             }
         });
 
-        hh12.setOnCheckedChangeListener((group, checkedId) -> {
+        hh14.setOnCheckedChangeListener((group, checkedId) -> {
 
             MainApp.hh07txt = "1";
 
             hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
-            if (hh12a.isChecked()) {
+            if (hh14a.isChecked()) {
                 fldGrpHH04.setVisibility(View.VISIBLE);
                 btnAddHousehold.setVisibility(View.GONE);
             } else {
@@ -331,16 +331,16 @@ public class SetupActivity extends Activity {
         } else {
             hh04b.setError(null);
         }
-        if (hh12.getCheckedRadioButtonId() == -1) {
+        if (hh14.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Please one option", Toast.LENGTH_LONG).show();
-            hh12b.setError("Please one option");
+            hh14b.setError("Please one option");
             Log.i(TAG, "Please one option");
             return false;
         } else {
-            hh12b.setError(null);
+            hh14b.setError(null);
         }
 
-        if (hh12a.isChecked()) {
+        if (hh14a.isChecked()) {
 
             if (hh05.isChecked() && hh06.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please enter number", Toast.LENGTH_LONG).show();
@@ -351,7 +351,7 @@ public class SetupActivity extends Activity {
                 hh06.setError(null);
             }
 
-            if (!hh06.getText().toString().isEmpty() && Integer.valueOf(hh06.getText().toString()) <= 1) {
+            if (!hh06.getText().toString().isEmpty() && Integer.parseInt(hh06.getText().toString()) <= 1) {
                 Toast.makeText(this, "Greater then 1!", Toast.LENGTH_LONG).show();
                 hh06.setError("Greater then 1!");
                 Log.i(TAG, "hh06:Greater then 1!");

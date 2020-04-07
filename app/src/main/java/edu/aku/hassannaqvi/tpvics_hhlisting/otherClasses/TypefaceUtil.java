@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Other;
+package edu.aku.hassannaqvi.tpvics_hhlisting.otherClasses;
 
 /**
  * Created by hassan.naqvi on 10/19/2016.

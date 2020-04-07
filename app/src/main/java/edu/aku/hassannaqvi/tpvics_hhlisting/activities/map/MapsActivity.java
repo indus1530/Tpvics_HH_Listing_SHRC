@@ -34,10 +34,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VerticesContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.DatabaseHelper;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VerticesContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting.Core;
+package edu.aku.hassannaqvi.tpvics_hhlisting.core;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,21 +17,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.BLRandomContract.singleRandomHH;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.EnumBlockContract.EnumBlockTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.ListingContract.ListingEntry;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.SignupContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.SignupContract.SignUpTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.TeamsContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.TeamsContract.SingleTaluka;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.UsersContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.UsersContract.UsersTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VersionAppContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VersionAppContract.VersionAppTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VerticesContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting.Contracts.VerticesContract.SingleVertices;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.BLRandomContract.singleRandomHH;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.EnumBlockContract.EnumBlockTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract.ListingEntry;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.SignupContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.SignupContract.SignUpTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.TeamsContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.TeamsContract.SingleTaluka;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.UsersContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.UsersContract.UsersTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VersionAppContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VersionAppContract.VersionAppTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VerticesContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.VerticesContract.SingleVertices;
 
 
 /**
