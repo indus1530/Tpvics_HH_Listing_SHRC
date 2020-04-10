@@ -8,6 +8,17 @@
     <color name="colorAccentAlpha">#24d60000</color>
     <color name="colorAccentGAlpha">#2400d600</color>
 
+    <color name="colorSecondary">#00617d</color>
+    <color name="redforborder">#EF9A9A</color>
+    <color name="colorPrimaryLight">#448aff</color>
+    <color name="colorPrimaryAlpha1">#607d8b</color>
+    <color name="pink_100">#9BD8FF</color>
+    <color name="colorHeading">#99FFCC</color>
+    <color name="colorRedsub">#d6ff8a80</color>
+    <color name="lightred">#FFEBEE</color>
+    <color name="colorPrimaryBeta">#00BCD4</color>
+
+
     <color name="black_overlay">#66000000</color>
 
     <color name="zxing_transparent">#00000000</color>

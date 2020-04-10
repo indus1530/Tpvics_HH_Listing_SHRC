@@ -7,10 +7,9 @@
     tools:context="edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.MainActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="ltr"
-        android:orientation="vertical">
+        style="@style/vlinearlayout"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl">
 
         <TextView
             android:id="@+id/lblAppVersion"
@@ -45,29 +44,31 @@
             android:textSize="24sp"
             android:visibility="gone" />
 
-        <androidx.cardview.widget.CardView style="@style/cardView">
 
-            <LinearLayout
-                style="@style/linearlayout_view_wt_bound"
-                android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/checkPSUcv"
+            style="@style/cardView">
+
+            <LinearLayout style="@style/hlinearlayout">
 
                 <EditText
                     android:id="@+id/txtPSU"
                     style="@style/EditTextNum"
                     android:layout_width="0dp"
-                    android:layout_margin="0dp"
-                    android:layout_weight="70"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:hint="@string/cluster_number"
                     android:maxLength="6" />
 
                 <Button
                     android:id="@+id/btnCheckPSU"
-                    style="@style/buttons_bottom"
+                    style="@style/button"
+                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="30"
-                    android:text="@string/check" />
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg"
+                    android:text="@string/check"
+                    android:textColor="@color/colorPrimaryDark" />
 
             </LinearLayout>
 
@@ -76,19 +77,16 @@
 
         <LinearLayout
             android:id="@+id/fldGrpna101"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            style="@style/vlinearlayout"
             android:visibility="gone"
             tools:visibility="visible">
 
             <!-- Province -->
-            <androidx.cardview.widget.CardView style="@style/cardView">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/na101acv"
+                style="@style/cardView">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <LinearLayout style="@style/hlinearlayout">
 
                     <!--hh03-->
                     <TextView
@@ -106,7 +104,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@color/white"
+                        android:background="@color/pink_100"
                         android:gravity="center"
                         android:text="@string/na101a"
                         android:textColor="@color/colorPrimaryDark" />
@@ -117,12 +115,11 @@
 
 
             <!-- District  -->
-            <androidx.cardview.widget.CardView style="@style/cardView">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/na101bcv"
+                style="@style/cardView">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <LinearLayout style="@style/hlinearlayout">
 
                     <!--hh04-->
                     <TextView
@@ -140,7 +137,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@color/white"
+                        android:background="@color/pink_100"
                         android:gravity="center"
                         android:text="@string/na101b"
                         android:textColor="@color/colorPrimaryDark" />
@@ -151,12 +148,11 @@
 
 
             <!-- Tehsil  -->
-            <androidx.cardview.widget.CardView style="@style/cardView">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/na101ccv"
+                style="@style/cardView">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <LinearLayout style="@style/hlinearlayout">
 
                     <!--hh05-->
                     <TextView
@@ -174,7 +170,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@color/white"
+                        android:background="@color/pink_100"
                         android:gravity="center"
                         android:text="@string/na101c"
                         android:textColor="@color/colorPrimaryDark" />
@@ -185,12 +181,11 @@
 
 
             <!-- Place   -->
-            <androidx.cardview.widget.CardView style="@style/cardView">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/na101dcv"
+                style="@style/cardView">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <LinearLayout style="@style/hlinearlayout">
 
                     <!--hh06-->
                     <TextView
@@ -208,7 +203,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@color/white"
+                        android:background="@color/pink_100"
                         android:gravity="center"
                         android:text="@string/na101d"
                         android:textColor="@color/colorPrimaryDark" />
@@ -216,6 +211,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
 
             <Button
                 android:id="@+id/openClusterMap"
@@ -239,9 +235,10 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/lllstwarning"
-            style="@style/linearlayout_view"
+            style="@style/vlinearlayout"
             android:layout_marginTop="15dp"
             android:visibility="gone"
             tools:visibility="visible">
@@ -256,26 +253,26 @@
 
                     <TextView
                         style="@style/i_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/colorPrimary"
-                        android:text="@string/lstWarning"
-                        android:textColor="@color/white" />
+                        android:text="@string/lstWarning" />
 
                     <RadioGroup
                         android:id="@+id/lstwarning"
-                        style="@style/radiogroup">
+                        style="@style/hradiogroup">
 
                         <RadioButton
                             android:id="@+id/lstwarninga"
                             style="@style/radiobutton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/lstwarningb"
                             style="@style/radiobutton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:text="@string/no" />
+
                     </RadioGroup>
 
                 </LinearLayout>
@@ -354,6 +351,9 @@
                 android:layout_margin="8dp"
                 android:onClick="copyData"
                 android:text="@string/copy_data_to_sdcard" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </ScrollView>
