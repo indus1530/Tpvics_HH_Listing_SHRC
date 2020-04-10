@@ -33,6 +33,10 @@
     <string name="no"> نہیں </string>
     <string name="delete"> Delete this HH </string>
     <string name="lstWarning">کیا یہ پہلا ٹیب ہے جو اس کلسٹر میں استعمال ہوتا ہے؟</string>
+    <string name="name"> نام </string>
+    <string name="num"> نمبر </string>
+    <string name="other"> دیگر </string>
+    <string name="specify"> وضاحت کریں </string>
 
     <string name="btnSync">Sync</string>
     <string name="btnUpload">Upload</string>
