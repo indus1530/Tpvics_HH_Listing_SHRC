@@ -23,9 +23,7 @@
         android:textDirection="rtl"
         tools:context=".activities.ui.SetupActivity">
 
-        <LinearLayout
-            style="@style/linearlayout_view"
-            android:layoutDirection="rtl">
+        <LinearLayout style="@style/linearlayout_view">
 
             <LinearLayout
                 android:id="@+id/fldGrpSecA01"

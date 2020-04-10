@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="callback"
+            type="edu.aku.hassannaqvi.tpvics_hhlisting.activities.ui.FamilyListingActivity" />
+
+        <variable
+            name="member"
+            type="edu.aku.hassannaqvi.tpvics_hhlisting.models.Members" />
+    </data>
+
+    <ScrollView
+        style="@style/i_scrollview"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:layoutDirection="rtl"
+        android:scrollbarSize="10dip"
+        android:textDirection="rtl"
+        tools:context=".activities.ui.FamilyListingActivity">
+
+        <LinearLayout
+            android:id="@+id/activity_household_listing"
+            style="@style/linearlayout_view">
+
+            <TextView
+                android:id="@+id/txtTeamNoWithFam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_weight="3"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/hh03"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_22sdp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/deleteHH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layoutDirection="rtl"
+                android:tag="-1"
+                android:text="@string/delete"
+                android:textAlignment="center"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/fldGrpSecB01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:text="@string/hh08" />
+
+                        <EditText
+                            android:id="@+id/hh08"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="@string/txtName"
+                            android:hint="@string/hh08"
+                            android:inputType="text"
+                            android:maxLength="24" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:text="@string/hh09"
+                            android:visibility="gone" />
+
+                        <EditText
+                            android:id="@+id/hh09"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hh09"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout
+                        style="@style/linearlayout_view_wt_bound"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_weight="20"
+                            android:text="@string/hh16" />
+
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/hh16"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_weight="50"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:onTextChanged="@{callback.onTextChangedHH16}"
+                            app:maxValue="99"
+                            app:minValue="1"
+                            app:type="range" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/hh10" />
+
+                        <RadioGroup
+                            android:id="@+id/hh10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/hh10a"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/yes" />
+
+                            <RadioButton
+                                android:id="@+id/hh10b"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/no" />
+
+                        </RadioGroup>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/hh11"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_weight="1"
+                            android:hint="@string/hh10a"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:onTextChanged="@{callback.onTextChangedHH11}"
+                            android:text='@{hh10a.checked ? hh11.getText().toString() : ""}'
+                            android:visibility="@{hh10a.checked ? View.VISIBLE : View.GONE}"
+                            app:maxValue="0"
+                            app:minValue="1"
+                            app:type="range"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/hh12" />
+
+                        <RadioGroup
+                            android:id="@+id/hh12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/hh12a"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/yes" />
+
+                            <RadioButton
+                                android:id="@+id/hh12b"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/no" />
+
+                        </RadioGroup>
+
+                        <com.edittextpicker.aliazaz.EditTextPicker
+                            android:id="@+id/hh13"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_weight="1"
+                            android:hint="@string/hh10a"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:text='@{hh12a.checked ? hh13.getText().toString() : ""}'
+                            android:visibility="@{hh12a.checked ? View.VISIBLE : View.GONE}"
+                            app:maxValue="0"
+                            app:minValue="1"
+                            app:type="range"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView style="@style/cardView">
+
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
+
+                        <Switch
+                            android:id="@+id/hh17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_weight="4"
+                            android:tag="-1"
+                            android:text="@string/hh17"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textOff="@string/no"
+                            android:textOn="@string/yes"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAddNewHousehold"
+                style="@style/button"
+                android:onClick="@{() -> callback.onBtnAddNewHouseHoldClick()}"
+                android:text="@string/add_new_family"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnAddFamily"
+                style="@style/button"
+                android:onClick="@{() -> callback.onBtnAddFamilyClick()}"
+                android:text="@string/add_next_family"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnAddHousehold"
+                style="@style/button"
+                android:onClick="@{() -> callback.onBtnAddHouseholdClick()}"
+                android:text="@string/goto_next_structure"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
