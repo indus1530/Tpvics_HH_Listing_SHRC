@@ -12,10 +12,13 @@ import androidx.databinding.DataBindingUtil;
 import com.validatorcrawler.aliazaz.Clear;
 import com.validatorcrawler.aliazaz.Validator;
 
+import java.util.Objects;
+
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.ActivityFamilyListingBinding;
+import edu.aku.hassannaqvi.tpvics_hhlisting.models.Members;
 
 public class FamilyListingActivity extends AppCompatActivity {
 
@@ -30,7 +33,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         bi = DataBindingUtil.setContentView(this, R.layout.activity_family_listing);
         bi.setCallback(this);
         this.setTitle("Family Information");
-        bi.txtTeamNoWithFam.setText(MainApp.tabCheck + "-" + String.format("%04d", MainApp.hh03txt) + "-" + String.format("%03d", Integer.valueOf(MainApp.hh07txt)));
+        Members.txtTeamNoWithFam.set(MainApp.tabCheck + "-" + String.format("%04d", MainApp.hh03txt) + "-" + String.format("%03d", Integer.valueOf(MainApp.hh07txt)));
 
         setupButtons();
 
@@ -50,7 +53,7 @@ public class FamilyListingActivity extends AppCompatActivity {
                     }
                 }
             }
-            bi.txtTeamNoWithFam.setText(MainApp.tabCheck + "-S" + String.format("%04d", MainApp.hh03txt) + "-H" + String.format("%03d", Integer.valueOf(MainApp.hh07txt)));
+            Members.txtTeamNoWithFam.set(MainApp.tabCheck + "-S" + String.format("%04d", MainApp.hh03txt) + "-H" + String.format("%03d", Integer.valueOf(MainApp.hh07txt)));
         });
 
         bi.deleteHH.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -60,6 +63,16 @@ public class FamilyListingActivity extends AppCompatActivity {
                 Clear.clearAllFields(bi.fldGrpSecB01, true);
         });
 
+    }
+
+    public void onTextChangedHH11(CharSequence s, int start, int before, int count) {
+        if (Objects.requireNonNull(bi.hh11.getText()).toString().trim().isEmpty()) return;
+        bi.hh13.setMaxvalue(Float.parseFloat(bi.hh11.getText().toString()));
+    }
+
+    public void onTextChangedHH16(CharSequence s, int start, int before, int count) {
+        if (Objects.requireNonNull(bi.hh16.getText()).toString().trim().isEmpty()) return;
+        bi.hh11.setMaxvalue(Float.parseFloat(bi.hh16.getText().toString()) - 1);
     }
 
     public void setupButtons() {
@@ -75,7 +88,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         }
     }
 
-    private void SaveDraft() {
+    private void saveDraft() {
 
         MainApp.lc.setHh07(MainApp.hh07txt);
         MainApp.lc.setHh08a1("1");
@@ -112,7 +125,7 @@ public class FamilyListingActivity extends AppCompatActivity {
 
         if (formValidation()) {
 
-            SaveDraft();
+            saveDraft();
             if (UpdateDB()) {
                 if (familyFlag)
                     MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
@@ -136,7 +149,7 @@ public class FamilyListingActivity extends AppCompatActivity {
     public void onBtnAddFamilyClick() {
         if (formValidation()) {
 
-            SaveDraft();
+            saveDraft();
             if (UpdateDB()) {
                 MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
                 MainApp.lc.setHh07(MainApp.hh07txt);
@@ -154,7 +167,7 @@ public class FamilyListingActivity extends AppCompatActivity {
     public void onBtnAddHouseholdClick() {
         if (formValidation()) {
 
-            SaveDraft();
+            saveDraft();
             if (UpdateDB()) {
                 MainApp.fCount = 0;
                 MainApp.fTotal = 0;

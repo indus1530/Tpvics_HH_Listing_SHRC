@@ -10,179 +10,206 @@ import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.ScrollView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.validatorcrawler.aliazaz.Clear;
+import com.validatorcrawler.aliazaz.Validator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import edu.aku.hassannaqvi.tpvics_hhlisting.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.LoginActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.MainActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
+import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.ActivitySetupBinding;
+
+import static edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp.lc;
 
 public class SetupActivity extends Activity {
-
-    private static String deviceId;
-    @BindView(R.id.activity_household_listing)
-    ScrollView activityHouseholdListing;
-    @BindView(R.id.hh02)
-    EditText hh02;
-    @BindView(R.id.hh03)
-    TextView hh03;
-    @BindView(R.id.hh04)
-    RadioGroup hh04;
-    @BindView(R.id.hh04a)
-    RadioButton hh04a;
-    @BindView(R.id.hh04b)
-    RadioButton hh04b;
-    @BindView(R.id.hh04g)
-    RadioButton hh04g;
-    @BindView(R.id.hh04h)
-    RadioButton hh04h;
-    @BindView(R.id.hh14)
-    RadioGroup hh14;
-    @BindView(R.id.hh14a)
-    RadioButton hh14a;
-    @BindView(R.id.hh14b)
-    RadioButton hh14b;
-    @BindView(R.id.hh05)
-    Switch hh05;
-    @BindView(R.id.hh06)
-    EditText hh06;
-    @BindView(R.id.hh07)
-    TextView hh07;
-    @BindView(R.id.fldGrpHH04)
-    LinearLayout fldGrpHH04;
-    @BindView(R.id.fldGrpHH12)
-    LinearLayout fldGrpHH12;
-    @BindView(R.id.btnAddHousehold)
-    Button btnAddHousehold;
-    @BindView(R.id.btnChangePSU)
-    Button btnChangPSU;
-    String dtToday = new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date().getTime());
-
-    private String TAG = "Setup Activity";
+    private static final String TAG = "Setup Activity";
+    private ActivitySetupBinding bi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setup);
-        ButterKnife.bind(this);
-
+        bi = DataBindingUtil.setContentView(this, R.layout.activity_setup);
+        bi.setCallback(this);
         this.setTitle("Structure Information");
 
-        if (MainApp.userEmail == null) {
-            Toast.makeText(this, "USER ERROR1[" + MainApp.userEmail + "]: Please Login Again!", Toast.LENGTH_LONG).show();
-            Intent retreat = new Intent(this, LoginActivity.class);
-            startActivity(retreat);
-        }
-        if (MainApp.userEmail.length() < 7) {
-            Toast.makeText(this, "USER ERROR2" + MainApp.userEmail + ": Please Login Again!", Toast.LENGTH_LONG).show();
-            Intent retreat = new Intent(this, LoginActivity.class);
-            startActivity(retreat);
-        }
-
-        deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        hh02.setText(MainApp.clusterCode);
-        hh02.setEnabled(false);
+        bi.hh02.setText(MainApp.clusterCode);
+        bi.hh02.setEnabled(false);
 
         if (MainApp.hh02txt == null) {
             MainApp.hh03txt = 1;
         } else {
             MainApp.hh03txt++;
-            hh02.setText(MainApp.clusterCode);
-            hh02.setEnabled(false);
+            bi.hh02.setText(MainApp.clusterCode);
+            bi.hh02.setEnabled(false);
         }
-
         MainApp.hh07txt = "1";
-
         String StructureNumber = MainApp.tabCheck + "-" + String.format("%04d", MainApp.hh03txt);
+        bi.hh03.setTextColor(Color.RED);
+        bi.hh03.setText(StructureNumber);
+        bi.hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
 
-        hh03.setTextColor(Color.RED);
-        hh03.setText(StructureNumber);
-        hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
+        bi.hh04.setOnCheckedChangeListener((group, checkedId) -> {
 
-
-        hh04.setOnCheckedChangeListener((group, checkedId) -> {
-
-            if (hh04a.isChecked()) {
+            if (bi.hh04a.isChecked()) {
                 //Moved to Add next Family button: MainApp.hh07txt = String.valueOf((char) MainApp.hh07txt.charAt(0) + 1);
                 MainApp.hh07txt = "1";
             } else {
                 MainApp.hh07txt = "";
             }
 
-            if (hh04g.isChecked() || hh04h.isChecked()) {
-                Clear.clearAllFields(fldGrpHH12);
-                fldGrpHH12.setVisibility(View.GONE);
-                btnAddHousehold.setVisibility(View.GONE);
-                btnChangPSU.setVisibility(View.VISIBLE);
-                if (hh04g.isChecked()) {
-                    btnChangPSU.setText("Logout");
+            if (bi.hh04h.isChecked() || bi.hh04i.isChecked()) {
+                Clear.clearAllFields(bi.fldGrpHH12);
+                bi.fldGrpHH12.setVisibility(View.GONE);
+                bi.btnNextStructure.setVisibility(View.GONE);
+                bi.btnChangePSU.setVisibility(View.VISIBLE);
+                if (bi.hh04h.isChecked()) {
+                    bi.btnChangePSU.setText(R.string.logout);
                 } else {
-                    btnChangPSU.setText("Change Enumeration Block");
+                    bi.btnChangePSU.setText(R.string.change_enumeration_block);
                 }
             } else {
-                fldGrpHH12.setVisibility(View.VISIBLE);
-                btnChangPSU.setVisibility(View.GONE);
+                bi.fldGrpHH12.setVisibility(View.VISIBLE);
+                bi.btnChangePSU.setVisibility(View.GONE);
             }
         });
 
-        hh14.setOnCheckedChangeListener((group, checkedId) -> {
+        bi.hh14.setOnCheckedChangeListener((group, checkedId) -> {
 
             MainApp.hh07txt = "1";
 
-            hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
-            if (hh14a.isChecked()) {
-                fldGrpHH04.setVisibility(View.VISIBLE);
-                btnAddHousehold.setVisibility(View.GONE);
+            bi.hh07.setText(new StringBuilder(getString(R.string.hh07)).append(":").append(MainApp.hh07txt));
+            if (bi.hh14a.isChecked()) {
+                bi.fldGrpHH04.setVisibility(View.VISIBLE);
+                bi.btnNextStructure.setVisibility(View.GONE);
             } else {
-                Clear.clearAllFields(fldGrpHH04);
-                fldGrpHH04.setVisibility(View.GONE);
-                hh05.setChecked(false);
-                hh06.setText(null);
-                btnAddHousehold.setVisibility(View.VISIBLE);
+                Clear.clearAllFields(bi.fldGrpHH04);
+                bi.fldGrpHH04.setVisibility(View.GONE);
+                bi.hh05.setChecked(false);
+                bi.hh06.setText(null);
+                bi.btnNextStructure.setVisibility(View.VISIBLE);
             }
         });
 
-        hh05.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        bi.hh05.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 MainApp.hh07txt = "1";
-                hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
-                hh06.setVisibility(View.VISIBLE);
-                hh06.requestFocus();
+                bi.hh07.setText(String.format("%s: %s", getString(R.string.hh07), MainApp.hh07txt));
+                bi.hh06.setVisibility(View.VISIBLE);
+                bi.hh06.requestFocus();
 
             } else {
                 MainApp.hh07txt = "1";
-                hh07.setText(getString(R.string.hh07) + ": " + MainApp.hh07txt);
-                hh06.setVisibility(View.GONE);
-                hh06.setText(null);
+                bi.hh07.setText(String.format("%s: %s", getString(R.string.hh07), MainApp.hh07txt));
+                bi.hh06.setVisibility(View.GONE);
+                bi.hh06.setText(null);
             }
         });
 
 
     }
 
-    @OnClick(R.id.btnAddChild)
-    void onBtnAddChildClick() {
+    private void SaveDraft() {
+
+        lc = new ListingContract();
+        SharedPreferences sharedPref = getSharedPreferences("tagName", MODE_PRIVATE);
+        lc.setTagId(sharedPref.getString("tagName", null));
+        lc.setAppVer(MainApp.versionName + "." + MainApp.versionCode);
+        lc.setHhDT(new SimpleDateFormat("dd-MM-yy HH:mm:ss").format(new Date().getTime()));
+        lc.setEnumCode(MainApp.enumCode);
+        lc.setClusterCode(MainApp.clusterCode);
+        lc.setEnumStr(MainApp.enumStr);
+        lc.setHh01(String.valueOf(MainApp.hh01txt));
+        lc.setHh02(MainApp.hh02txt);
+        lc.setHh03(String.valueOf(MainApp.hh03txt));
+        lc.setHh04(bi.hh04a.isChecked() ? "1" :
+                bi.hh04b.isChecked() ? "2" :
+                        bi.hh04c.isChecked() ? "3" :
+                                bi.hh04d.isChecked() ? "4" :
+                                        bi.hh04e.isChecked() ? "5" :
+                                                bi.hh04f.isChecked() ? "6" :
+                                                        bi.hh04h.isChecked() ? "8" :
+                                                                bi.hh04i.isChecked() ? "9" :
+                                                                        bi.hh0496.isChecked() ? "96" :
+                                                                                "0");
+        lc.setUsername(MainApp.userEmail);
+        lc.setHh05(bi.hh05.isChecked() ? "1" : "2");
+        lc.setHh06(Objects.requireNonNull(bi.hh06.getText()).toString());
+        lc.setHh07(MainApp.hh07txt);
+        lc.setHh09a1(bi.hh04a.isChecked() ? "1" : "2");
+        lc.setDeviceID(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+        lc.setIsRandom(MainApp.tabCheck);
+        setGPS();
+        MainApp.fTotal = bi.hh06.getText().toString().isEmpty() ? 0 : Integer.parseInt(bi.hh06.getText().toString());
+        Log.d(TAG, "SaveDraft: " + lc.getHh03());
+    }
+
+    public void setGPS() {
+        SharedPreferences GPSPref = getSharedPreferences("GPSCoordinates", Context.MODE_PRIVATE);
+//        String date = DateFormat.format("dd-MM-yyyy HH:mm", Long.parseLong(GPSPref.getString("Time", "0"))).toString();
+        try {
+            String lat = GPSPref.getString("Latitude", "0");
+            String lang = GPSPref.getString("Longitude", "0");
+            String acc = GPSPref.getString("Accuracy", "0");
+            String dt = GPSPref.getString("Time", "0");
+            if (lat.equals("0") && lang.equals("0")) {
+                Toast.makeText(this, "Could not obtained GPS points", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "GPS set", Toast.LENGTH_SHORT).show();
+            }
+            String date = DateFormat.format("dd-MM-yyyy HH:mm", Long.parseLong(GPSPref.getString("Time", "0"))).toString();
+            lc.setGPSLat(GPSPref.getString("Latitude", "0"));
+            lc.setGPSLng(GPSPref.getString("Longitude", "0"));
+            lc.setGPSAcc(GPSPref.getString("Accuracy", "0"));
+            lc.setGPSAlt(GPSPref.getString("Altitude", "0"));
+//            MainApp.fc.setGpsTime(GPSPref.getString(date, "0")); // Timestamp is converted to date above
+            lc.setGPSTime(date); // Timestamp is converted to date above
+            Toast.makeText(this, "GPS set", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e(TAG, "setGPS: " + e.getMessage());
+        }
+
+    }
+
+    private boolean formValidation() {
+        return Validator.emptyCheckingContainer(this, bi.fldGrpSecA01);
+    }
+
+    private boolean updateDB() {
+        DatabaseHelper db = new DatabaseHelper(this);
+        Log.d(TAG, "UpdateDB: Structure" + lc.getHh03());
+
+        long updcount = db.addForm(lc);
+
+        lc.setID(String.valueOf(updcount));
+
+        if (updcount != 0) {
+
+
+            lc.setUID(
+                    (lc.getDeviceID() + lc.getID()));
+
+            db.updateListingUID();
+
+        } else {
+            Toast.makeText(this, "Updating Database... ERROR!", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
+    public void onBtnAddHHClick() {
 
         if (MainApp.hh02txt == null) {
-            MainApp.hh02txt = hh02.getText().toString();
+            MainApp.hh02txt = bi.hh02.getText().toString();
         }
         if (formValidation()) {
             SaveDraft();
@@ -194,18 +221,17 @@ public class SetupActivity extends Activity {
 
     }
 
-    @OnClick(R.id.btnChangePSU)
-    void onBtnChangePSUClick() {
+    public void onBtnChangePSUClick() {
 
         finish();
 
         Intent fA;
-        if (hh04g.isChecked()) {
+        if (bi.hh04h.isChecked()) {
             startActivity(new Intent(this, LoginActivity.class));
         } else {
             SaveDraft();
 
-            if (UpdateDB()) {
+            if (updateDB()) {
                 MainApp.hh02txt = null;
 
                 fA = new Intent(this, MainActivity.class);
@@ -215,165 +241,14 @@ public class SetupActivity extends Activity {
 
     }
 
-    private void SaveDraft() {
-
-        MainApp.lc = new ListingContract();
-        SharedPreferences sharedPref = getSharedPreferences("tagName", MODE_PRIVATE);
-        MainApp.lc.setTagId(sharedPref.getString("tagName", null));
-        MainApp.lc.setAppVer(MainApp.versionName + "." + MainApp.versionCode);
-        MainApp.lc.setHhDT(dtToday);
-
-        MainApp.lc.setEnumCode(MainApp.enumCode);
-        MainApp.lc.setClusterCode(MainApp.clusterCode);
-        MainApp.lc.setEnumStr(MainApp.enumStr);
-
-        MainApp.lc.setHh01(String.valueOf(MainApp.hh01txt));
-        MainApp.lc.setHh02(MainApp.hh02txt);
-        MainApp.lc.setHh03(String.valueOf(MainApp.hh03txt));
-
-        switch (hh04.getCheckedRadioButtonId()) {
-            case R.id.hh04a:
-                MainApp.lc.setHh04("1");
-                break;
-            case R.id.hh04b:
-                MainApp.lc.setHh04("2");
-                break;
-            case R.id.hh04c:
-                MainApp.lc.setHh04("3");
-                break;
-            case R.id.hh04d:
-                MainApp.lc.setHh04("4");
-                break;
-            case R.id.hh04e:
-                MainApp.lc.setHh04("5");
-                break;
-            case R.id.hh04f:
-                MainApp.lc.setHh04("6");
-                break;
-            case R.id.hh0496:
-                MainApp.lc.setHh04("96");
-                break;
-            case R.id.hh04g:
-                MainApp.lc.setHh04("8");
-                break;
-            case R.id.hh04h:
-                MainApp.lc.setHh04("9");
-                break;
-            default:
-                break;
-        }
-        MainApp.lc.setUsername(MainApp.userEmail);
-        MainApp.lc.setHh05(hh05.isChecked() ? "1" : "2");
-        MainApp.lc.setHh06(hh06.getText().toString());
-        MainApp.lc.setHh07(MainApp.hh07txt);
-        MainApp.lc.setHh09a1(hh04a.isChecked() ? "1" : "2");
-        MainApp.lc.setDeviceID(deviceId);
-
-        MainApp.lc.setIsRandom(MainApp.tabCheck);
-
-        setGPS();
-
-        MainApp.fTotal = hh06.getText().toString().isEmpty() ? 0 : Integer.parseInt(hh06.getText().toString());
-
-
-        Log.d(TAG, "SaveDraft: " + MainApp.lc.getHh03());
-
-    }
-
-    public void setGPS() {
-        SharedPreferences GPSPref = getSharedPreferences("GPSCoordinates", Context.MODE_PRIVATE);
-
-//        String date = DateFormat.format("dd-MM-yyyy HH:mm", Long.parseLong(GPSPref.getString("Time", "0"))).toString();
-
-        try {
-            String lat = GPSPref.getString("Latitude", "0");
-            String lang = GPSPref.getString("Longitude", "0");
-            String acc = GPSPref.getString("Accuracy", "0");
-            String dt = GPSPref.getString("Time", "0");
-
-            if (lat == "0" && lang == "0") {
-                Toast.makeText(this, "Could not obtained GPS points", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "GPS set", Toast.LENGTH_SHORT).show();
-            }
-
-            String date = DateFormat.format("dd-MM-yyyy HH:mm", Long.parseLong(GPSPref.getString("Time", "0"))).toString();
-
-            MainApp.lc.setGPSLat(GPSPref.getString("Latitude", "0"));
-            MainApp.lc.setGPSLng(GPSPref.getString("Longitude", "0"));
-            MainApp.lc.setGPSAcc(GPSPref.getString("Accuracy", "0"));
-            MainApp.lc.setGPSAlt(GPSPref.getString("Altitude", "0"));
-//            MainApp.fc.setGpsTime(GPSPref.getString(date, "0")); // Timestamp is converted to date above
-            MainApp.lc.setGPSTime(date); // Timestamp is converted to date above
-
-            Toast.makeText(this, "GPS set", Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            Log.e(TAG, "setGPS: " + e.getMessage());
-        }
-
-    }
-
-    private boolean formValidation() {
+    public void onBtnNextStructureClick() {
         if (MainApp.hh02txt == null) {
-            Toast.makeText(this, "Please enter PSU", Toast.LENGTH_LONG).show();
-            hh02.setError("Please enter PSU");
-            Log.i(TAG, "PSU not given");
-            return false;
-        } else {
-            hh02.setError(null);
-        }
-        if (hh04.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please one option", Toast.LENGTH_LONG).show();
-            hh04b.setError("Please one option");
-            Log.i(TAG, "Please one option");
-            return false;
-        } else {
-            hh04b.setError(null);
-        }
-        if (hh14.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please one option", Toast.LENGTH_LONG).show();
-            hh14b.setError("Please one option");
-            Log.i(TAG, "Please one option");
-            return false;
-        } else {
-            hh14b.setError(null);
-        }
-
-        if (hh14a.isChecked()) {
-
-            if (hh05.isChecked() && hh06.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Please enter number", Toast.LENGTH_LONG).show();
-                hh06.setError("Please enter number");
-                Log.i(TAG, "Please enter number");
-                return false;
-            } else {
-                hh06.setError(null);
-            }
-
-            if (!hh06.getText().toString().isEmpty() && Integer.parseInt(hh06.getText().toString()) <= 1) {
-                Toast.makeText(this, "Greater then 1!", Toast.LENGTH_LONG).show();
-                hh06.setError("Greater then 1!");
-                Log.i(TAG, "hh06:Greater then 1!");
-                return false;
-            } else {
-                hh06.setError(null);
-            }
-        }
-
-
-        return true;
-    }
-
-    @OnClick(R.id.btnAddHousehold)
-    void onBtnAddHouseholdClick() {
-        if (MainApp.hh02txt == null) {
-            MainApp.hh02txt = hh02.getText().toString();
+            MainApp.hh02txt = bi.hh02.getText().toString();
         }
         if (formValidation()) {
 
             SaveDraft();
-            if (UpdateDB()) {
+            if (updateDB()) {
                 MainApp.fCount = 0;
                 MainApp.fTotal = 0;
                 MainApp.cCount = 0;
@@ -384,34 +259,6 @@ public class SetupActivity extends Activity {
 
             }
         }
-    }
-
-    private boolean UpdateDB() {
-        DatabaseHelper db = new DatabaseHelper(this);
-        Log.d(TAG, "UpdateDB: Structure" + MainApp.lc.getHh03());
-
-        long updcount = db.addForm(MainApp.lc);
-
-        MainApp.lc.setID(String.valueOf(updcount));
-
-        if (updcount != 0) {
-
-
-            MainApp.lc.setUID(
-                    (MainApp.lc.getDeviceID() + MainApp.lc.getID()));
-
-            db.updateListingUID();
-
-        } else {
-            Toast.makeText(this, "Updating Database... ERROR!", Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "Back Button NOT Allowed!", Toast.LENGTH_SHORT).show();
-
     }
 }
 

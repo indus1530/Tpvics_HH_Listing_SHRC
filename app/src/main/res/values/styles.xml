@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme.
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:scrollViewStyle">@style/BackgroundStyle</item>
         <item name="android:textViewStyle">@style/labels</item>
@@ -13,10 +13,10 @@
         <item name="*android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
 
 
-        <!-- Customize your theme here. -->
-        <!--
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        &lt;!&ndash;
                 <item name="android:windowActionBarOverlay">true</item>
-        -->
+        &ndash;&gt;
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>
 
     </style>
@@ -33,7 +33,7 @@
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
-        <!-- Customize your theme here. -->
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
     </style>
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -48,7 +48,7 @@
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
-        <!-- Customize your theme here. -->
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
     </style>
 
     <style name="MyPopupMenu" parent="android:Theme.Material.Light.DarkActionBar">
@@ -100,7 +100,7 @@
     </style>
 
 
-    <!-- Form Styles -->
+    &lt;!&ndash; Form Styles &ndash;&gt;
     <style name="labels" parent="android:Widget.Material.Light.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -274,7 +274,7 @@
     </style>
 
 
-    <!-- <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+    &lt;!&ndash; <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
          <item name="sv_backgroundColor">#33b78ff7</item>
          <item name="sv_showcaseColor">@color/colorPrimaryDark</item>
          <item name="sv_buttonText">OK</item>
@@ -309,7 +309,7 @@
 
      <style name="CustomText2" parent="TextAppearance.ShowcaseView.Detail.Light">
          <item name="android:textColor">#8affffff</item>
-     </style>-->
+     </style>&ndash;&gt;
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -332,6 +332,355 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorForeground">@android:color/black</item>
+    </style>-->
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="buttons_bottom">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textView3Head">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="textInputName">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:background">@drawable/et_style</item>
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:radius">2dp</item>
+    </style>
+
+    <style name="BackgroundStyle" parent="android:Widget.ScrollView">
+        <item name="android:background">#e4e4e4</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
+    <style name="i_scrollview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">5sp</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:paddingBottom">5sp</item>
+    </style>
+
+    <style name="EditTextComa" parent="@style/textInput">
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ , .</item>
+    </style>
+
+    <style name="EditTextAlpha" parent="@style/textInput">
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</item>
+    </style>
+
+    <style name="EditTextAlphaNumeric" parent="@style/textInput">
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            0123456789
+        </item>
+    </style>
+
+    <style name="EditTextNum" parent="@style/textInput">
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="EditTextdeci" parent="@style/textInput">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+    <style name="TestDisabled">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="SpinnerItem">
+        <item name="android:textAppearance">@style/SpinnerItemText</item>
+    </style>
+
+    <style name="SpinnerItemText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <!-- Form Styles -->
+    <style name="labels" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--        <item name="android:layout_marginTop">24dp</item>-->
+        <item name="android:background">@drawable/text_style</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:padding">10dp</item>
+        <!--        <item name="android:paddingTop">16dp</item>-->
+        <item name="android:elevation">1dp</item>
+        <!--        <item name="android:paddingStart">8dp</item>-->
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <!--        <item name="android:paddingEnd">8dp</item>-->
+
+
+    </style>
+
+    <style name="HeadingTitle" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
+    <style name="listItems" parent="android:Widget.Material.Light.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <style name="errors">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:background">#ffd6d6</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#ff1e1e</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="sub">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:background">#ffd6d6</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="textInput" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/et_style</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:inputType">textPostalAddress</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="textInput2" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/et_style</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="spinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/spinner_style</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="i_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <!--        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:drawable">@drawable/textview_background_grad</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:elevation">1dp</item>
+    </style>
+
+    <style name="i_textviewhint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawable">@drawable/textview_background_grad</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:elevation">1dp</item>
+    </style>
+
+    <style name="spinnerItemStyle">
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="spinnerDropDownItemStyle">
+        <item name="android:padding">20dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="radiogroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">#d6d6d6</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="radiobutton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <!--        <item name="android:button">@color/colorPrimary</item>-->
+        <item name="android:elevation">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="button" parent="android:Widget.Material.Light.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <!--        <item name="android:minHeight">36dp</item>-->
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_margin">10sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/white</item>
+        <!--        <item name="android:radius">2dp</item>-->
+        <item name="android:elevation">1dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="AppTheme.AppBarOverlay">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="linearlayout_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">1dp</item>
+    </style>
+
+    <style name="linearlayout_view_wt_bound">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <!--Card View Start-->
+    <style name="cardView">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+
+        <!--<item name="android:layout_marginRight">10dp</item>-->
+        <!--<item name="android:layout_marginLeft">10dp</item>-->
+        <item name="cardCornerRadius">7dp</item>
+        <item name="cardElevation">1dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!--Card View End-->
+
+    <style name="expandCollapse">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 
