@@ -68,5 +68,11 @@
     <string name="logout">Logout</string>
     <string name="add_new_family">Add New Family</string>
     <string name="add_next_family">Add Next Family</string>
+    <string name="cluster_number">Cluster number</string>
+    <string name="check">CHECK</string>
+    <string name="start_line_listing">Start Line Listing</string>
+    <string name="sync_listing">Sync Listing</string>
+    <string name="open_db_manager">Open DB Manager</string>
+    <string name="copy_data_to_sdcard">Copy Data to SDCard</string>
 
 </resources>

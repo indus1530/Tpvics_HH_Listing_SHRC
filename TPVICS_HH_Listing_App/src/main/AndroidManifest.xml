@@ -39,7 +39,7 @@
         <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting.activities.sync.SyncActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme1" />
         <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting.activities.ui.SetupActivity"
             android:screenOrientation="portrait" />
@@ -64,7 +64,7 @@
         <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting.activities.RandomizationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme2"
+            android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

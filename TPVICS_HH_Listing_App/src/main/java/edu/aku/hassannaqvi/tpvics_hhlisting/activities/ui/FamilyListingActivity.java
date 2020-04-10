@@ -105,7 +105,7 @@ public class FamilyListingActivity extends AppCompatActivity {
     }
 
     private boolean formValidation() {
-        return Validator.emptyCheckingContainer(this, bi.activityHouseholdListing);
+        return Validator.emptyCheckingContainer(this, bi.fldGrpSecB01);
     }
 
     private boolean UpdateDB() {

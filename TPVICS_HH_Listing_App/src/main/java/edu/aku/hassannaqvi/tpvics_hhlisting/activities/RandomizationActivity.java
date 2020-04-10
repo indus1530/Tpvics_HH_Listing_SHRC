@@ -110,7 +110,7 @@ public class RandomizationActivity extends MenuActivity {
 
         public ApplicationsTask(Context mContext) {
             context = mContext;
-            dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
+//            dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
         }
 
         protected void onPreExecute() {
@@ -158,7 +158,7 @@ public class RandomizationActivity extends MenuActivity {
 
         public RandomizationTask(Context mContext, String clustercode) {
             context = mContext;
-            dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
+//            dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
             this.clustercode = clustercode;
 
             listingDataList = new ArrayList<>();

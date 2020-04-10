@@ -4,15 +4,12 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="edu.aku.hassannaqvi.tpvics_hhlisting.activities.home.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
         android:orientation="vertical">
 
         <TextView
@@ -48,34 +45,33 @@
             android:textSize="24sp"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+        <androidx.cardview.widget.CardView style="@style/cardView">
 
-            <Button
-                android:id="@+id/btnCheckPSU"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_weight="30"
-                android:padding="10dp"
-                android:text="CHECK" />
+            <LinearLayout
+                style="@style/linearlayout_view_wt_bound"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtPSU"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="70"
-                android:background="#ddd"
-                android:hint="Cluster number"
-                android:inputType="number"
-                android:maxLength="6"
-                android:padding="10dp"
-                android:textColor="@android:color/black" />
+                <EditText
+                    android:id="@+id/txtPSU"
+                    style="@style/EditTextNum"
+                    android:layout_width="0dp"
+                    android:layout_margin="0dp"
+                    android:layout_weight="70"
+                    android:hint="@string/cluster_number"
+                    android:maxLength="6" />
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btnCheckPSU"
+                    style="@style/buttons_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="30"
+                    android:text="@string/check" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
         <LinearLayout
@@ -86,139 +82,140 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!-- Province -->
+            <androidx.cardview.widget.CardView style="@style/cardView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <!--na101a-->
+
+                    <!--hh03-->
                     <TextView
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="@string/na101a"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="@string/na101a" />
+
 
                     <TextView
                         android:id="@+id/na101a"
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="2"
-                        android:background="@color/dullWhile"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:text="@string/na101a"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                    <!--na101b-->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="@string/na101b"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:id="@+id/na101b"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="2"
-                        android:background="@color/dullWhile"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <!-- District  -->
+            <androidx.cardview.widget.CardView style="@style/cardView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <!--na101c-->
+
+                    <!--hh04-->
                     <TextView
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="@string/na101c"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="@string/na101b" />
+
+
+                    <TextView
+                        android:id="@+id/na101b"
+                        style="@style/i_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:text="@string/na101b"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Tehsil  -->
+            <androidx.cardview.widget.CardView style="@style/cardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!--hh05-->
+                    <TextView
+                        style="@style/i_textview"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="@string/na101c" />
 
 
                     <TextView
                         android:id="@+id/na101c"
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="2"
-                        android:background="@color/dullWhile"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:text="@string/na101c"
+                        android:textColor="@color/colorPrimaryDark" />
+
                 </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Place   -->
+            <androidx.cardview.widget.CardView style="@style/cardView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!--na101d-->
+                    <!--hh06-->
                     <TextView
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="@string/na101d"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="@string/na101d" />
 
 
                     <TextView
                         android:id="@+id/na101d"
+                        style="@style/i_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_weight="2"
-                        android:background="@color/dullWhile"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:text="@string/na101d"
+                        android:textColor="@color/colorPrimaryDark" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/openClusterMap"
@@ -233,9 +230,11 @@
 
             <CheckBox
                 android:id="@+id/chkconfirm"
+                style="@style/checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
+                android:layoutDirection="rtl"
                 android:text="@string/confirmcity" />
 
         </LinearLayout>
@@ -247,48 +246,47 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/fldGrpMain01"
-                style="@style/linearlayout_view_wt_bound">
+            <androidx.cardview.widget.CardView
+                style="@style/cardView"
+                android:layoutDirection="rtl">
 
-                <TextView
-                    style="@style/textInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/lstWarning"
-                    android:textColor="@color/white" />
+                <LinearLayout
+                    android:id="@+id/fldGrpMain01"
+                    style="@style/linearlayout_view_wt_bound">
 
-                <RadioGroup
-                    android:id="@+id/lstwarning"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        android:id="@+id/lstwarninga"
+                    <TextView
+                        style="@style/i_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="@string/yes" />
+                        android:layout_gravity="center"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/lstWarning"
+                        android:textColor="@color/white" />
 
-                    <RadioButton
-                        android:id="@+id/lstwarningb"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="@string/no" />
-                </RadioGroup>
+                    <RadioGroup
+                        android:id="@+id/lstwarning"
+                        style="@style/radiogroup">
 
-            </LinearLayout>
+                        <RadioButton
+                            android:id="@+id/lstwarninga"
+                            style="@style/radiobutton"
+                            android:text="@string/yes" />
+
+                        <RadioButton
+                            android:id="@+id/lstwarningb"
+                            style="@style/radiobutton"
+                            android:text="@string/no" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/openForm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                style="@style/button"
                 android:onClick="openForm"
-                android:text="Start Line Listing" />
+                android:text="@string/start_line_listing" />
 
         </LinearLayout>
 
@@ -330,7 +328,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:onClick="syncFunction"
-            android:text="Sync Listing"
+            android:text="@string/sync_listing"
             android:visibility="gone" />
 
         <LinearLayout
@@ -346,8 +344,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:onClick="openDB"
-
-                android:text="Open DB Manager" />
+                android:text="@string/open_db_manager" />
 
 
             <Button
@@ -356,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:onClick="copyData"
-                android:text="Copy Data to SDCard" />
+                android:text="@string/copy_data_to_sdcard" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
