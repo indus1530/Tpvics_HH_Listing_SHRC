@@ -104,13 +104,13 @@ public class SetupActivity extends Activity {
             if (isChecked) {
                 MainApp.hh07txt = "1";
                 bi.hh07.setText(String.format("%s: %s", getString(R.string.hh07), MainApp.hh07txt));
-                bi.hh06.setVisibility(View.VISIBLE);
+                bi.hh06.setEnabled(true);
                 bi.hh06.requestFocus();
 
             } else {
                 MainApp.hh07txt = "1";
                 bi.hh07.setText(String.format("%s: %s", getString(R.string.hh07), MainApp.hh07txt));
-                bi.hh06.setVisibility(View.GONE);
+                bi.hh06.setEnabled(false);
                 bi.hh06.setText(null);
             }
         });

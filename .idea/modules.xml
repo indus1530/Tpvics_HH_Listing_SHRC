@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android Work-TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/Android Work-TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
       <module fileurl="file://$PROJECT_DIR$/app/Android Work-TPVICS_HH_Listing-app.iml" filepath="$PROJECT_DIR$/app/Android Work-TPVICS_HH_Listing-app.iml" group="TPVICS_HH_Listing/app" />
+      <module fileurl="file://$PROJECT_DIR$/Android-TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/Android-TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
+      <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/Android-TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/Android-TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" group="TPVICS_HH_Listing/TPVICS_HH_Listing_App" />
       <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
       <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" group="TPVICS_HH_Listing/TPVICS_HH_Listing_App" />
       <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing_App.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing_App.iml" group="TPVICS_HH_Listing/TPVICS_HH_Listing_App" />
