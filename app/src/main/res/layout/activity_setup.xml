@@ -22,75 +22,57 @@
         android:textDirection="rtl"
         tools:context=".activities.ui.SetupActivity">
 
-        <LinearLayout style="@style/vlinearlayout">
+        <LinearLayout style="@style/linearlayout_view">
 
             <LinearLayout
                 android:id="@+id/fldGrpSecA01"
-                style="@style/vlinearlayout">
+                style="@style/linearlayout_view_wt_bound"
+                android:layoutDirection="rtl">
 
+                <androidx.cardview.widget.CardView style="@style/cardView">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/hh02cv"
-                    style="@style/cardView">
-
-                    <LinearLayout style="@style/hlinearlayout">
+                    <LinearLayout
+                        style="@style/linearlayout_view_wt_bound"
+                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/i_textview"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="@string/hh02" />
 
                         <TextView
                             android:id="@+id/hh02"
                             style="@style/i_textview"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:background="@color/pink_100"
-                            android:gravity="center"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
+                            android:background="@color/white"
+                            android:textAlignment="center"
+                            android:textColor="@color/black" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    style="@style/textView3Head"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/hh03" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/hh03cv"
-                    style="@style/cardView">
+                <TextView
+                    android:id="@+id/hh03"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_weight="3"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="@string/hh03"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/_22sdp"
+                    android:textStyle="bold" />
 
-                    <LinearLayout style="@style/hlinearlayout">
+                <androidx.cardview.widget.CardView style="@style/cardView">
 
-                        <TextView
-                            style="@style/i_textview"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/hh03" />
-
-                        <TextView
-                            android:id="@+id/hh03"
-                            style="@style/i_textview"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:background="@color/pink_100"
-                            android:gravity="center"
-                            android:text="@string/hh03"
-                            android:textColor="@color/colorAccent"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/hh04cv"
-                    style="@style/cardView">
-
-                    <LinearLayout style="@style/vlinearlayout">
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
 
                         <TextView
                             style="@style/i_textview"
@@ -98,7 +80,7 @@
 
                         <RadioGroup
                             android:id="@+id/hh04"
-                            style="@style/vradiogroup">
+                            style="@style/radiogroup">
 
                             <RadioButton
                                 android:id="@+id/hh04a"
@@ -151,19 +133,15 @@
 
                 </androidx.cardview.widget.CardView>
 
-
                 <LinearLayout
                     android:id="@+id/fldGrpHH12"
-                    style="@style/vlinearlayout"
+                    style="@style/linearlayout_view_wt_bound"
                     android:visibility="gone"
                     tools:visibility="visible">
 
+                    <androidx.cardview.widget.CardView style="@style/cardView">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/hh14cv"
-                        style="@style/cardView">
-
-                        <LinearLayout style="@style/vlinearlayout">
+                        <LinearLayout style="@style/linearlayout_view_wt_bound">
 
                             <TextView
                                 style="@style/i_textview"
@@ -171,20 +149,16 @@
 
                             <RadioGroup
                                 android:id="@+id/hh14"
-                                style="@style/hradiogroup">
+                                style="@style/radiogroup">
 
                                 <RadioButton
                                     android:id="@+id/hh14a"
                                     style="@style/radiobutton"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:text="@string/yes" />
 
                                 <RadioButton
                                     android:id="@+id/hh14b"
                                     style="@style/radiobutton"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:text="@string/no" />
 
                             </RadioGroup>
@@ -193,52 +167,50 @@
 
                     </androidx.cardview.widget.CardView>
 
-
                     <LinearLayout
                         android:id="@+id/fldGrpHH04"
-                        style="@style/vlinearlayout"
+                        style="@style/linearlayout_view_wt_bound"
                         android:visibility="gone"
                         tools:visibility="visible">
 
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/hh0506cv"
-                            style="@style/cardView">
+                        <androidx.cardview.widget.CardView style="@style/cardView">
 
-                            <LinearLayout style="@style/vlinearlayout">
+                            <LinearLayout style="@style/linearlayout_view_wt_bound">
 
-                                <!--Are there more than one Families?-->
-                                <TextView
-                                    style="@style/i_textview"
-                                    android:text="@string/hh05" />
+                                <LinearLayout
+                                    style="@style/linearlayout_view_wt_bound"
+                                    android:orientation="horizontal">
 
-                                <LinearLayout style="@style/hlinearlayout">
+                                    <!--Are there more than one Families?-->
+                                    <TextView
+                                        style="@style/i_textview"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="80"
+                                        android:text="@string/hh05" />
 
                                     <Switch
                                         android:id="@+id/hh05"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="1" />
-
-                                    <!--How many Families?-->
-                                    <com.edittextpicker.aliazaz.EditTextPicker
-                                        android:id="@+id/hh06"
-                                        style="@style/EditTextNum"
-                                        android:layout_width="0dp"
-                                        android:layout_weight="1"
-                                        android:enabled="false"
-                                        android:hint="@string/hh06"
-                                        android:maxLength="2"
-                                        app:maxValue="99"
-                                        app:minValue="1"
-                                        app:type="range" />
-
+                                        android:layout_gravity="center"
+                                        android:layout_weight="20" />
                                 </LinearLayout>
 
+                                <!--How many Families?-->
+                                <com.edittextpicker.aliazaz.EditTextPicker
+                                    android:id="@+id/hh06"
+                                    style="@style/EditTextNum"
+                                    android:hint="@string/hh06"
+                                    android:maxLength="2"
+                                    android:visibility="gone"
+                                    app:maxValue="99"
+                                    app:minValue="1"
+                                    app:type="range"
+                                    tools:visibility="visible" />
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>
-
 
                         <TextView
                             android:id="@+id/hh07"
