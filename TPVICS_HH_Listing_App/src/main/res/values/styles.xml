@@ -359,6 +359,21 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="button" parent="android:Widget.Material.Light.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <!--        <item name="android:minHeight">36dp</item>-->
+        <item name="android:textSize">22px</item>
+        <item name="android:layout_margin">10sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/white</item>
+        <!--        <item name="android:radius">2dp</item>-->
+        <item name="android:elevation">1dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
     <style name="textView3Head">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -593,30 +608,26 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="vradiogroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="hradiogroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <style name="radiobutton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textSize">18sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
-        <!--        <item name="android:button">@color/colorPrimary</item>-->
         <item name="android:elevation">1dp</item>
         <item name="android:layout_marginBottom">1dp</item>
         <item name="android:padding">15dp</item>
-    </style>
-
-    <style name="button" parent="android:Widget.Material.Light.Button">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <!--        <item name="android:minHeight">36dp</item>-->
-        <item name="android:textSize">20sp</item>
-        <item name="android:layout_margin">10sp</item>
-        <item name="android:typeface">serif</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/white</item>
-        <!--        <item name="android:radius">2dp</item>-->
-        <item name="android:elevation">1dp</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
     <style name="checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
@@ -652,6 +663,18 @@
         <item name="android:padding">1dp</item>
     </style>
 
+    <style name="vlinearlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="hlinearlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <style name="linearlayout_view_wt_bound">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -666,9 +689,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">8dp</item>
-
-        <!--<item name="android:layout_marginRight">10dp</item>-->
-        <!--<item name="android:layout_marginLeft">10dp</item>-->
         <item name="cardCornerRadius">7dp</item>
         <item name="cardElevation">1dp</item>
     </style>
