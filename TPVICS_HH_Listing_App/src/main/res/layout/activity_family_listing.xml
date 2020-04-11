@@ -68,7 +68,8 @@
 
             <LinearLayout
                 android:id="@+id/fldGrpSecB01"
-                style="@style/vlinearlayout">
+                style="@style/vlinearlayout"
+                android:tag='@{deleteHH.checked ? "-1" : "0"}'>
 
 
                 <androidx.cardview.widget.CardView
