@@ -80,7 +80,7 @@
 
                         <RadioGroup
                             android:id="@+id/hh04"
-                            style="@style/radiogroup">
+                            style="@style/vradiogroup">
 
                             <RadioButton
                                 android:id="@+id/hh04a"
