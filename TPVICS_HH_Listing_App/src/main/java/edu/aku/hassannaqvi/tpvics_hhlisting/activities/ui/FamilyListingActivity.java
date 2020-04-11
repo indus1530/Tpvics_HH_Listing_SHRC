@@ -59,10 +59,13 @@ public class FamilyListingActivity extends AppCompatActivity {
         });
 
         bi.deleteHH.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b)
+            if (b) {
+                bi.fldGrpSecB01.setTag("-1");
                 Clear.clearAllFields(bi.fldGrpSecB01, false);
-            else
+            } else {
+                bi.fldGrpSecB01.setTag("0");
                 Clear.clearAllFields(bi.fldGrpSecB01, true);
+            }
         });
 
     }

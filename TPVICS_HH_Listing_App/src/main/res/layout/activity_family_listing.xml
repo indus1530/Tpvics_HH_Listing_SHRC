@@ -40,36 +40,32 @@
 
                     <TextView
                         android:id="@+id/txtTeamNoWithFam"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:background="@null"
-                        android:gravity="center"
                         android:text="@{member.txtTeamNoWithFam}"
+                        android:textAlignment="center"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/_22sdp"
                         android:textStyle="bold" />
-
-                    <CheckBox
-                        android:id="@+id/deleteHH"
-                        style="@style/checkbox"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tag="-1"
-                        android:text="@string/delete"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
+            <CheckBox
+                android:id="@+id/deleteHH"
+                style="@style/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="-1"
+                android:text="@string/delete"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/fldGrpSecB01"
-                style="@style/vlinearlayout"
-                android:tag='@{deleteHH.checked ? "-1" : "0"}'>
+                style="@style/vlinearlayout">
 
 
                 <androidx.cardview.widget.CardView
@@ -256,14 +252,13 @@
                     android:id="@+id/hh17cv"
                     style="@style/cardView">
 
-                    <LinearLayout style="@style/vlinearlayout">
+                    <LinearLayout style="@style/linearlayout_view_wt_bound">
 
                         <Switch
                             android:id="@+id/hh17"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_weight="4"
+                            android:padding="@dimen/_8sdp"
                             android:gravity="center"
                             android:tag="-1"
                             android:text="@string/hh17"
