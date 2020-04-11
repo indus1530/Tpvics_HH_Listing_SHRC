@@ -78,5 +78,11 @@
     <string name="sync_listing">Sync Listing</string>
     <string name="open_db_manager">Open DB Manager</string>
     <string name="copy_data_to_sdcard">Copy Data to SDCard</string>
+    <string name="records_summary">Records Summary</string>
+    <string name="new_version_of_this_app_is_available_for_download">New version of this app is available for download.</string>
+    <string name="check_cluster_map">Check Cluster Map</string>
+    <string name="a_project_of">A PROJECT OF</string>
+    <string name="aga_khan_logo">Aga Khan LOGO</string>
+    <string name="only_for_testing">ONLY FOR TESTING</string>
 
 </resources>

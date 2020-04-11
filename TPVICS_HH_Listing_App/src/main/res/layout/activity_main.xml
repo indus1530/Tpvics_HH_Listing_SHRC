@@ -8,8 +8,7 @@
 
     <LinearLayout
         style="@style/vlinearlayout"
-        android:layoutDirection="rtl"
-        android:textDirection="rtl">
+        android:layoutDirection="rtl">
 
         <TextView
             android:id="@+id/lblAppVersion"
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             android:gravity="center_horizontal"
-            android:text="Records Summary "
+            android:text="@string/records_summary"
             android:textColor="@color/green"
             android:textSize="24sp" />
 
@@ -39,7 +38,7 @@
             android:layout_height="wrap_content"
             android:background="@color/orange"
             android:gravity="center_horizontal"
-            android:text="New version of this app is available for download."
+            android:text="@string/new_version_of_this_app_is_available_for_download"
             android:textColor="@color/red"
             android:textSize="24sp"
             android:visibility="gone" />
@@ -56,7 +55,7 @@
                     style="@style/EditTextNum"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="70"
                     android:hint="@string/cluster_number"
                     android:maxLength="6" />
 
@@ -65,7 +64,7 @@
                     style="@style/button"
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="30"
                     android:background="@drawable/button_bg"
                     android:text="@string/check"
                     android:textColor="@color/colorPrimaryDark" />
@@ -220,7 +219,7 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:onClick="openClusterMap"
-                android:text="Check Cluster Map"
+                android:text="@string/check_cluster_map"
                 android:textColor="#7139c2"
                 android:visibility="gone" />
 
