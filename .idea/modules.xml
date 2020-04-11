@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android Work-TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/Android Work-TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
-      <module fileurl="file://$PROJECT_DIR$/app/Android Work-TPVICS_HH_Listing-app.iml" filepath="$PROJECT_DIR$/app/Android Work-TPVICS_HH_Listing-app.iml" group="TPVICS_HH_Listing/app" />
-      <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
-      <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing-TPVICS_HH_Listing_App.iml" group="TPVICS_HH_Listing/TPVICS_HH_Listing_App" />
-      <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing_App.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/TPVICS_HH_Listing_App.iml" group="TPVICS_HH_Listing/TPVICS_HH_Listing_App" />
-      <module fileurl="file://$PROJECT_DIR$/UEN_MidHH_Listing.iml" filepath="$PROJECT_DIR$/UEN_MidHH_Listing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TPVICS_HH_Listing_App/app.iml" filepath="$PROJECT_DIR$/TPVICS_HH_Listing_App/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TPVICS_HH_Listing.iml" filepath="$PROJECT_DIR$/.idea/TPVICS_HH_Listing.iml" group="TPVICS_HH_Listing" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TPVICS_HH_Listing/app" />
     </modules>
   </component>
 </project>
