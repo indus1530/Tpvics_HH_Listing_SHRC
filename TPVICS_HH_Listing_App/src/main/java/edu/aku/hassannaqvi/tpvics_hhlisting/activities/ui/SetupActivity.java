@@ -148,6 +148,7 @@ public class SetupActivity extends Activity {
         lc.setHh09a1(bi.hh04a.isChecked() ? "1" : "2");
         lc.setDeviceID(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
         lc.setIsRandom(MainApp.tabCheck);
+        lc.setHh08a1(bi.hh14a.isChecked() ? "1" : bi.hh14b.isChecked() ? "2" : "0");
         setGPS();
         MainApp.fTotal = bi.hh06.getText().toString().isEmpty() ? 0 : Integer.parseInt(bi.hh06.getText().toString());
         Log.d(TAG, "SaveDraft: " + lc.getHh03());

@@ -20,6 +20,8 @@ import edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting.databinding.ActivityFamilyListingBinding;
 import edu.aku.hassannaqvi.tpvics_hhlisting.models.Members;
 
+import static edu.aku.hassannaqvi.tpvics_hhlisting.core.MainApp.lc;
+
 public class FamilyListingActivity extends AppCompatActivity {
 
     public static String TAG = "FamilyListingActivity";
@@ -90,17 +92,17 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     private void saveDraft() {
 
-        MainApp.lc.setHh07(MainApp.hh07txt);
-        MainApp.lc.setHh08a1("1");
-        MainApp.lc.setHh08(bi.hh08.getText().toString());
-        MainApp.lc.setHh09(bi.hh09.getText().toString());
-        MainApp.lc.setHh10(bi.hh10a.isChecked() ? "1" : bi.hh10b.isChecked() ? "2" : "0");
-        MainApp.lc.setHh11(bi.hh11.getText().toString().isEmpty() ? "0" : bi.hh11.getText().toString());
-        MainApp.lc.setHh14(bi.hh16.getText().toString());
-        MainApp.lc.setHh15(bi.deleteHH.isChecked() ? "1" : "0");
-        MainApp.lc.setIsNewHH(bi.hh17.isChecked() ? "1" : "2");
+        lc.setHh07(MainApp.hh07txt);
+//        MainApp.lc.setHh08a1("1");
+        lc.setHh08(bi.hh08.getText().toString());
+        lc.setHh09(bi.hh09.getText().toString());
+        lc.setHh10(bi.hh10a.isChecked() ? "1" : bi.hh10b.isChecked() ? "2" : "0");
+        lc.setHh11(bi.hh11.getText().toString().isEmpty() ? "0" : bi.hh11.getText().toString());
+        lc.setHh14(bi.hh16.getText().toString());
+        lc.setHh15(bi.deleteHH.isChecked() ? "1" : "0");
+        lc.setIsNewHH(bi.hh17.isChecked() ? "1" : "2");
 
-        Log.d(TAG, "SaveDraft: Structure " + MainApp.lc.getHh03());
+        Log.d(TAG, "SaveDraft: Structure " + lc.getHh03());
 
     }
 
@@ -110,10 +112,10 @@ public class FamilyListingActivity extends AppCompatActivity {
 
     private boolean UpdateDB() {
         DatabaseHelper db = new DatabaseHelper(this);
-        long updcount = db.addForm(MainApp.lc);
-        MainApp.lc.setID(String.valueOf(updcount));
+        long updcount = db.addForm(lc);
+        lc.setID(String.valueOf(updcount));
         if (updcount != 0) {
-            MainApp.lc.setUID((MainApp.lc.getDeviceID() + MainApp.lc.getID()));
+            lc.setUID((lc.getDeviceID() + lc.getID()));
             db.updateListingUID();
         } else {
             Toast.makeText(this, "Updating Database... ERROR!", Toast.LENGTH_SHORT).show();
@@ -135,7 +137,7 @@ public class FamilyListingActivity extends AppCompatActivity {
 
                     familyFlag = true;
                 }
-                MainApp.lc.setHh07(MainApp.hh07txt);
+                lc.setHh07(MainApp.hh07txt);
                 MainApp.fCount++;
 
                 finish();
@@ -152,7 +154,7 @@ public class FamilyListingActivity extends AppCompatActivity {
             saveDraft();
             if (UpdateDB()) {
                 MainApp.hh07txt = String.valueOf(Integer.parseInt(MainApp.hh07txt) + 1);
-                MainApp.lc.setHh07(MainApp.hh07txt);
+                lc.setHh07(MainApp.hh07txt);
                 MainApp.fCount++;
 
                 finish();
