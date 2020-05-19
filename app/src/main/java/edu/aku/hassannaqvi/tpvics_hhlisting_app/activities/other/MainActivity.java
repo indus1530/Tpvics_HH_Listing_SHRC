@@ -592,15 +592,9 @@ public class MainActivity extends MenuActivity {
     public void onBackPressed() {
         if (exit) {
             finish(); // finish activity
-
-            Intent ii = new Intent(this, LoginActivity.class);
-            ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(ii);
-            finish();
-
+            startActivity(new Intent(this, LoginActivity.class));
         } else {
-            Toast.makeText(this, "Press Back again to Exit.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
             exit = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -608,6 +602,7 @@ public class MainActivity extends MenuActivity {
                     exit = false;
                 }
             }, 3 * 1000);
+
         }
     }
 
