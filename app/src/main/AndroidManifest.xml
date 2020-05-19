@@ -23,7 +23,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.LoginActivity"
+            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.SplashscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.LoginActivity"
             android:label="Login In"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -32,7 +43,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.MainActivity"
+            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -50,17 +61,6 @@
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidDatabaseManager"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.DarkActionBar" />
-        <activity
-            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.SplashScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.RandomizationActivity"
             android:screenOrientation="portrait"
@@ -83,7 +83,7 @@
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.MainActivity" />
+                android:value="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.MainActivity" />
         </activity>
         <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.WifiDirect.WiFiDirectActivity"

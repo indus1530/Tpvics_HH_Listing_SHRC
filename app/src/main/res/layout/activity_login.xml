@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".activities.home.LoginActivity">
+    tools:context=".activities.other.LoginActivity">
 
     <!-- Login progress -->
     <ProgressBar
@@ -84,7 +84,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/sg_agakhan_02"
+                android:background="@drawable/akulogo"
                 android:contentDescription="@string/aga_khan_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -177,16 +177,86 @@
                 app:layout_constraintEnd_toEndOf="@+id/cardView2"
                 app:layout_constraintTop_toTopOf="@+id/cardView2" />
 
+            <!--Province-->
+            <LinearLayout
+                android:id="@+id/spinners"
+                style="@style/linearlayout_view"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+                <androidx.cardview.widget.CardView
+                    style="@style/cardView"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        style="@style/linearlayout_view"
+                        android:layoutDirection="ltr"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/i_textview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Province" />
+
+                        <Spinner
+                            android:id="@+id/spinnerProvince"
+                            style="@null"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="2" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!--Districts-->
+
+                <androidx.cardview.widget.CardView
+                    style="@style/cardView"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        style="@style/linearlayout_view"
+                        android:layoutDirection="ltr"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/i_textview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="District" />
+
+                        <Spinner
+                            android:id="@+id/spinnerDistrict"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="2" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+                app:layout_constraintTop_toBottomOf="@+id/spinners">
 
                 <ImageButton
                     android:id="@+id/email_sign_in_button"
@@ -257,7 +327,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="40dp"
                 android:text="Version 2.1"
                 android:textAlignment="center"
                 android:textColor="@color/black"

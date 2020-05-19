@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.LoginActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.LoginActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.SignupContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;

@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home;
+package edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;

@@ -56,14 +56,14 @@ public class GetAllData extends AsyncTask<String, String, String> {
         this.list = list;
         TAG = "Get" + syncClass;
         switch (syncClass) {
-            case "EnumBlock":
-                position = 0;
-                break;
             case "User":
                 position = 0;
                 break;
             case "VersionApp":
                 position = 1;
+                break;
+            case "EnumBlock":
+                position = 2;
                 break;
         }
         list.get(position).settableName(syncClass);
@@ -75,7 +75,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
         pd = new ProgressDialog(mContext);
         pd.setTitle("Syncing " + syncClass);
         pd.setMessage("Getting connected to server...");
-//        pd.show();
+        // pd.show();
         list.get(position).setstatus("Getting connected to server...");
         list.get(position).setstatusID(2);
         list.get(position).setmessage("");
@@ -87,20 +87,22 @@ public class GetAllData extends AsyncTask<String, String, String> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
         switch (values[0]) {
-            case "EnumBlock":
-                position = 0;
-                break;
             case "User":
                 position = 0;
                 break;
             case "VersionApp":
                 position = 1;
                 break;
+            case "EnumBlock":
+                position = 2;
+                break;
         }
         list.get(position).setstatus("Syncing");
         list.get(position).setstatusID(2);
         list.get(position).setmessage("");
         adapter.updatesyncList(list);
+        pd.setMessage("Syncing");
+        // pd.show();
     }
 
     @Override
@@ -111,10 +113,6 @@ public class GetAllData extends AsyncTask<String, String, String> {
         URL url = null;
         try {
             switch (syncClass) {
-                case "EnumBlock":
-                    url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
-                    position = 0;
-                    break;
                 case "User":
                     url = new URL(MainApp._HOST_URL + UsersContract.UsersTable._URI);
                     position = 0;
@@ -122,6 +120,10 @@ public class GetAllData extends AsyncTask<String, String, String> {
                 case "VersionApp":
                     url = new URL(MainApp._UPDATE_URL + VersionAppContract.VersionAppTable._URI);
                     position = 1;
+                    break;
+                case "EnumBlock":
+                    url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
+                    position = 2;
                     break;
             }
 
@@ -131,36 +133,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
 
             switch (syncClass) {
                 case "EnumBlock":
-
-                    if (args[0] != null && !args[0].equals("")) {
-                        if (Integer.valueOf(args[0]) > 0) {
-                            urlConnection.setRequestMethod("POST");
-                            urlConnection.setDoOutput(true);
-                            urlConnection.setDoInput(true);
-                            urlConnection.setRequestProperty("Content-Type", "application/json");
-                            urlConnection.setRequestProperty("charset", "utf-8");
-                            urlConnection.setUseCaches(false);
-
-                            // Starts the query
-                            urlConnection.connect();
-                            DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-                            JSONObject json = new JSONObject();
-                            try {
-                                json.put("dist_id", args[0]);
-                                json.put("user", "test1234");
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
-                            Log.d(TAG, "downloadUrl: " + json.toString());
-                            wr.writeBytes(json.toString());
-                            wr.flush();
-                            wr.close();
-                        }
-                    }
-                    break;
-
                 case "User":
-
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setDoOutput(true);
                     urlConnection.setDoInput(true);
@@ -181,7 +154,6 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     wr.writeBytes(json.toString());
                     wr.flush();
                     wr.close();
-
                     break;
             }
 
@@ -205,53 +177,54 @@ public class GetAllData extends AsyncTask<String, String, String> {
         } finally {
             urlConnection.disconnect();
         }
-
-
         return result.toString();
     }
 
     @Override
     protected void onPostExecute(String result) {
 
+
         //Do something with the JSON string
         if (result != null) {
-            String json = result;
-            if (json.length() > 0) {
+            if (result.length() > 0) {
                 DatabaseHelper db = new DatabaseHelper(mContext);
                 try {
-                    JSONArray jsonArray = new JSONArray(json);
-
+                    JSONArray jsonArray = new JSONArray(result);
+                    Log.d(TAG, "onPostExecute: " + syncClass);
+                    int insertCount = 0;
                     switch (syncClass) {
-                        case "EnumBlock":
-                            db.syncEnumBlocks(jsonArray);
-                            position = 0;
-                            break;
                         case "User":
-                            db.syncUsers(jsonArray);
+                            insertCount = db.syncUser(jsonArray);
                             position = 0;
                             break;
                         case "VersionApp":
                             db.syncVersionApp(jsonArray);
                             position = 1;
                             break;
+                        case "EnumBlock":
+                            db.syncEnumBlocks(jsonArray);
+                            insertCount = db.syncEnumBlocks(jsonArray);
+                            position = 2;
+                            break;
+
                     }
 
                     pd.setMessage("Received: " + jsonArray.length());
-                    list.get(position).setmessage("Received: " + jsonArray.length());
-                    list.get(position).setstatus("Successfull");
-                    list.get(position).setstatusID(3);
+                    list.get(position).setmessage("Received: " + jsonArray.length() + ", Saved: " + insertCount);
+                    list.get(position).setstatus(insertCount == 0 ? "Unsuccessful" : "Successful");
+                    list.get(position).setstatusID(insertCount == 0 ? 2 : 3);
                     adapter.updatesyncList(list);
-//                    pd.show();
+                    // pd.show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             } else {
-                pd.setMessage("Received: " + json.length() + "");
-                list.get(position).setmessage("Received: " + json.length() + "");
-                list.get(position).setstatus("Successfull");
-                list.get(position).setstatusID(3);
+                pd.setMessage("Received: " + result.length() + "");
+                list.get(position).setmessage("Received: " + result.length() + "");
+                list.get(position).setstatus("Processed");
+                list.get(position).setstatusID(4);
                 adapter.updatesyncList(list);
-//                pd.show();
+                // pd.show();
             }
         } else {
             pd.setTitle("Connection Error");
@@ -260,8 +233,10 @@ public class GetAllData extends AsyncTask<String, String, String> {
             list.get(position).setstatusID(1);
             list.get(position).setmessage("Server not found!");
             adapter.updatesyncList(list);
-//            pd.show();
+            // pd.show();
         }
+
+
     }
 
 }

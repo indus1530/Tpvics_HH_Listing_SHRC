@@ -21,6 +21,7 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
 
     public SyncListAdapter(List<SyncModel> synclist) {
         this.synclist = synclist;
+        this.setHasStableIds(true);
     }
 
     public void updatesyncList(List<SyncModel> synclist) {
@@ -55,6 +56,8 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
                 return Color.YELLOW;
             case 3:
                 return Color.GREEN;
+            case 4:
+                return Color.GRAY;
             default:
                 return Color.BLACK;
         }
@@ -62,6 +65,7 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
 
     public class SyncListViewHolder extends RecyclerView.ViewHolder {
         SyncListAdapterBinding binding;
+
 
         public SyncListViewHolder(View itemView) {
             super(itemView);
@@ -74,7 +78,7 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.SyncLi
             binding.tvTableName.setText(model.gettableName());
             binding.tvStatus.setText(model.getstatus());
             binding.tvMsg.setText(model.getmessage());
-            if (model.getstatusID() == 1 || model.getstatusID() == 3) {
+            if (model.getstatusID() == 1 || model.getstatusID() == 3 || model.getstatusID() == 4) {
                 binding.pb.setVisibility(View.GONE);
             } else {
                 binding.pb.setVisibility(View.VISIBLE);

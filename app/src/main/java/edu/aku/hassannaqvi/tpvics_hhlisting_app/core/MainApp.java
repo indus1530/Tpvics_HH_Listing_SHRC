@@ -30,8 +30,8 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.TypefaceUtil;
 public class MainApp extends Application {
 
     // GPS Related Field Variables
-    public static final String _IP = "http://f38158";// .TEST server
-    //    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
+//    public static final String _IP = "http://f38158";// .TEST server
+    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
     public static final String _HOST_URL = MainApp._IP + "/tpvics/api/";
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds

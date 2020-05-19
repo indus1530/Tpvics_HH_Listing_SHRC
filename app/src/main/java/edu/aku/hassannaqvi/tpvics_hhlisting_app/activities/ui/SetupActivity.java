@@ -22,8 +22,8 @@ import java.util.Date;
 import java.util.Objects;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.LoginActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.MainActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.LoginActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.MainActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;

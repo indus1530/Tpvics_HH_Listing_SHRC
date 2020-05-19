@@ -28,9 +28,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.SyncListAdapter;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.Upload_list_adapter;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.UploadListAdapter;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
@@ -40,13 +41,17 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.syncClasses.SyncAllData;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.syncClasses.SyncDevice;
 
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.DATABASE_NAME;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.DB_NAME;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.PROJECT_NAME;
+
 public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDevicInterface {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPref;
     String DirectoryName;
     DatabaseHelper db;
     SyncListAdapter syncListAdapter;
-    Upload_list_adapter uploadListAdapter;
+    UploadListAdapter uploadListAdapter;
     ActivitySyncBinding bi;
     SyncModel model;
     SyncModel uploadmodel;
@@ -55,7 +60,6 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
     Boolean listActivityCreated;
     Boolean uploadlistActivityCreated;
     String dtToday = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date().getTime());
-
     private boolean sync_flag;
 
     @Override
@@ -72,23 +76,17 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         db = new DatabaseHelper(this);
         dbBackup();
 
-        sync_flag = getIntent().getBooleanExtra("sync_flag", false);
+        sync_flag = getIntent().getBooleanExtra(CONSTANTS.SYNC_LOGIN, false);
 
-        bi.btnSync.setOnClickListener(v -> {
-
-            Toast.makeText(SyncActivity.this, "Start Downloading Data", Toast.LENGTH_SHORT).show();
-            onSyncDataClick();
-        });
-        bi.btnUpload.setOnClickListener(v -> {
-
-            Toast.makeText(SyncActivity.this, "Start Uploading Data", Toast.LENGTH_SHORT).show();
-            syncServer();
-        });
+        bi.btnSync.setOnClickListener(v -> onSyncDataClick());
+        bi.btnUpload.setOnClickListener(v -> syncServer());
         setAdapter();
         setUploadAdapter();
     }
 
     public void onSyncDataClick() {
+
+        // Require permissions INTERNET & ACCESS_NETWORK_STATE
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -115,7 +113,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
     }
 
     void setUploadAdapter() {
-        uploadListAdapter = new Upload_list_adapter(uploadlist);
+        uploadListAdapter = new UploadListAdapter(uploadlist);
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getApplicationContext());
         bi.rvUploadList.setLayoutManager(mLayoutManager2);
         bi.rvUploadList.setItemAnimator(new DefaultItemAnimator());
@@ -128,14 +126,8 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         }
     }
 
-    @Override
-    public void processFinish(boolean flag) {
-        if (flag) {
-            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(sync_flag);
-        }
-    }
-
     public void syncServer() {
+//        if(true) return;
 
         // Require permissions INTERNET & ACCESS_NETWORK_STATE
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -146,7 +138,8 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
             DatabaseHelper db = new DatabaseHelper(this);
 
             new SyncDevice(this, false).execute();
-//            Toast.makeText(getApplicationContext(), "Syncing Forms", Toast.LENGTH_SHORT).show();
+//  *******************************************************Forms*********************************
+            Toast.makeText(getApplicationContext(), "Syncing Forms", Toast.LENGTH_SHORT).show();
             if (uploadlistActivityCreated) {
                 uploadmodel = new SyncModel();
                 uploadmodel.setstatusID(0);
@@ -154,27 +147,14 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
             }
             new SyncAllData(
                     this,
-                    "Listing Form",
+                    "Forms",
                     "updateSyncedForms",
                     ListingContract.class,
                     MainApp._HOST_URL + ListingContract.ListingEntry._URL,
+                    ListingContract.ListingEntry.TABLE_NAME,
                     db.getUnsyncedListings(), 0, uploadListAdapter, uploadlist
             ).execute();
 
-//            Toast.makeText(getApplicationContext(), "Syncing Family Members", Toast.LENGTH_SHORT).show();
-            /*if (uploadlistActivityCreated) {
-                uploadmodel = new SyncModel();
-                uploadmodel.setstatusID(0);
-                uploadlist.add(uploadmodel);
-            }
-            new SyncAllData(
-                    this,
-                    "New Users",
-                    "updateSyncedSignup",
-                    SignupContract.class,
-                    MainApp._HOST_URL + SignupContract.SignUpTable._URL,
-                    db.getUnsyncedSignups(), 1, uploadListAdapter, uploadlist
-            ).execute();*/
             bi.noDataItem.setVisibility(View.GONE);
 
             uploadlistActivityCreated = false;
@@ -192,6 +172,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
 
     }
 
+
     public void dbBackup() {
 
         sharedPref = getSharedPreferences("src", MODE_PRIVATE);
@@ -201,19 +182,17 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
 
             String dt = sharedPref.getString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
 
-            if (dt != new SimpleDateFormat("dd-MM-yy").format(new Date())) {
+            if (!dt.equals(new SimpleDateFormat("dd-MM-yy").format(new Date()))) {
                 editor.putString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
-
-                editor.commit();
+                editor.apply();
             }
 
-            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + DatabaseHelper.PROJECT_NAME);
+            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + PROJECT_NAME);
             boolean success = true;
             if (!folder.exists()) {
                 success = folder.mkdirs();
             }
             if (success) {
-
                 DirectoryName = folder.getPath() + File.separator + sharedPref.getString("dt", "");
                 folder = new File(DirectoryName);
                 if (!folder.exists()) {
@@ -222,11 +201,10 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                 if (success) {
 
                     try {
-                        File dbFile = new File(this.getDatabasePath(DatabaseHelper.DATABASE_NAME).getPath());
+                        File dbFile = new File(this.getDatabasePath(DATABASE_NAME).getPath());
                         FileInputStream fis = new FileInputStream(dbFile);
 
-                        String outFileName = DirectoryName + File.separator +
-                                DatabaseHelper.DB_NAME;
+                        String outFileName = DirectoryName + File.separator + DB_NAME;
 
                         // Open the empty db as the output stream
                         OutputStream output = new FileOutputStream(outFileName);
@@ -254,23 +232,37 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
 
     }
 
-    public class SyncData extends AsyncTask<Boolean, String, String> {
+    @Override
+    public void processFinish(boolean flag) {
+        if (flag) {
+            MainApp.getTagName(SyncActivity.this);
+            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(sync_flag);
+        }
+    }
 
-        String countryID;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    private class SyncData extends AsyncTask<Boolean, String, String> {
+
         private Context mContext;
+        private String distID;
 
-        public SyncData(Context mContext, String countryID) {
+        private SyncData(Context mContext, String districtId) {
             this.mContext = mContext;
-            this.countryID = countryID;
+            this.distID = districtId;
         }
 
         @Override
-        protected String doInBackground(Boolean... strings) {
+        protected String doInBackground(Boolean... booleans) {
             runOnUiThread(() -> {
 
-                if (strings[0]) {
+                if (booleans[0]) {
 //                  getting Users!!
-//                    Toast.makeText(SyncActivity.this, "Sync Users", Toast.LENGTH_SHORT).show();
                     if (listActivityCreated) {
                         model = new SyncModel();
                         model.setstatusID(0);
@@ -278,8 +270,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     }
                     new GetAllData(mContext, "User", syncListAdapter, list).execute();
 
-//              Getting App Version
-//              Toast.makeText(SyncActivity.this, "Sync App Version", Toast.LENGTH_SHORT).show();
+//                    Getting App Version
                     if (listActivityCreated) {
                         model = new SyncModel();
                         model.setstatusID(0);
@@ -287,44 +278,33 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     }
                     new GetAllData(mContext, "VersionApp", syncListAdapter, list).execute();
 
-                } else {
-
-//                  getting Enum Blocks
+//                    Getting Enumblocks
                     if (listActivityCreated) {
                         model = new SyncModel();
                         model.setstatusID(0);
                         list.add(model);
                     }
-                    new GetAllData(mContext, "EnumBlock", syncListAdapter, list).execute(countryID);
-
-
+                    new GetAllData(mContext, "EnumBlock", syncListAdapter, list).execute();
                     bi.noItem.setVisibility(View.GONE);
+
                 }
 
                 listActivityCreated = false;
             });
-
 
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(() -> {
 
-                @Override
-                public void run() {
+                editor.putBoolean("flag", true);
+                editor.commit();
 
-//                    populateSpinner(mContext);
+                dbBackup();
 
-                    editor.putBoolean("flag", true);
-                    editor.commit();
-
-                    dbBackup();
-
-                }
             }, 1200);
         }
     }
-
 }

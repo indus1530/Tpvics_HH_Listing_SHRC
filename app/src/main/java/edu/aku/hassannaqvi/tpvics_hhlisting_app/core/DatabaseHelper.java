@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.BLRandomContract.singleRandomHH;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
@@ -187,30 +188,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return count;
-    }
-
-    public void syncEnumBlocks(JSONArray Enumlist) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(EnumBlockTable.TABLE_NAME, null, null);
-        try {
-            for (int i = 0; i < Enumlist.length(); i++) {
-                JSONObject jsonObjectCC = Enumlist.getJSONObject(i);
-
-                EnumBlockContract Vc = new EnumBlockContract();
-                Vc.Sync(jsonObjectCC);
-
-                ContentValues values = new ContentValues();
-
-                values.put(EnumBlockTable.COLUMN_DIST_ID, Vc.getDist_id());
-                values.put(EnumBlockTable.COLUMN_GEO_AREA, Vc.getGeoarea());
-                values.put(EnumBlockTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
-
-                db.insert(EnumBlockTable.TABLE_NAME, null, values);
-            }
-        } catch (Exception ignored) {
-        } finally {
-            db.close();
-        }
     }
 
     public boolean Login(String username, String password) throws SQLException {
@@ -958,11 +935,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void syncUsers(JSONArray userlist) {
+
+    public int syncUser(JSONArray userList) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(UsersContract.UsersTable.TABLE_NAME, null, null);
+        int insertCount = 0;
         try {
-            JSONArray jsonArray = userlist;
+            JSONArray jsonArray = userList;
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObjectUser = jsonArray.getJSONObject(i);
@@ -971,18 +950,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.Sync(jsonObjectUser);
                 ContentValues values = new ContentValues();
 
-                values.put(UsersTable.ROW_USERNAME, user.getUserName());
-                values.put(UsersTable.ROW_PASSWORD, user.getPassword());
-                values.put(UsersTable.DIST_ID, user.getDIST_ID());
-                db.insert(UsersTable.TABLE_NAME, null, values);
+                values.put(UsersContract.UsersTable.ROW_USERNAME, user.getUserName());
+                values.put(UsersContract.UsersTable.ROW_PASSWORD, user.getPassword());
+                values.put(UsersContract.UsersTable.DIST_ID, user.getDIST_ID());
+                long rowID = db.insert(UsersContract.UsersTable.TABLE_NAME, null, values);
+                if (rowID != -1) insertCount++;
             }
-
 
         } catch (Exception e) {
             Log.d(TAG, "syncUser(e): " + e);
+            db.close();
         } finally {
             db.close();
         }
+        return insertCount;
+    }
+
+    public int syncEnumBlocks(JSONArray enumList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, null);
+        int insertCount = 0;
+        try {
+            for (int i = 0; i < enumList.length(); i++) {
+                JSONObject jsonObjectCC = null;
+                try {
+                    jsonObjectCC = enumList.getJSONObject(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                EnumBlockContract Vc = new EnumBlockContract();
+                try {
+                    Vc.Sync(jsonObjectCC);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                ContentValues values = new ContentValues();
+
+                values.put(EnumBlockContract.EnumBlockTable.COLUMN_DIST_ID, Vc.getDist_id());
+                values.put(EnumBlockContract.EnumBlockTable.COLUMN_GEO_AREA, Vc.getGeoarea());
+                values.put(EnumBlockContract.EnumBlockTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
+
+                db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
+                long rowID = db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
+                if (rowID != -1) insertCount++;
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "syncEnumBlocks(e): " + e);
+            db.close();
+        } finally {
+            db.close();
+        }
+        return insertCount;
     }
 
 
@@ -1238,5 +1259,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return allVC;
+    }
+
+    //New Functionality
+
+
+    //Get All EnumBlock
+    public List<EnumBlockContract> getEnumBlock() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = {
+                EnumBlockTable._ID,
+                EnumBlockTable.COLUMN_DIST_ID,
+                EnumBlockTable.COLUMN_GEO_AREA,
+                EnumBlockTable.COLUMN_CLUSTER_AREA
+        };
+
+        String whereClause = null;
+        String[] whereArgs = null;
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = EnumBlockTable._ID + " ASC";
+        List<EnumBlockContract> allEB = new ArrayList<>();
+        try {
+            c = db.query(
+                    EnumBlockTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                allEB.add(new EnumBlockContract().HydrateEnum(c));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return allEB;
     }
 }

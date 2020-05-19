@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home.LoginActivity">
+    tools:context="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.LoginActivity">
 
     <!-- Login progress -->
     <ProgressBar

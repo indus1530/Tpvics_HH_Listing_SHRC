@@ -1,4 +1,4 @@
-package edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.home;
+package edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other;
 
 import android.Manifest;
 import android.animation.Animator;
@@ -37,17 +37,25 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.validatorcrawler.aliazaz.Validator;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,19 +64,30 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.ui.SignupActivity;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
+import kotlin.Pair;
+import kotlin.Unit;
+import kotlin.coroutines.CoroutineContext;
+
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS.LOGIN_SPLASH_FLAG;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.SplashRepositoryKt.populatingSpinners;
+import static java.lang.Thread.sleep;
 
 /**
  * A login screen that offers login via email/password.
@@ -120,6 +139,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     DatabaseHelper db;
     private UserLoginTask mAuthTask = null;
     private int clicks;
+    ArrayAdapter<String> provinceAdapter;
+    @BindView(R.id.spinnerProvince)
+    Spinner spinnerProvince;
+    @BindView(R.id.spinners)
+    LinearLayout spinners;
+    @BindView(R.id.spinnerDistrict)
+    Spinner spinnerDistrict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +207,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+        setListeners();
+
 //        DB backup
         dbBackup();
 
@@ -199,12 +227,47 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         });
 
 //        Testing visibility
-        if (Integer.valueOf(MainApp.versionName.split("\\.")[0]) > 0) {
+        if (Integer.parseInt(MainApp.versionName.split("\\.")[0]) > 0) {
             testing.setVisibility(View.GONE);
         } else {
             testing.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void setListeners() {
+        provinceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, SplashscreenActivity.provinces);
+        spinnerProvince.setAdapter(provinceAdapter);
+        spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) return;
+                List<String> districts = new ArrayList<>(Collections.singletonList("...."));
+                for (Map.Entry<String, Pair<String, EnumBlockContract>> entry : SplashscreenActivity.districtsMap.entrySet()) {
+                    if (entry.getValue().getFirst().equals(spinnerProvince.getSelectedItem().toString()))
+                        districts.add(entry.getKey());
+                }
+                spinnerDistrict.setAdapter(new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1
+                        , districts));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) return;
+                MainApp.DIST_ID = Objects.requireNonNull(SplashscreenActivity.districtsMap.get(spinnerDistrict.getSelectedItem().toString())).getSecond().getDist_id();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void loadIMEI() {
@@ -355,19 +418,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     @OnClick(R.id.syncData)
     void onSyncDataClick() {
-        //TODO implement
-
-        // Require permissions INTERNET & ACCESS_NETWORK_STATE
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-
-//            Toast.makeText(LoginActivity.this, "Starting Download Data Request!", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(LoginActivity.this, SyncActivity.class).putExtra("sync_flag", true));
-//            new SyncData(this).execute();
-
-
+            startActivity(new Intent(this, SyncActivity.class).putExtra(CONSTANTS.SYNC_LOGIN, true));
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();
         }
@@ -502,18 +557,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    showProgress(true);
-                    mAuthTask = new UserLoginTask(email, password);
-                    mAuthTask.execute((Void) null);
-
-                }
-            }, 800);
-
+            if (!Validator.emptyCheckingContainer(this, spinners))
+                return;
+            showProgress(true);
+            mAuthTask = new UserLoginTask(this, email, password);
+            mAuthTask.execute((Void) null);
         }
     }
 
@@ -728,99 +776,42 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent().getBooleanExtra(LOGIN_SPLASH_FLAG, false))
+            callingCoroutine();
+    }
 
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CONSTANTS.LOGIN_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                callingCoroutine();
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
         }
+    }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                if ((mEmail.equals("dmu@aku") && mPassword.equals("aku?dmu")) || db.Login(mEmail, mPassword)
-                        || (mEmail.equals("test1234") && mPassword.equals("test1234"))) {
-                    MainApp.userEmail = mEmail;
-                    MainApp.admin = mEmail.contains("@");
-                    finish();
-
-                    Intent iLogin = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(iLogin);
-
-                } else {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                    Toast.makeText(LoginActivity.this, mEmail + " " + mPassword, Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        LoginActivity.this);
-                alertDialogBuilder
-                        .setMessage("GPS is disabled in your device. Enable it?")
-                        .setCancelable(false)
-                        .setPositiveButton("Enable GPS",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        Intent callGPSSettingIntent = new Intent(
-                                                android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                        startActivity(callGPSSettingIntent);
-                                    }
-                                });
-                alertDialogBuilder.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = alertDialogBuilder.create();
-                alert.show();
+    private void callingCoroutine() {
+        //To call coroutine here
+        populatingSpinners(getApplicationContext(), provinceAdapter, new SplashscreenActivity.Continuation<Unit>() {
+            @Override
+            public void resume(Unit value) {
 
             }
 
-        }
+            @Override
+            public void resumeWithException(@NotNull Throwable exception) {
 
+            }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
+            @NotNull
+            @Override
+            public CoroutineContext getContext() {
+                return null;
+            }
+        });
     }
 
     private class MyLocationListener implements LocationListener {
@@ -877,6 +868,102 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         }
 
+    }
+
+    /**
+     * Represents an asynchronous login/registration task used to authenticate
+     * the user.
+     */
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mEmail;
+        private final String mPassword;
+        private final Context mContext;
+
+        UserLoginTask(Context context, String email, String password) {
+            mEmail = email;
+            mPassword = password;
+            mContext = context;
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            try {
+                // Simulate network access.
+                sleep(2000);
+            } catch (InterruptedException e) {
+                return false;
+            }
+
+            String[] DUMMY_CREDENTIALS = new String[]{
+                    "test1234:test1234", "testS12345:testS12345", "bar@example.com:world"
+            };
+
+            for (String credential : DUMMY_CREDENTIALS) {
+                String[] pieces = credential.split(":");
+                if (pieces[0].equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return pieces[1].equals(mPassword);
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            showProgress(false);
+            if (!success) return;
+            LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            assert mlocManager != null;
+            if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
+                if ((mEmail.equals("dmu@aku") && mPassword.equals("aku?dmu")) ||
+                        (mEmail.equals("guest@aku") && mPassword.equals("aku1234")) || db.Login(mEmail, mPassword)
+                        || (mEmail.equals("test1234") && mPassword.equals("test1234"))) {
+                    MainApp.userEmail = mEmail;
+                    MainApp.admin = mEmail.contains("@");
+                    Intent iLogin = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(iLogin);
+
+                } else {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                    Toast.makeText(LoginActivity.this, mEmail + " " + mPassword, Toast.LENGTH_SHORT).show();
+                }
+
+
+            } else {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        LoginActivity.this);
+                alertDialogBuilder
+                        .setMessage("GPS is disabled in your device. Enable it?")
+                        .setCancelable(false)
+                        .setPositiveButton("Enable GPS",
+                                (dialog, id) -> {
+                                    Intent callGPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(callGPSSettingIntent);
+                                });
+                alertDialogBuilder.setNegativeButton("Cancel",
+                        (dialog, id) -> dialog.cancel());
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+
+            }
+
+        }
+
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
     }
 
 

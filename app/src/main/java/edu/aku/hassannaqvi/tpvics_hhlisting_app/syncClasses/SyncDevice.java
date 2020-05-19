@@ -28,11 +28,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class SyncDevice extends AsyncTask<Void, Integer, String> {
     private SyncDevicInterface delegate;
     private Context context;
-
-    private SharedPreferences sharedPref;
-    private SharedPreferences.Editor editor;
     private boolean flag;
-    private String TAG = "";
+    private String TAG = SyncDevice.class.getName();
 
     public SyncDevice(Context context, boolean flag) {
         this.context = context;
@@ -133,8 +130,8 @@ public class SyncDevice extends AsyncTask<Void, Integer, String> {
                     JSONObject jsonObject = new JSONObject(json.getString(i));
                     if (!jsonObject.equals("")) {
                         String tag = jsonObject.getString("tag");
-                        sharedPref = context.getSharedPreferences("tagName", MODE_PRIVATE);
-                        editor = sharedPref.edit();
+                        SharedPreferences sharedPref = context.getSharedPreferences("tagName", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("tagName", tag);
                         editor.apply();
 
