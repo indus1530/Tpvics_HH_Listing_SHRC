@@ -14,6 +14,7 @@ public class ListingContract {
     private String ID;
     private String UID;
     private String hhDT;
+    private String hhDT01;
     private String enumCode;
     private String clusterCode;
     private String enumStr;
@@ -411,12 +412,21 @@ public class ListingContract {
         this.counter = counter;
     }
 
+    public String getHhDT01() {
+        return hhDT01;
+    }
+
+    public void setHhDT01(String hhDT02) {
+        this.hhDT01 = hhDT02;
+    }
+
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
         json.put("projectname", "TPVICS2020-LINELISTING");
         json.put(ListingEntry._ID, this.ID);
         json.put(ListingEntry.COLUMN_NAME_UID, this.UID);
         json.put(ListingEntry.COLUMN_NAME_HHDATETIME, this.hhDT);
+        json.put(ListingEntry.COLUMN_NAME_HHDATETIME01, this.hhDT01);
         json.put(ListingEntry.COLUMN_NAME_ENUMCODE, this.enumCode);
         json.put(ListingEntry.COLUMN_NAME_CLUSTERCODE, this.clusterCode);
         json.put(ListingEntry.COLUMN_NAME_ENUMSTR, this.enumStr);
@@ -463,6 +473,7 @@ public class ListingContract {
         ListingContract lc = new ListingContract(c.getString(c.getColumnIndex(ListingEntry._ID)));
         lc.setUID(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_UID))));
         lc.setHhDT(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_HHDATETIME))));
+        lc.setHhDT01(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_HHDATETIME01))));
         lc.setEnumCode(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_ENUMCODE))));
         lc.setClusterCode(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_CLUSTERCODE))));
         lc.setEnumStr(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_ENUMSTR))));
@@ -562,7 +573,8 @@ public class ListingContract {
         public static final String COLUMN_NAME_NULLABLE = "NULLHACK";
         public static final String _ID = "_id";
         public static final String COLUMN_NAME_UID = "uid";
-        public static final String COLUMN_NAME_HHDATETIME = "formdate";
+        public static final String COLUMN_NAME_HHDATETIME = "sysdate";
+        public static final String COLUMN_NAME_HHDATETIME01 = "formdate";
         public static final String COLUMN_NAME_ENUMCODE = "enumcode";
         public static final String COLUMN_NAME_CLUSTERCODE = "clustercode";
         public static final String COLUMN_NAME_ENUMSTR = "enumstr";

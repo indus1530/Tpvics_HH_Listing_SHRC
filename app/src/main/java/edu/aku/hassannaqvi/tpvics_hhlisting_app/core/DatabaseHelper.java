@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + SignUpTable.COLUMN_SYNCED_DATE + " TEXT " +
             ");";
     // Change this when you change the database schema.
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static String TAG = "DatabaseHelper";
     public static String DB_FORM_ID;
     // Create a table to hold Listings.
@@ -76,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ListingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             ListingEntry.COLUMN_NAME_UID + " TEXT, " +
             ListingEntry.COLUMN_NAME_HHDATETIME + " TEXT, " +
+            ListingEntry.COLUMN_NAME_HHDATETIME01 + " TEXT, " +
             ListingEntry.COLUMN_NAME_ENUMCODE + " TEXT, " +
             ListingEntry.COLUMN_NAME_CLUSTERCODE + " TEXT, " +
             ListingEntry.COLUMN_NAME_ENUMSTR + " TEXT, " +
@@ -145,6 +146,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + UsersTable.ROW_PASSWORD + " TEXT,"
             + UsersTable.DIST_ID + " TEXT );";
 
+    final String SQL_ALTER_FORM_COLUMN = "ALTER TABLE " + ListingEntry.TABLE_NAME + " ADD COLUMN " + ListingEntry.COLUMN_NAME_HHDATETIME + " TEXT";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -166,14 +169,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Simply discard all old data and start over when upgrading.
-        db.execSQL("DROP TABLE IF EXISTS " + ListingEntry.TABLE_NAME);
+        /*db.execSQL("DROP TABLE IF EXISTS " + ListingEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SingleTaluka.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + EnumBlockTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UsersTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SingleVertices.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + VersionAppTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SignUpTable.TABLE_NAME);
-        onCreate(db);
+        onCreate(db);*/
+
+        if (oldVersion == 1) {
+            db.execSQL(SQL_ALTER_FORM_COLUMN);
+        }
 
     }
 
@@ -449,6 +456,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ListingEntry._ID,
                 ListingEntry.COLUMN_NAME_UID,
                 ListingEntry.COLUMN_NAME_HHDATETIME,
+                ListingEntry.COLUMN_NAME_HHDATETIME01,
                 ListingEntry.COLUMN_NAME_ENUMCODE,
                 ListingEntry.COLUMN_NAME_CLUSTERCODE,
                 ListingEntry.COLUMN_NAME_ENUMSTR,
