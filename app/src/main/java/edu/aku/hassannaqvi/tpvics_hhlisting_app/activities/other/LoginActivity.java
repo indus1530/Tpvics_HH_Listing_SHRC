@@ -76,9 +76,7 @@ import butterknife.OnClick;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.ui.SignupActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 import kotlin.Pair;
@@ -213,18 +211,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         dbBackup();
 
         db = new DatabaseHelper(this);
-
-        signup.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                VersionAppContract versionAppContract = db.getVersionApp();
-                if (versionAppContract != null)
-                    startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-                else
-                    Toast.makeText(LoginActivity.this, "Please download data first!!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 //        Testing visibility
         if (Integer.parseInt(MainApp.versionName.split("\\.")[0]) > 0) {

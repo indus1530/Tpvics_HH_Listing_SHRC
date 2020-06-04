@@ -60,7 +60,7 @@ public class MainApp extends Application {
 
     public static int cTotal = 0;
     public static SharedPreferences sharedPref;
-    public static String userEmail;
+    public static String userEmail = "";
     public static int versionCode;
     public static String versionName;
     public static boolean validateFlag;

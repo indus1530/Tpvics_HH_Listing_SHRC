@@ -39,10 +39,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.ui.SignupActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
             android:name="edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.other.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"

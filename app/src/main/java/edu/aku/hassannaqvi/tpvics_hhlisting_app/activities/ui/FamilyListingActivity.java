@@ -101,6 +101,8 @@ public class FamilyListingActivity extends AppCompatActivity {
         lc.setHh09(bi.hh09.getText().toString());
         lc.setHh10(bi.hh10a.isChecked() ? "1" : bi.hh10b.isChecked() ? "2" : "0");
         lc.setHh11(bi.hh11.getText().toString().isEmpty() ? "0" : bi.hh11.getText().toString());
+        lc.setHh12(bi.hh12a.isChecked() ? "1" : bi.hh12b.isChecked() ? "2" : "0");
+        lc.setHh13(bi.hh13.getText().toString().isEmpty() ? "0" : bi.hh13.getText().toString());
         lc.setHh14(bi.hh16.getText().toString());
         lc.setHh15(bi.deleteHH.isChecked() ? "1" : "0");
         lc.setIsNewHH(bi.hh17.isChecked() ? "1" : "2");
@@ -117,7 +119,7 @@ public class FamilyListingActivity extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(this);
         long updcount = db.addForm(lc);
         lc.setID(String.valueOf(updcount));
-        if (updcount != 0) {
+        if (updcount > 0) {
             lc.setUID((lc.getDeviceID() + lc.getID()));
             db.updateListingUID();
         } else {

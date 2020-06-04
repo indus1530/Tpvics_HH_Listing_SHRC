@@ -30,10 +30,23 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.databinding.ActivitySetupBinding;
 
 import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp.lc;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp.userEmail;
 
 public class SetupActivity extends Activity {
     private static final String TAG = "Setup Activity";
     private ActivitySetupBinding bi;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (userEmail == null || userEmail.equals("")) {
+            Toast.makeText(this, "Username not found. Kindly, re-start app!!", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(this, MainActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
