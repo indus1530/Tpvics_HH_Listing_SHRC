@@ -1202,28 +1202,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void syncVersionApp(JSONArray Versionlist) {
+    public Integer syncVersionApp(JSONObject VersionList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(VersionAppTable.TABLE_NAME, null, null);
+        db.delete(VersionAppContract.VersionAppTable.TABLE_NAME, null, null);
+        long count = 0;
         try {
-            JSONArray jsonArray = Versionlist;
-            JSONObject jsonObjectCC = jsonArray.getJSONObject(0);
-
+            JSONObject jsonObjectCC = ((JSONArray) VersionList.get(VersionAppContract.VersionAppTable.COLUMN_VERSION_PATH)).getJSONObject(0);
             VersionAppContract Vc = new VersionAppContract();
             Vc.Sync(jsonObjectCC);
 
             ContentValues values = new ContentValues();
 
-            values.put(VersionAppTable.COLUMN_PATH_NAME, Vc.getPathname());
-            values.put(VersionAppTable.COLUMN_VERSION_CODE, Vc.getVersioncode());
-            values.put(VersionAppTable.COLUMN_VERSION_NAME, Vc.getVersionname());
+            values.put(VersionAppContract.VersionAppTable.COLUMN_PATH_NAME, Vc.getPathname());
+            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_CODE, Vc.getVersioncode());
+            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_NAME, Vc.getVersionname());
 
-            db.insert(VersionAppTable.TABLE_NAME, null, values);
-        } catch (Exception e) {
+            count = db.insert(VersionAppContract.VersionAppTable.TABLE_NAME, null, values);
+            if (count > 0) count = 1;
+
+        } catch (Exception ignored) {
         } finally {
             db.close();
         }
 
+        return (int) count;
     }
 
     public VersionAppContract getVersionApp() {
@@ -1256,7 +1258,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                allVC.hydrate(c);
+                allVC.Hydrate(c);
             }
         } finally {
             if (c != null) {
