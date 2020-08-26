@@ -980,29 +980,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int insertCount = 0;
         try {
             for (int i = 0; i < enumList.length(); i++) {
-                JSONObject jsonObjectCC = null;
+                JSONObject jsonObjectCC;
                 try {
                     jsonObjectCC = enumList.getJSONObject(i);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                EnumBlockContract Vc = new EnumBlockContract();
-                try {
+                    EnumBlockContract Vc = new EnumBlockContract();
                     Vc.Sync(jsonObjectCC);
+
+                    ContentValues values = new ContentValues();
+
+                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_DIST_ID, Vc.getDist_id());
+                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_GEO_AREA, Vc.getGeoarea());
+                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
+
+                    long rowID = db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
+                    if (rowID != -1) insertCount++;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                ContentValues values = new ContentValues();
-
-                values.put(EnumBlockContract.EnumBlockTable.COLUMN_DIST_ID, Vc.getDist_id());
-                values.put(EnumBlockContract.EnumBlockTable.COLUMN_GEO_AREA, Vc.getGeoarea());
-                values.put(EnumBlockContract.EnumBlockTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
-
-                db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
-                long rowID = db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
-                if (rowID != -1) insertCount++;
             }
 
         } catch (Exception e) {

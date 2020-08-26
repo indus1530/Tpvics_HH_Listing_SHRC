@@ -38,8 +38,8 @@
     <string name="other"> دیگر </string>
     <string name="specify"> وضاحت کریں </string>
 
-    <string name="btnSync">Sync</string>
-    <string name="btnUpload">Upload</string>
+    <string name="btnSync">Download Data</string>
+    <string name="btnUpload">Upload Data</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>

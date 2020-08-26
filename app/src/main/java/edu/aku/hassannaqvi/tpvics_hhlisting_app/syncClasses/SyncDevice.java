@@ -120,9 +120,8 @@ public class SyncDevice extends AsyncTask<Void, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        int sSynced = 0;
         StringBuilder sSyncedError = new StringBuilder();
-        JSONArray json = null;
+        JSONArray json;
         try {
             json = new JSONArray(result);
             if (json.length() > 0) {

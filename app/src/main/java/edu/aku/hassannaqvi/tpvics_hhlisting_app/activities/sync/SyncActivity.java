@@ -91,8 +91,10 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            if (sync_flag) new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
-            else new SyncDevice(SyncActivity.this, true).execute();
+            bi.lbls.setText("DOWNLOADING DATA FROM SERVER");
+            /*if (sync_flag) new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
+            else new SyncDevice(SyncActivity.this, true).execute();*/
+            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();
         }
@@ -135,7 +137,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            DatabaseHelper db = new DatabaseHelper(this);
+            bi.lbls.setText("UPLOADING DATA TO SERVER");
 
             new SyncDevice(this, false).execute();
 //  *******************************************************Forms*********************************
@@ -171,7 +173,6 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         }
 
     }
-
 
     public void dbBackup() {
 
@@ -236,7 +237,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
     public void processFinish(boolean flag) {
         if (flag) {
             MainApp.getTagName(SyncActivity.this);
-            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(sync_flag);
+            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
         }
     }
 
@@ -260,7 +261,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         @Override
         protected String doInBackground(Boolean... booleans) {
             runOnUiThread(() -> {
-
+                new SyncDevice(SyncActivity.this, false).execute();
                 if (booleans[0]) {
 //                  getting Users!!
                     if (listActivityCreated) {

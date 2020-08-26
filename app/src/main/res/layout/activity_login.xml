@@ -115,7 +115,7 @@
                     android:drawableRight="@drawable/ic_assignment_ind_black_24dp"
                     android:drawablePadding="10dp"
                     android:elevation="@dimen/cardview_compat_inset_shadow"
-                    android:hint="Email"
+                    android:hint="User ID"
                     android:imeActionLabel="loginemail"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textEmailAddress"
