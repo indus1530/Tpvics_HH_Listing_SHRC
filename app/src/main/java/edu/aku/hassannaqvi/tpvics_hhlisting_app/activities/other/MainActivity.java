@@ -406,13 +406,13 @@ public class MainActivity extends MenuActivity {
         if (!txtPSU.getText().toString().isEmpty()) {
 
             txtPSU.setError(null);
-            boolean loginFlag = true;
-            /*int clus = Integer.parseInt(txtPSU.getText().toString().substring(3, 6));
-            if (clus < 500) {
+            boolean loginFlag;
+            int clus = Integer.parseInt(txtPSU.getText().toString().substring(0, 3));
+            if (clus < 900) {
                 loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user"));
             } else {
                 loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user");
-            }*/
+            }
             if (loginFlag) {
                 DatabaseHelper db = new DatabaseHelper(this);
                 EnumBlockContract enumBlockContract = db.getEnumBlock(txtPSU.getText().toString());
