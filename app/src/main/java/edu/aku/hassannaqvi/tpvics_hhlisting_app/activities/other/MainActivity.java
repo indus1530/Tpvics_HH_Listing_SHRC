@@ -403,6 +403,11 @@ public class MainActivity extends MenuActivity {
 
     public void OpenFormFun() {
 
+        if (MainApp.userEmail.equals("0000")) {
+            finish();
+            return;
+        }
+
         if (!txtPSU.getText().toString().isEmpty()) {
 
             txtPSU.setError(null);
