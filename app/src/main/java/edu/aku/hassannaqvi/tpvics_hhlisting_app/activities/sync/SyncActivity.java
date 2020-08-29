@@ -6,9 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,11 +16,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,9 +34,7 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.SyncModel;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.syncClasses.SyncAllData;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.syncClasses.SyncDevice;
 
-import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.DATABASE_NAME;
-import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.DB_NAME;
-import static edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper.PROJECT_NAME;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.UtilsKt.dbBackup;
 
 public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDevicInterface {
     SharedPreferences.Editor editor;
@@ -74,7 +65,9 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
         listActivityCreated = true;
         uploadlistActivityCreated = true;
         db = new DatabaseHelper(this);
-        dbBackup();
+        sharedPref = getSharedPreferences("listingHHTpvics", MODE_PRIVATE);
+        editor = sharedPref.edit();
+        dbBackup(this);
 
         sync_flag = getIntent().getBooleanExtra(CONSTANTS.SYNC_LOGIN, false);
 
@@ -94,7 +87,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
             bi.lbls.setText("DOWNLOADING DATA FROM SERVER");
             /*if (sync_flag) new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
             else new SyncDevice(SyncActivity.this, true).execute();*/
-            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(true);
+            new SyncData(SyncActivity.this, MainApp.DIST_ID).execute(sync_flag);
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();
         }
@@ -174,7 +167,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
 
     }
 
-    public void dbBackup() {
+    /*public void dbBackup() {
 
         sharedPref = getSharedPreferences("src", MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -231,7 +224,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
             }
         }
 
-    }
+    }*/
 
     @Override
     public void processFinish(boolean flag) {
@@ -279,6 +272,15 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     }
                     new GetAllData(mContext, "VersionApp", syncListAdapter, list).execute();
 
+//                  getting Districts!!
+                    if (listActivityCreated) {
+                        model = new SyncModel();
+                        model.setstatusID(0);
+                        list.add(model);
+                    }
+                    new GetAllData(mContext, "District", syncListAdapter, list).execute();
+                    bi.noItem.setVisibility(View.GONE);
+                } else {
 //                    Getting Enumblocks
                     if (listActivityCreated) {
                         model = new SyncModel();
@@ -287,7 +289,6 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                     }
                     new GetAllData(mContext, "EnumBlock", syncListAdapter, list).execute();
                     bi.noItem.setVisibility(View.GONE);
-
                 }
 
                 listActivityCreated = false;
@@ -303,7 +304,7 @@ public class SyncActivity extends AppCompatActivity implements SyncDevice.SyncDe
                 editor.putBoolean("flag", true);
                 editor.commit();
 
-                dbBackup();
+                dbBackup(mContext);
 
             }, 1200);
         }

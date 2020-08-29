@@ -25,9 +25,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -51,17 +51,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.validatorcrawler.aliazaz.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,7 +70,7 @@ import butterknife.OnClick;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 import kotlin.Pair;
@@ -85,6 +79,8 @@ import kotlin.coroutines.CoroutineContext;
 
 import static edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS.LOGIN_SPLASH_FLAG;
 import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.SplashRepositoryKt.populatingSpinners;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.UtilsKt.dbBackup;
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.UtilsKt.getPermissionsList;
 import static java.lang.Thread.sleep;
 
 /**
@@ -144,6 +140,28 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     LinearLayout spinners;
     @BindView(R.id.spinnerDistrict)
     Spinner spinnerDistrict;
+
+    public static String getDeviceId(Context context) {
+
+        String deviceId;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            deviceId = Settings.Secure.getString(
+                    context.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        } else {
+            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (mTelephony.getDeviceId() != null) {
+                deviceId = mTelephony.getDeviceId();
+            } else {
+                deviceId = Settings.Secure.getString(
+                        context.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+            }
+        }
+
+        return deviceId;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +226,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         setListeners();
 
 //        DB backup
-        dbBackup();
+        dbBackup(this);
 
         db = new DatabaseHelper(this);
 
@@ -221,6 +239,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     }
 
+    public void loadIMEI() {
+        // Check if the READ_PHONE_STATE permission is already available.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // READ_PHONE_STATE permission has not been granted.
+                requestReadPhoneStatePermission();
+            } else {
+                doPermissionGrantedStuffs();
+            }
+        } else {
+            doPermissionGrantedStuffs();
+        }
+    }
+
     private void setListeners() {
         provinceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, SplashscreenActivity.provinces);
         spinnerProvince.setAdapter(provinceAdapter);
@@ -229,7 +262,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) return;
                 List<String> districts = new ArrayList<>(Collections.singletonList("...."));
-                for (Map.Entry<String, Pair<String, EnumBlockContract>> entry : SplashscreenActivity.districtsMap.entrySet()) {
+                for (Map.Entry<String, Pair<String, DistrictContract>> entry : SplashscreenActivity.districtsMap.entrySet()) {
                     if (entry.getValue().getFirst().equals(spinnerProvince.getSelectedItem().toString()))
                         districts.add(entry.getKey());
                 }
@@ -256,24 +289,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         });
     }
 
-    public void loadIMEI() {
-        // Check if the READ_PHONE_STATE permission is already available.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // READ_PHONE_STATE permission has not been granted.
-                requestReadPhoneStatePermission();
-            } else {
-                doPermissionGrantedStuffs();
-            }
-        } else {
-            doPermissionGrantedStuffs();
-        }
-    }
-
     private void requestReadPhoneStatePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.READ_PHONE_STATE)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
             // Provide an additional rationale to the user if the permission was not granted
             // and the user would benefit from additional context for the use of the permission.
             // For example if the user has previously denied the permission.
@@ -297,110 +314,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
-    private boolean checkAndRequestPermissions() {
-        int permissionContact = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS);
-        int permissionGetAccount = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.GET_ACCOUNTS);
-        int permissionReadPhoneState = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE);
-        int accessFineLocation = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        int accessCoarseLocation = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
-        int writeExternalStorage = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        if (permissionContact != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_CONTACTS);
-        }
-        if (permissionGetAccount != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.GET_ACCOUNTS);
-        }
-        if (permissionReadPhoneState != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (accessFineLocation != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (accessCoarseLocation != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        }
-        if (writeExternalStorage != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-            return false;
-        }
-
-        return true;
-    }
-
-    public void dbBackup() {
-
-        sharedPref = getSharedPreferences("linelisting", MODE_PRIVATE);
-        editor = sharedPref.edit();
-
-        if (sharedPref.getBoolean("checkingFlag", false)) {
-
-            String dt = sharedPref.getString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
-
-            if (!dt.equals(new SimpleDateFormat("dd-MM-yy").format(new Date()))) {
-                editor.putString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
-                editor.apply();
-            }
-
-            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + DatabaseHelper.FOLDER_NAME);
-            boolean success = true;
-            if (!folder.exists()) {
-                success = folder.mkdirs();
-            }
-            if (success) {
-
-                DirectoryName = folder.getPath() + File.separator + sharedPref.getString("dt", "");
-                folder = new File(DirectoryName);
-                if (!folder.exists()) {
-                    success = folder.mkdirs();
-                }
-                if (success) {
-
-                    try {
-                        File dbFile = new File(this.getDatabasePath(DatabaseHelper.DATABASE_NAME).getPath());
-                        FileInputStream fis = new FileInputStream(dbFile);
-
-                        String outFileName = DirectoryName + File.separator +
-                                DatabaseHelper.DB_NAME;
-
-                        // Open the empty db as the output stream
-                        OutputStream output = new FileOutputStream(outFileName);
-
-                        // Transfer bytes from the inputfile to the outputfile
-                        byte[] buffer = new byte[1024];
-                        int length;
-                        while ((length = fis.read(buffer)) > 0) {
-                            output.write(buffer, 0, length);
-                        }
-                        // Close the streams
-                        output.flush();
-                        output.close();
-                        fis.close();
-                    } catch (IOException e) {
-                        Log.e("dbBackup:", e.getMessage());
-                    }
-
-                }
-
-            } else {
-                Toast.makeText(this, "Not create folder", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-    }
-
     @OnClick(R.id.syncData)
     void onSyncDataClick() {
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -413,39 +326,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        for (int i = 0; i < permissions.length; i++) {
-            switch (permissions[i]) {
-                case Manifest.permission.READ_CONTACTS:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        populateAutoComplete();
-                    }
-                    break;
-                case Manifest.permission.GET_ACCOUNTS:
-                    break;
-                case Manifest.permission.READ_PHONE_STATE:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        doPermissionGrantedStuffs();
-                    }
-                    break;
-                case Manifest.permission.ACCESS_COARSE_LOCATION:
-                    break;
-                case Manifest.permission.ACCESS_FINE_LOCATION:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        requestLocationUpdate();
-                    }
-                    break;
-                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                    break;
-            }
-
+    private boolean checkAndRequestPermissions() {
+        if (!getPermissionsList(this).isEmpty()) {
+            ActivityCompat.requestPermissions(this, getPermissionsList(this).toArray(new String[getPermissionsList(this).size()]),
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            return false;
         }
+
+        return true;
     }
 
     public void requestLocationUpdate() {
@@ -467,18 +355,33 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         );
     }
 
-    private void doPermissionGrantedStuffs() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        for (int i = 0; i < permissions.length; i++) {
+            switch (permissions[i]) {
+                case Manifest.permission.READ_CONTACTS:
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        populateAutoComplete();
+                    }
+                    break;
+                case Manifest.permission.GET_ACCOUNTS:
+                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                case Manifest.permission.ACCESS_COARSE_LOCATION:
+                    break;
+                case Manifest.permission.READ_PHONE_STATE:
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        doPermissionGrantedStuffs();
+                    }
+                    break;
+                case Manifest.permission.ACCESS_FINE_LOCATION:
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        requestLocationUpdate();
+                    }
+                    break;
+            }
+
         }
-        MainApp.IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
     }
 
     private void populateAutoComplete() {
@@ -945,6 +848,20 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
+    private void doPermissionGrantedStuffs() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+//        MainApp.IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        MainApp.IMEI = getDeviceId(this);
+    }
 
 }
 

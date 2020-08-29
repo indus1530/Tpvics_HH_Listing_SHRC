@@ -47,7 +47,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.3.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.google.maps.android:android-maps-utils:2.0.3'
     testImplementation 'junit:junit:4.13'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0'
@@ -69,8 +69,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     testImplementation 'junit:junit:4.13'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     // For control over item selection of both touch and mouse driven selection

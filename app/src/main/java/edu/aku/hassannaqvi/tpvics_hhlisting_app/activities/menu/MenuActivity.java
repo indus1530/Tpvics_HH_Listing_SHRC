@@ -6,19 +6,12 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +20,8 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.WifiDirect.WiFiDirectActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
+
+import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.UtilsKt.dbBackup;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -42,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         db = new DatabaseHelper(this);
-        dbBackup();
+        dbBackup(this);
 
     }
 
@@ -99,7 +94,7 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    public void dbBackup() {
+    /*public void dbBackup() {
 
         sharedPref = getSharedPreferences("linelisting", MODE_PRIVATE);
         editor = sharedPref.edit();
@@ -108,10 +103,10 @@ public class MenuActivity extends AppCompatActivity {
 
             String dt = sharedPref.getString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
 
-            if (dt != new SimpleDateFormat("dd-MM-yy").format(new Date())) {
+            if (!dt.equals(new SimpleDateFormat("dd-MM-yy").format(new Date()))) {
                 editor.putString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
 
-                editor.commit();
+                editor.apply();
             }
 
             File folder = new File(Environment.getExternalStorageDirectory() + File.separator + DatabaseHelper.FOLDER_NAME);
@@ -159,7 +154,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
-    }
+    }*/
 
     public void syncServer() {
 

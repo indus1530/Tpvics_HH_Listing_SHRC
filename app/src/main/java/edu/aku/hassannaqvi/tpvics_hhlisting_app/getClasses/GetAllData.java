@@ -123,7 +123,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     position = 1;
                     break;
                 case "District":
-                    url = new URL(MainApp._UPDATE_URL + DistrictContract.DistrictTable._URI);
+                    url = new URL(MainApp._HOST_URL + DistrictContract.DistrictTable._URI);
                     position = 2;
                     break;
                 case "EnumBlock":
@@ -137,7 +137,6 @@ public class GetAllData extends AsyncTask<String, String, String> {
             urlConnection.setConnectTimeout(150000 /* milliseconds */);
 
             switch (syncClass) {
-                case "EnumBlock":
                 case "District":
                 case "User":
                     urlConnection.setRequestMethod("POST");
@@ -160,6 +159,31 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     wr.writeBytes(json.toString());
                     wr.flush();
                     wr.close();
+                    break;
+
+
+                case "EnumBlock":
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setDoInput(true);
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("charset", "utf-8");
+                    urlConnection.setUseCaches(false);
+
+                    // Starts the query
+                    urlConnection.connect();
+                    DataOutputStream wr2 = new DataOutputStream(urlConnection.getOutputStream());
+                    JSONObject json2 = new JSONObject();
+                    try {
+                        json2.put("user", "test1234");
+                        json2.put("dist_id", MainApp.DIST_ID);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                    Log.d(TAG, "downloadUrl: " + json2.toString());
+                    wr2.writeBytes(json2.toString());
+                    wr2.flush();
+                    wr2.close();
                     break;
             }
 

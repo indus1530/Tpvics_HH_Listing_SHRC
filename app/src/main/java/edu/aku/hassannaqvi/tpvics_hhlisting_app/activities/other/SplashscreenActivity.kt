@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract
 import kotlinx.coroutines.*
 
 /**
@@ -36,7 +36,7 @@ class SplashscreenActivity : Activity() {
     companion object {
         private const val SPLASH_TIME_OUT = 500
         lateinit var provinces: MutableList<String>
-        lateinit var districtsMap: MutableMap<String, Pair<String, EnumBlockContract>>
+        lateinit var districtsMap: MutableMap<String, Pair<String, DistrictContract>>
     }
 
     override fun onPause() {

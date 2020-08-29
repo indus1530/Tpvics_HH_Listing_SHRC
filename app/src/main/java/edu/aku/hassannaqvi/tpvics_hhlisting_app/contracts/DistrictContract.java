@@ -25,7 +25,7 @@ public class DistrictContract {
         return this;
     }
 
-    public DistrictContract HydrateEnum(Cursor cursor) {
+    public DistrictContract Hydrate(Cursor cursor) {
         this.dist_id = cursor.getString(cursor.getColumnIndex(DistrictTable.COLUMN_DIST_ID));
         this.district = cursor.getString(cursor.getColumnIndex(DistrictTable.COLUMN_DIST_NAME));
         this.province = cursor.getString(cursor.getColumnIndex(DistrictTable.COLUMN_PROVINCE_NAME));
