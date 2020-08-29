@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.List;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.SyncListAdapter;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
@@ -43,12 +44,6 @@ public class GetAllData extends AsyncTask<String, String, String> {
     private String syncClass;
 
 
-    public GetAllData(Context context, String syncClass) {
-        mContext = context;
-        this.syncClass = syncClass;
-        TAG = "Get" + syncClass;
-    }
-
     public GetAllData(Context context, String syncClass, SyncListAdapter adapter, List<SyncModel> list) {
         mContext = context;
         this.syncClass = syncClass;
@@ -62,8 +57,11 @@ public class GetAllData extends AsyncTask<String, String, String> {
             case "VersionApp":
                 position = 1;
                 break;
-            case "EnumBlock":
+            case "District":
                 position = 2;
+                break;
+            case "EnumBlock":
+                position = 0;
                 break;
         }
         list.get(position).settableName(syncClass);
@@ -93,8 +91,11 @@ public class GetAllData extends AsyncTask<String, String, String> {
             case "VersionApp":
                 position = 1;
                 break;
-            case "EnumBlock":
+            case "District":
                 position = 2;
+                break;
+            case "EnumBlock":
+                position = 0;
                 break;
         }
         list.get(position).setstatus("Syncing");
@@ -121,9 +122,13 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     url = new URL(MainApp._UPDATE_URL + VersionAppContract.VersionAppTable._URI);
                     position = 1;
                     break;
+                case "District":
+                    url = new URL(MainApp._UPDATE_URL + DistrictContract.DistrictTable._URI);
+                    position = 2;
+                    break;
                 case "EnumBlock":
                     url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
-                    position = 2;
+                    position = 0;
                     break;
             }
 
@@ -133,6 +138,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
 
             switch (syncClass) {
                 case "EnumBlock":
+                case "District":
                 case "User":
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setDoOutput(true);
@@ -203,10 +209,15 @@ public class GetAllData extends AsyncTask<String, String, String> {
                             if (insertCount == 1) jsonArray.put("1");
                             position = 1;
                             break;
+                        case "District":
+                            jsonArray = new JSONArray(result);
+                            insertCount = db.syncDistrict(jsonArray);
+                            position = 2;
+                            break;
                         case "EnumBlock":
                             jsonArray = new JSONArray(result);
                             insertCount = db.syncEnumBlocks(jsonArray);
-                            position = 2;
+                            position = 0;
                             break;
 
                     }

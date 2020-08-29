@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.BLRandomContract.singleRandomHH;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract.DistrictTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract.EnumBlockTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
@@ -114,39 +116,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ListingEntry.COLUMN_NAME_GPSAltitude + " TEXT, " +
             ListingEntry.COLUMN_RANDOMIZED + " TEXT, " +
             ListingEntry.COLUMN_SYNCED + " TEXT, " +
-            ListingEntry.COLUMN_SYNCED_DATE + " TEXT " +
-            " );";
+            ListingEntry.COLUMN_SYNCED_DATE + " TEXT );";
     final String SQL_CREATE_DISTRICT_TABLE = "CREATE TABLE " + SingleTaluka.TABLE_NAME + " (" +
             SingleTaluka._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            SingleTaluka.COLUMN_TEAM_NO + " TEXT " +
-            ");";
+            SingleTaluka.COLUMN_TEAM_NO + " TEXT " + ");";
     final String SQL_CREATE_PSU_TABLE = "CREATE TABLE " + EnumBlockTable.TABLE_NAME + " (" +
             EnumBlockTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             EnumBlockTable.COLUMN_DIST_ID + " TEXT, " +
             EnumBlockTable.COLUMN_GEO_AREA + " TEXT, " +
-            EnumBlockTable.COLUMN_CLUSTER_AREA + " TEXT " +
-            ");";
+            EnumBlockTable.COLUMN_CLUSTER_AREA + " TEXT );";
     final String SQL_CREATE_VERTICES_TABLE = "CREATE TABLE " + SingleVertices.TABLE_NAME + " (" +
             SingleVertices._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             SingleVertices.COLUMN_CLUSTER_CODE + " TEXT," +
             SingleVertices.COLUMN_POLY_LAT + " TEXT, " +
             SingleVertices.COLUMN_POLY_LANG + " TEXT, " +
-            SingleVertices.COLUMN_POLY_SEQ + " TEXT " +
-            ");";
+            SingleVertices.COLUMN_POLY_SEQ + " TEXT );";
     final String SQL_COUNT_LISTINGS = "SELECT count(*) as ttlisting from " + ListingEntry.TABLE_NAME;
     final String SQL_CREATE_VERSIONAPP = "CREATE TABLE " + VersionAppTable.TABLE_NAME + " (" +
             VersionAppTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             VersionAppTable.COLUMN_VERSION_CODE + " TEXT, " +
             VersionAppTable.COLUMN_VERSION_NAME + " TEXT, " +
-            VersionAppTable.COLUMN_PATH_NAME + " TEXT " +
-            ");";
+            VersionAppTable.COLUMN_PATH_NAME + " TEXT );";
     final String SQL_CREATE_USERS = "CREATE TABLE " + UsersTable.TABLE_NAME + "("
             + UsersTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + UsersTable.ROW_USERNAME + " TEXT,"
             + UsersTable.ROW_PASSWORD + " TEXT,"
             + UsersTable.DIST_ID + " TEXT );";
-
-    final String SQL_ALTER_FORM_COLUMN = "ALTER TABLE " + ListingEntry.TABLE_NAME + " ADD COLUMN " + ListingEntry.COLUMN_NAME_HHDATETIME + " TEXT";
+    final String SQL_CREATE_DISTRICTS = "CREATE TABLE " + DistrictTable.TABLE_NAME + "("
+            + DistrictTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + DistrictTable.COLUMN_DIST_ID + " TEXT,"
+            + DistrictTable.COLUMN_DIST_NAME + " TEXT,"
+            + DistrictTable.COLUMN_PROVINCE_NAME + " TEXT );";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -163,6 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_VERTICES_TABLE);
         db.execSQL(SQL_CREATE_SIGNUP);
         db.execSQL(SQL_CREATE_VERSIONAPP);
+        db.execSQL(SQL_CREATE_DISTRICTS);
 
     }
 
@@ -177,11 +178,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + VersionAppTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SignUpTable.TABLE_NAME);
         onCreate(db);*/
-
-        if (oldVersion == 1) {
-            db.execSQL(SQL_ALTER_FORM_COLUMN);
-        }
-
     }
 
     public int getListingCount() {
@@ -302,7 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newRowId;
     }
 
-    public Long addBLRandom(ListingContract lc) {
+    public void addBLRandom(ListingContract lc) {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -325,7 +321,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 values);
 
-        return newRowId;
     }
 
     public void updateListingUID() {
@@ -967,6 +962,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             Log.d(TAG, "syncUser(e): " + e);
+            db.close();
+        } finally {
+            db.close();
+        }
+        return insertCount;
+    }
+
+    public int syncDistrict(JSONArray distList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DistrictContract.DistrictTable.TABLE_NAME, null, null);
+        int insertCount = 0;
+        try {
+            for (int i = 0; i < distList.length(); i++) {
+
+                JSONObject jsonObjectUser = distList.getJSONObject(i);
+
+                DistrictContract dist = new DistrictContract();
+                dist.Sync(jsonObjectUser);
+                ContentValues values = new ContentValues();
+
+                values.put(DistrictTable.COLUMN_DIST_ID, dist.getDist_id());
+                values.put(DistrictTable.COLUMN_DIST_NAME, dist.getDistrict());
+                values.put(DistrictTable.COLUMN_PROVINCE_NAME, dist.getProvince());
+                long rowID = db.insert(DistrictTable.TABLE_NAME, null, values);
+                if (rowID != -1) insertCount++;
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "syncDist(e): " + e);
             db.close();
         } finally {
             db.close();
