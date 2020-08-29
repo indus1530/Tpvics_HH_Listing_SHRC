@@ -427,8 +427,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     }
                     break;
                 case Manifest.permission.GET_ACCOUNTS:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    }
                     break;
                 case Manifest.permission.READ_PHONE_STATE:
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
@@ -436,8 +434,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     }
                     break;
                 case Manifest.permission.ACCESS_COARSE_LOCATION:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    }
                     break;
                 case Manifest.permission.ACCESS_FINE_LOCATION:
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
@@ -446,9 +442,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     }
                     break;
                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-
-                    }
                     break;
             }
 
