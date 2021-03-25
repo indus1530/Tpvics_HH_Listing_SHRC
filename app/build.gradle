@@ -19,10 +19,10 @@ android {
 
         defaultConfig {
             applicationId "edu.aku.hassannaqvi.tpvics_hhlisting_app"
-            minSdkVersion 22
+            minSdkVersion 23
             targetSdkVersion 30
             versionCode code
-            versionName "1.3"
+            versionName "1.4"
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
     } else {
@@ -43,6 +43,12 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
 }
 
 dependencies {
@@ -53,76 +59,70 @@ dependencies {
 
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:2.0.3'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.media:media:1.1.0'
+    implementation 'androidx.media:media:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.github.BlackBoxVision:datetimepicker-edittext:v0.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    testImplementation 'junit:junit:4.13'
-    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.13.1'
+    //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     // For control over item selection of both touch and mouse driven selection
-    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
-
-    //Combobox
-    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
-    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
-
-    //Ali mask
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    //Ali Libraries
     implementation 'com.github.AliAzaz:Edittext-Library:2.0.0'
     implementation 'com.github.AliAzaz:AndroidValidatorCrawler:1.0.3'
-
+    //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.balysv:material-ripple:1.0.2'
-    implementation 'com.google.android:flexbox:2.0.0'
-    implementation 'com.github.whalemare:sheetmenu:2.0.1'
-
-    def lifecycle_version = "2.2.0"
-    def arch_version = "2.1.0"
-
-    // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    // LiveData
+    //LifeCycle
+    def lifecycle_version = "2.3.0"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    // Lifecycles only (without ViewModel or LiveData)
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
-    // Saved state module for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-    // optional - ReactiveStreams support for LiveData
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
-    //Live data End
-
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     //Date Time
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.4'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
+    implementation 'com.github.BlackBoxVision:datetimepicker-edittext:v0.4.0'
     //SDP
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
-
     //Coroutine
-    def coroutine_version = '1.3.7'
+    def coroutine_version = '1.3.9'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation "io.reactivex.rxjava3:rxjava:3.0.3"
+    implementation "io.reactivex.rxjava3:rxjava:3.0.6"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
-
-    implementation 'id.zelory:compressor:2.1.0'
-
+    //Showcase
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
+
+    //Rooted
+    implementation 'com.scottyab:rootbeer-lib:0.0.8'
+
+    //Security
+    def security_crypto_version = '1.1.0-alpha03'
+    implementation "androidx.security:security-crypto:$security_crypto_version"
+
+    //WorkManager
+    def work_version = '2.5.0'
+    implementation "androidx.work:work-runtime:$work_version"// WorkManager (Java only)
+    implementation "androidx.work:work-runtime-ktx:$work_version" // WorkManager (Kotlin + coroutines)
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Apache
+    api 'org.apache.commons:commons-lang3:3.12.0'
 
 }

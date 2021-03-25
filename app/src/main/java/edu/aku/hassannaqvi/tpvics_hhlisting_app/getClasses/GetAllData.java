@@ -20,13 +20,12 @@ import java.net.URL;
 import java.util.List;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.SyncListAdapter;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.SyncModel;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.utils.Keys;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.utils.ServerSecurity;
 
 /**
  * Created by ali.azaz on 7/14/2017.
@@ -110,24 +109,27 @@ public class GetAllData extends AsyncTask<String, String, String> {
     protected String doInBackground(String... args) {
 
         StringBuilder result = new StringBuilder();
+        String table = "";
 
         URL url = null;
         try {
             switch (syncClass) {
                 case "User":
-                    url = new URL(MainApp._HOST_URL + UsersContract.UsersTable._URI);
+                    url = new URL(MainApp._HOST_URL + MainApp._SERVER_GET_URL);
                     position = 0;
+                    table = "users";
                     break;
                 case "VersionApp":
                     url = new URL(MainApp._UPDATE_URL + VersionAppContract.VersionAppTable._URI);
                     position = 1;
                     break;
                 case "District":
-                    url = new URL(MainApp._HOST_URL + DistrictContract.DistrictTable._URI);
+                    url = new URL(MainApp._HOST_URL + MainApp._SERVER_GET_URL);
                     position = 2;
+                    table = "users";
                     break;
                 case "EnumBlock":
-                    url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
+                    url = new URL(MainApp._HOST_URL + MainApp._SERVER_GET_URL);
                     position = 0;
                     break;
             }
@@ -156,7 +158,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
                         e1.printStackTrace();
                     }
                     Log.d(TAG, "downloadUrl: " + json.toString());
-                    wr.writeBytes(json.toString());
+                    wr.writeBytes(ServerSecurity.INSTANCE.encrypt(String.valueOf(json), Keys.INSTANCE.apiKey()));
                     wr.flush();
                     wr.close();
                     break;
@@ -181,7 +183,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
                         e1.printStackTrace();
                     }
                     Log.d(TAG, "downloadUrl: " + json2.toString());
-                    wr2.writeBytes(json2.toString());
+                    wr2.writeBytes(ServerSecurity.INSTANCE.encrypt(String.valueOf(json2), Keys.INSTANCE.apiKey()));
                     wr2.flush();
                     wr2.close();
                     break;
@@ -207,7 +209,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
         } finally {
             urlConnection.disconnect();
         }
-        return result.toString();
+        return ServerSecurity.INSTANCE.decrypt(result.toString(), Keys.INSTANCE.apiKey());
     }
 
     @Override

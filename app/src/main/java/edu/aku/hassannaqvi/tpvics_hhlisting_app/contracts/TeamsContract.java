@@ -39,7 +39,7 @@ public class TeamsContract {
 
     public static abstract class SingleTaluka implements BaseColumns {
 
-        public static final String TABLE_NAME = "Districts";
+        public static final String TABLE_NAME = "team";
         public static final String COLUMN_NAME_NULLABLE = "nullColumnHack";
         public static final String _ID = "_ID";
         public static final String COLUMN_TEAM_NO = "teamno";

@@ -1,10 +1,23 @@
 package edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class SyncModel {
-    private String tableName;
-    private String status;
-    private int statusID;
-    private String message;
+    String tableName;
+    String status;
+    int statusID;
+    String message;
+
+    public SyncModel(String tableName) {
+
+        this.tableName = tableName;
+        this.status = StringUtils.EMPTY;
+        this.statusID = 0;
+        this.message = StringUtils.EMPTY;
+
+
+    }
+
 
     public String gettableName() {
         return tableName;

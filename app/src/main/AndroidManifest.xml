@@ -36,31 +36,38 @@
         </activity>
         <activity
             android:name=".activities.other.LoginActivity"
+            android:exported="false"
             android:label="Login In"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.other.MainActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activities.sync.SyncActivity"
+            android:exported="false"
             android:label="DATA SYNC ACTIVITY"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" />
         <activity
             android:name=".activities.ui.SetupActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ui.FamilyListingActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".core.AndroidDatabaseManager"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.DarkActionBar" />
         <activity
             android:name=".activities.RandomizationActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -78,6 +85,7 @@
 
         <activity
             android:name=".activities.map.MapsActivity"
+            android:exported="false"
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -86,6 +94,7 @@
 
         <activity
             android:name=".WifiDirect.WiFiDirectActivity"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

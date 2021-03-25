@@ -56,6 +56,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.map.MapsActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.menu.MenuActivity;
@@ -73,9 +74,6 @@ public class MainActivity extends MenuActivity {
 
     public static String TAG = "MainActivity";
     static File file;
-    private static String ipAddress = "192.168.1.10";
-    private static String port = "3000";
-    public List<String> psuCode;
     String dtToday = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date().getTime());
     @BindView(R.id.districtN)
     TextView districtN;
@@ -126,7 +124,6 @@ public class MainActivity extends MenuActivity {
     Boolean exit = false;
     Boolean flag = false;
     DatabaseHelper db;
-    ProgressDialog progressDoalog;
     @BindView(R.id.lblAppVersion)
     TextView lblAppVersion;
     VersionAppContract versionAppContract;
@@ -173,16 +170,7 @@ public class MainActivity extends MenuActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem dbManager = menu.findItem(R.id.menu_openDB);
-//        MenuItem randomization = menu.findItem(R.id.menu_randomization);
-
-        if (MainApp.admin) {
-            dbManager.setVisible(true);
-//            randomization.setVisible(true);
-        } else {
-            dbManager.setVisible(false);
-//            randomization.setVisible(false);
-        }
-
+        dbManager.setVisible(MainApp.admin);
         return true;
     }
 
@@ -211,11 +199,8 @@ public class MainActivity extends MenuActivity {
         editorDownload = sharedPrefDownload.edit();
 
         String versionCode = sharedPrefInfo.getString("versionCode", "");
-        if (versionCode.equals("")) {
-
-
-        } else {
-            if (Integer.valueOf(versionCode) > Integer.valueOf(MainApp.versionCode)) {
+        if (!versionCode.equals("")) {
+            if (Integer.parseInt(versionCode) > MainApp.versionCode) {
                 msgUpdate.setVisibility(View.VISIBLE);
             }
         }
@@ -229,22 +214,14 @@ public class MainActivity extends MenuActivity {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
-                if (!m_Text.equals("")) {
-                    editor.putString("tagName", m_Text);
-                    editor.commit();
-                }
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            m_Text = input.getText().toString();
+            if (!m_Text.equals("")) {
+                editor.putString("tagName", m_Text);
+                editor.apply();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         // database handler
         db = new DatabaseHelper(getApplicationContext());
@@ -259,7 +236,7 @@ public class MainActivity extends MenuActivity {
             preVer = MainApp.versionName + "." + MainApp.versionCode;
             newVer = versionAppContract.getVersionname() + "." + versionAppContract.getVersioncode();
 
-            if (MainApp.versionCode < Integer.valueOf(versionAppContract.getVersioncode())) {
+            if (MainApp.versionCode < Integer.parseInt(versionAppContract.getVersioncode())) {
                 lblAppVersion.setVisibility(View.VISIBLE);
 
                 String fileName = DatabaseHelper.DATABASE_NAME.replace(".db", "-New-Apps");
@@ -283,7 +260,7 @@ public class MainActivity extends MenuActivity {
 
                         editorDownload.putLong("refID", refID);
                         editorDownload.putBoolean("flag", false);
-                        editorDownload.commit();
+                        editorDownload.apply();
 
                     } else {
                         lblAppVersion.setText("UEN-TPVICS Linelisting APP New Version " + newVer + "  Available..\n(Can't download.. Internet connectivity issue!!)");
@@ -307,37 +284,6 @@ public class MainActivity extends MenuActivity {
     }
 
     public void spinnersFill() {
-        // Spinner Drop down elements
-        //List<String> teamNos = new ArrayList<String>();
-        //Collection<TeamsContract> dc = db.getAllTeams();
-
-        //teamNos.add("....");
-
-        //Log.d(TAG, "onCreate: " + dc.size());
-        /*for (TeamsContract d : dc) {
-            teamNos.add(d.getTeamNo());
-        }*/
-
-        // Creating adapter for spinner
-        /*mN01.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, teamNos));
-
-        mN01.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if (mN01.getSelectedItemPosition() != 0) {
-
-                    MainApp.hh01txt = Integer.valueOf(mN01.getSelectedItem().toString());
-
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         txtPSU.addTextChangedListener(new TextWatcher() {
             @Override
@@ -363,35 +309,6 @@ public class MainActivity extends MenuActivity {
 
             }
         });
-
-/*
-        mN02.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MainApp.hh02txt = psuCode.get(position);
-                Collection<PSUsContract> pc = db.getAllPSUsByTaluka(MainApp.hh01txt);
-                for (PSUsContract p : pc) {
-                    Log.d(TAG, "onItemSelected: " + p.getPSUCode() + " -" + MainApp.hh02txt);
-
-                    if (p.getPSUCode().equals(MainApp.hh02txt)) {
-                        Log.d(TAG, "onItemSelected: " + p.getPSUName());
-                        String[] psuNameS = p.getPSUName().toString().split("\\|");
-                        districtN.setText(psuNameS[0]);
-                        Log.d(TAG, "onItemSelected: " + psuNameS[0]);
-                        ucN.setText(psuNameS[1]);
-                        Log.d(TAG, "onItemSelected: " + psuNameS[1]);
-                        psuN.setText(psuNameS[2]);
-                        Log.d(TAG, "onItemSelected: " + psuNameS[2]);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
     }
 
@@ -551,29 +468,9 @@ public class MainActivity extends MenuActivity {
 
     public void syncFunction(View view) {
         if (isNetworkAvailable()) {
-
-            /*new SyncDevice(this).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Listing", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Listing",
-                    "updateSyncedForms",
-                    ListingContract.class,
-                    MainApp._HOST_URL + ListingContract.ListingEntry._URL,
-                    db.getUnsyncedListings()
-            ).execute();
-            Toast.makeText(getApplicationContext(), "Syncing New Users Data", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "New Users",
-                    "updateSyncedSignup",
-                    SignupContract.class,
-                    MainApp._HOST_URL + SignupContract.SignUpTable._URL,
-                    db.getUnsyncedSignups()
-            ).execute();*/
-
-            startActivity(new Intent(MainActivity.this, SyncActivity.class));
+            startActivity(new Intent(MainActivity.this, SyncActivity.class)
+                    .putExtra(CONSTANTS.SYNC_LOGIN, true)
+                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.DIST_ID));
 
             SharedPreferences syncPref = getSharedPreferences("SyncInfo", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = syncPref.edit();
@@ -713,11 +610,7 @@ public class MainActivity extends MenuActivity {
                         Thread.sleep(3000);
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (JSONException | IOException | InterruptedException e) {
                 e.printStackTrace();
             }
 

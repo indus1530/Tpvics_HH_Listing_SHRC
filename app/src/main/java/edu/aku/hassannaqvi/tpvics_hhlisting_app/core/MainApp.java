@@ -16,12 +16,19 @@ import android.view.View;
 
 import androidx.core.app.ActivityCompat;
 
+import com.scottyab.rootbeer.RootBeer;
+
+import org.json.JSONArray;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.BuildConfig;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.SignupContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.TypefaceUtil;
+import timber.log.Timber;
 
 /**
  * Created by hassan.naqvi on 10/15/2016.
@@ -33,6 +40,8 @@ public class MainApp extends Application {
 //    public static final String _IP = "http://f38158";// .TEST server
     public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
     public static final String _HOST_URL = MainApp._IP + "/tpvics/api/";
+    public static final String _SERVER_URL = "syncenc.php";
+    public static final String _SERVER_GET_URL = "getdataenc.php";
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds
     private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -67,6 +76,10 @@ public class MainApp extends Application {
     public static String tabCheck = "";
     protected static LocationManager locationManager;
     Location location;
+
+
+    public static String[] downloadData;
+    public static List<JSONArray> uploadData;
 
     public static void updatePSU(String psuCode, String structureNo) {
 
@@ -129,7 +142,13 @@ public class MainApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("App", "Creating...");
+
+        RootBeer rootBeer = new RootBeer(this);
+        if (rootBeer.isRooted()) {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/JameelNooriNastaleeq.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 //        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/MBLateefi.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
@@ -145,8 +164,12 @@ public class MainApp extends Application {
             requestLocationUpdate();
         }
 
-
         sharedPref = getSharedPreferences("PSUCodes", Context.MODE_PRIVATE);
+
+        //Timber
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
 
     }
 

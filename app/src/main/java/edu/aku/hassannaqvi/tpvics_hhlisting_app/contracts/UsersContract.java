@@ -92,7 +92,7 @@ public class UsersContract {
         public static final String TABLE_NAME = "users";
         public static final String _ID = "id";
         public static final String ROW_USERNAME = "username";
-        public static final String ROW_PASSWORD = "password";
+        public static final String ROW_PASSWORD = "passwordenc";
         public static final String DIST_ID = "dist_id";
 
         public static final String _URI = "users.php";

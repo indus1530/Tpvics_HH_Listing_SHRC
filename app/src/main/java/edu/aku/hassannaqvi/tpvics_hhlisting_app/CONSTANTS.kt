@@ -23,6 +23,7 @@ class CONSTANTS {
         const val MORTALITY_INFO = 2017
         const val MWRA_INFO = "mwra"
         const val SYNC_LOGIN = "sync_login"
+        const val SYNC_DISTRICTID_LOGIN = "district_id_login"
 
         //For CHC Section
         const val IM02FLAG = "im02_flag"
