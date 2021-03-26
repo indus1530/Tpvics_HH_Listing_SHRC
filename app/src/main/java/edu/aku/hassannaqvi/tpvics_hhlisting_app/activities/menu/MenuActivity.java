@@ -15,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.WifiDirect.WiFiDirectActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 
 import static edu.aku.hassannaqvi.tpvics_hhlisting_app.repository.UtilsKt.dbBackup;
 
@@ -88,7 +90,9 @@ public class MenuActivity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            startActivity(new Intent(MenuActivity.this, SyncActivity.class));
+            startActivity(new Intent(MenuActivity.this, SyncActivity.class)
+                    .putExtra(CONSTANTS.SYNC_LOGIN, true)
+                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.DIST_ID));
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();
         }

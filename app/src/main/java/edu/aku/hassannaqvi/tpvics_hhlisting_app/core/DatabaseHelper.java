@@ -1078,7 +1078,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allVC;
     }
 
-    public void updateSyncedForms(String id) {
+    public void updateSyncedlistings(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
 // New value for one column
