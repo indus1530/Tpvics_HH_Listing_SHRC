@@ -19,7 +19,7 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.WifiDirect.WiFiDirectActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidDatabaseManager;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidManager;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 
@@ -67,7 +67,7 @@ public class MenuActivity extends AppCompatActivity {
                 return true;*/
 
             case R.id.menu_openDB:
-                Intent dbmanager = new Intent(getApplicationContext(), AndroidDatabaseManager.class);
+                Intent dbmanager = new Intent(getApplicationContext(), AndroidManager.class);
                 startActivity(dbmanager);
                 return true;
 

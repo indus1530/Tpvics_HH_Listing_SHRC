@@ -66,7 +66,7 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidDatabaseManager;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.AndroidManager;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 
@@ -181,12 +181,6 @@ public class MainActivity extends MenuActivity {
         ButterKnife.bind(this);
 
         this.setTitle("Household Linelisting");
-
-        if (MainApp.admin) {
-            adminBlock.setVisibility(View.VISIBLE);
-        } else {
-            adminBlock.setVisibility(View.GONE);
-        }
         MainApp.lc = null;
 
         /*Tag Info Start*/
@@ -274,6 +268,11 @@ public class MainActivity extends MenuActivity {
         }
 
         registerReceiver(broadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+//        Testing visibility
+        if (Integer.parseInt(MainApp.versionName.split("\\.")[0]) == 0) {
+            adminBlock.setVisibility(MainApp.admin ? View.VISIBLE : View.GONE);
+        }
 
     }
 
@@ -458,7 +457,7 @@ public class MainActivity extends MenuActivity {
     }
 
     public void openDB(View view) {
-        Intent dbmanager = new Intent(this, AndroidDatabaseManager.class);
+        Intent dbmanager = new Intent(this, AndroidManager.class);
         startActivity(dbmanager);
     }
 
