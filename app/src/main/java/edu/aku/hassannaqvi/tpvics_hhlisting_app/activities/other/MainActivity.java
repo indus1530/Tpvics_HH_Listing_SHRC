@@ -62,7 +62,7 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.map.MapsActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.menu.MenuActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.ui.SetupActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract;
@@ -336,9 +336,9 @@ public class MainActivity extends MenuActivity {
             }
             if (loginFlag) {
                 DatabaseHelper db = new DatabaseHelper(this);
-                EnumBlockContract enumBlockContract = db.getEnumBlock(txtPSU.getText().toString());
-                if (enumBlockContract != null) {
-                    String selected = enumBlockContract.getGeoarea();
+                Clusters clusters = db.getEnumBlock(txtPSU.getText().toString());
+                if (clusters != null) {
+                    String selected = clusters.getGeoarea();
 
                     if (!selected.equals("")) {
 
@@ -373,8 +373,8 @@ public class MainActivity extends MenuActivity {
                         });
 
                         MainApp.hh02txt = txtPSU.getText().toString();
-                        MainApp.enumCode = enumBlockContract.getDist_id();
-                        MainApp.enumStr = enumBlockContract.getGeoarea();
+                        MainApp.enumCode = clusters.getUc_id();
+                        MainApp.enumStr = clusters.getGeoarea();
                         MainApp.clusterCode = txtPSU.getText().toString();
                     }
                 } else {
@@ -469,7 +469,7 @@ public class MainActivity extends MenuActivity {
         if (isNetworkAvailable()) {
             startActivity(new Intent(MainActivity.this, SyncActivity.class)
                     .putExtra(CONSTANTS.SYNC_LOGIN, true)
-                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.DIST_ID));
+                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.UC_ID));
 
             SharedPreferences syncPref = getSharedPreferences("SyncInfo", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = syncPref.edit();

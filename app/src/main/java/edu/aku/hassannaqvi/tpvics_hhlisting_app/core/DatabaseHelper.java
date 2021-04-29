@@ -19,10 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.BLRandomContract.singleRandomHH;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract.DistrictTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract.EnumBlockTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters.ClusterTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract.ListingEntry;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.SignupContract;
@@ -33,6 +31,8 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract.UsersTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract.VersionAppTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts.DistrictTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract.SingleVertices;
 
@@ -43,10 +43,15 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract.Singl
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // The name of database.
-    public static final String DATABASE_NAME = "tpvics-hhl.db";
-    public static final String PROJECT_NAME = "tpvics-hhl-2019";
+    public static final String DATABASE_NAME = "tpvics-hhl-shrc.db";
+    public static final String PROJECT_NAME = "tpvics-hhl-shrc-2021";
     public static final String DB_NAME = DATABASE_NAME.replace(".db", "-copy.db");
     public static final String FOLDER_NAME = "DMU-TPVICS_HHL";
+    // Change this when you change the database schema.
+    private static final int DATABASE_VERSION = 1;
+    public static String TAG = "DatabaseHelper";
+    public static String DB_FORM_ID;
+
     public static final String SQL_CREATE_BL_RANDOM = "CREATE TABLE " + singleRandomHH.TABLE_NAME + "("
             + singleRandomHH.COLUMN_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT,"
             + singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + " TEXT,"
@@ -57,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + singleRandomHH.COLUMN_CONTACT + " TEXT,"
             + singleRandomHH.COLUMN_HH_SELECTED_STRUCT + " TEXT,"
             + singleRandomHH.COLUMN_RANDOMDT + " TEXT );";
+
     public static final String SQL_CREATE_SIGNUP = "CREATE TABLE " + SignUpTable.TABLE_NAME + "("
             + SignUpTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + SignUpTable.FULLNAME + " TEXT,"
@@ -69,11 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + SignUpTable.COLUMN_SYNCED + " TEXT, "
             + SignUpTable.COLUMN_SYNCED_DATE + " TEXT " +
             ");";
-    // Change this when you change the database schema.
-    private static final int DATABASE_VERSION = 2;
-    public static String TAG = "DatabaseHelper";
-    public static String DB_FORM_ID;
-    // Create a table to hold Listings.
+
     final String SQL_CREATE_LISTING_TABLE = "CREATE TABLE " + ListingEntry.TABLE_NAME + " (" +
             ListingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             ListingEntry.COLUMN_NAME_UID + " TEXT, " +
@@ -117,36 +119,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ListingEntry.COLUMN_RANDOMIZED + " TEXT, " +
             ListingEntry.COLUMN_SYNCED + " TEXT, " +
             ListingEntry.COLUMN_SYNCED_DATE + " TEXT );";
+
     final String SQL_CREATE_DISTRICT_TABLE = "CREATE TABLE " + SingleTaluka.TABLE_NAME + " (" +
             SingleTaluka._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             SingleTaluka.COLUMN_TEAM_NO + " TEXT " + ");";
-    final String SQL_CREATE_PSU_TABLE = "CREATE TABLE " + EnumBlockTable.TABLE_NAME + " (" +
-            EnumBlockTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            EnumBlockTable.COLUMN_DIST_ID + " TEXT, " +
-            EnumBlockTable.COLUMN_GEO_AREA + " TEXT, " +
-            EnumBlockTable.COLUMN_CLUSTER_AREA + " TEXT );";
+
+    final String SQL_CREATE_PSU_TABLE = "CREATE TABLE " + Clusters.ClusterTable.TABLE_NAME + " (" +
+            Clusters.ClusterTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            Clusters.ClusterTable.COLUMN_DIST_CODE + " TEXT, " +
+            Clusters.ClusterTable.COLUMN_ENUM_BLOCK_CODE + " TEXT, " +
+            Clusters.ClusterTable.COLUMN_GEO_AREA + " TEXT, " +
+            Clusters.ClusterTable.COLUMN_CLUSTER_AREA + " TEXT, " +
+            Clusters.ClusterTable.COLUMN_UC_ID + " TEXT " +
+            ");";
+
     final String SQL_CREATE_VERTICES_TABLE = "CREATE TABLE " + SingleVertices.TABLE_NAME + " (" +
             SingleVertices._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             SingleVertices.COLUMN_CLUSTER_CODE + " TEXT," +
             SingleVertices.COLUMN_POLY_LAT + " TEXT, " +
             SingleVertices.COLUMN_POLY_LANG + " TEXT, " +
             SingleVertices.COLUMN_POLY_SEQ + " TEXT );";
+
     final String SQL_COUNT_LISTINGS = "SELECT count(*) as ttlisting from " + ListingEntry.TABLE_NAME;
+
     final String SQL_CREATE_VERSIONAPP = "CREATE TABLE " + VersionAppTable.TABLE_NAME + " (" +
             VersionAppTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             VersionAppTable.COLUMN_VERSION_CODE + " TEXT, " +
             VersionAppTable.COLUMN_VERSION_NAME + " TEXT, " +
             VersionAppTable.COLUMN_PATH_NAME + " TEXT );";
+
     final String SQL_CREATE_USERS = "CREATE TABLE " + UsersTable.TABLE_NAME + "("
             + UsersTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + UsersTable.ROW_USERNAME + " TEXT,"
             + UsersTable.ROW_PASSWORD + " TEXT,"
             + UsersTable.DIST_ID + " TEXT );";
-    final String SQL_CREATE_DISTRICTS = "CREATE TABLE " + DistrictTable.TABLE_NAME + "("
-            + DistrictTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + DistrictTable.COLUMN_DIST_ID + " TEXT,"
-            + DistrictTable.COLUMN_DIST_NAME + " TEXT,"
-            + DistrictTable.COLUMN_PROVINCE_NAME + " TEXT );";
+
+    final String SQL_CREATE_DISTRICTS = "CREATE TABLE " + Districts.DistrictTable.TABLE_NAME + "("
+            + Districts.DistrictTable.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + Districts.DistrictTable.COLUMN_DIST_ID + " TEXT,"
+            + Districts.DistrictTable.COLUMN_DIST_NAME + " TEXT,"
+            + Districts.DistrictTable.COLUMN_PROVINCE_NAME + " TEXT, "
+            + Districts.DistrictTable.COLUMN_UC_NAME + " TEXT, "
+            + Districts.DistrictTable.COLUMN_UC_ID + " TEXT " +
+            ");";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -971,26 +986,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int syncDistrict(JSONArray distList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DistrictContract.DistrictTable.TABLE_NAME, null, null);
+        db.delete(Districts.DistrictTable.TABLE_NAME, null, null);
         int insertCount = 0;
         try {
             for (int i = 0; i < distList.length(); i++) {
 
                 JSONObject jsonObjectUser = distList.getJSONObject(i);
 
-                DistrictContract dist = new DistrictContract();
-                dist.Sync(jsonObjectUser);
+                Districts dist = new Districts();
+                dist.sync(jsonObjectUser);
                 ContentValues values = new ContentValues();
 
-                values.put(DistrictTable.COLUMN_DIST_ID, dist.getDist_id());
-                values.put(DistrictTable.COLUMN_DIST_NAME, dist.getDistrict());
-                values.put(DistrictTable.COLUMN_PROVINCE_NAME, dist.getProvince());
-                long rowID = db.insert(DistrictTable.TABLE_NAME, null, values);
+                values.put(Districts.DistrictTable.COLUMN_DIST_ID, dist.getDist_id());
+                values.put(Districts.DistrictTable.COLUMN_DIST_NAME, dist.getDistrict());
+                values.put(Districts.DistrictTable.COLUMN_PROVINCE_NAME, dist.getProvince());
+                values.put(Districts.DistrictTable.COLUMN_UC_NAME, dist.getUc_name());
+                values.put(Districts.DistrictTable.COLUMN_UC_ID, dist.getUc_id());
+                long rowID = db.insert(Districts.DistrictTable.TABLE_NAME, null, values);
                 if (rowID != -1) insertCount++;
             }
 
         } catch (Exception e) {
-            Log.d(TAG, "syncDist(e): " + e);
             db.close();
         } finally {
             db.close();
@@ -1000,36 +1016,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int syncEnumBlocks(JSONArray enumList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, null);
+        db.delete(ClusterTable.TABLE_NAME, null, null);
         int insertCount = 0;
-        try {
-            for (int i = 0; i < enumList.length(); i++) {
-                JSONObject jsonObjectCC;
-                try {
-                    jsonObjectCC = enumList.getJSONObject(i);
-                    EnumBlockContract Vc = new EnumBlockContract();
-                    Vc.Sync(jsonObjectCC);
 
-                    ContentValues values = new ContentValues();
+        for (int i = 0; i < enumList.length(); i++) {
+            JSONObject jsonObjectCC;
+            try {
+                jsonObjectCC = enumList.getJSONObject(i);
+                Clusters Vc = new Clusters();
+                Vc.Sync(jsonObjectCC);
+                ContentValues values = new ContentValues();
+                values.put(ClusterTable.COLUMN_DIST_CODE, Vc.getDist_code());
+                values.put(ClusterTable.COLUMN_ENUM_BLOCK_CODE, Vc.getEbcode());
+                values.put(ClusterTable.COLUMN_GEO_AREA, Vc.getGeoarea());
+                values.put(ClusterTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
+                values.put(ClusterTable.COLUMN_UC_ID, Vc.getUc_id());
 
-                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_DIST_ID, Vc.getDist_id());
-                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_GEO_AREA, Vc.getGeoarea());
-                    values.put(EnumBlockContract.EnumBlockTable.COLUMN_CLUSTER_AREA, Vc.getCluster());
-
-                    long rowID = db.insert(EnumBlockContract.EnumBlockTable.TABLE_NAME, null, values);
-                    if (rowID != -1) insertCount++;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                db.insert(ClusterTable.TABLE_NAME, null, values);
+                long rowID = db.insert(ClusterTable.TABLE_NAME, null, values);
+                if (rowID != -1) insertCount++;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
+        return insertCount;
+    }
 
-        } catch (Exception e) {
-            Log.d(TAG, "syncEnumBlocks(e): " + e);
-            db.close();
+    public Integer syncVersionApp(JSONObject VersionList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(VersionAppContract.VersionAppTable.TABLE_NAME, null, null);
+        long count = 0;
+        try {
+            JSONObject jsonObjectCC = ((JSONArray) VersionList.get(VersionAppContract.VersionAppTable.COLUMN_VERSION_PATH)).getJSONObject(0);
+            VersionAppContract Vc = new VersionAppContract();
+            Vc.Sync(jsonObjectCC);
+
+            ContentValues values = new ContentValues();
+
+            values.put(VersionAppContract.VersionAppTable.COLUMN_PATH_NAME, Vc.getPathname());
+            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_CODE, Vc.getVersioncode());
+            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_NAME, Vc.getVersionname());
+
+            count = db.insert(VersionAppContract.VersionAppTable.TABLE_NAME, null, values);
+            if (count > 0) count = 1;
+
+        } catch (Exception ignored) {
         } finally {
             db.close();
         }
-        return insertCount;
+
+        return (int) count;
     }
 
 
@@ -1077,6 +1113,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return allVC;
     }
+
+    public Clusters getEnumBlock(String cluster) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause = ClusterTable.COLUMN_CLUSTER_AREA + " =?";
+        String[] whereArgs = new String[]{cluster};
+        String groupBy = null;
+        String having = null;
+
+        String orderBy =
+                ClusterTable._ID + " ASC";
+
+        Clusters allEB = null;
+        try {
+            c = db.query(
+                    ClusterTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                allEB = new Clusters().HydrateEnum(c);
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return allEB;
+    }
+
+    public VersionAppContract getVersionApp() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = {
+                VersionAppTable._ID,
+                VersionAppTable.COLUMN_VERSION_CODE,
+                VersionAppTable.COLUMN_VERSION_NAME,
+                VersionAppTable.COLUMN_PATH_NAME
+        };
+
+        String whereClause = null;
+        String[] whereArgs = null;
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = VersionAppTable._ID + " ASC";
+
+        VersionAppContract allVC = new VersionAppContract();
+        try {
+            c = db.query(
+                    VersionAppTable.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                allVC.Hydrate(c);
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return allVC;
+    }
+
 
     public void updateSyncedlistings(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -1147,50 +1266,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public EnumBlockContract getEnumBlock(String cluster) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        String[] columns = {
-                EnumBlockTable._ID,
-                EnumBlockTable.COLUMN_DIST_ID,
-                EnumBlockTable.COLUMN_GEO_AREA,
-                EnumBlockTable.COLUMN_CLUSTER_AREA
-        };
-
-        String whereClause = EnumBlockTable.COLUMN_CLUSTER_AREA + " =?";
-        String[] whereArgs = new String[]{cluster};
-        String groupBy = null;
-        String having = null;
-
-        String orderBy =
-                EnumBlockTable._ID + " ASC";
-
-        EnumBlockContract allEB = null;
-        try {
-            c = db.query(
-                    EnumBlockTable.TABLE_NAME,  // The table to query
-                    columns,                   // The columns to return
-                    whereClause,               // The columns for the WHERE clause
-                    whereArgs,                 // The values for the WHERE clause
-                    groupBy,                   // don't group the rows
-                    having,                    // don't filter by row groups
-                    orderBy                    // The sort order
-            );
-            while (c.moveToNext()) {
-                allEB = new EnumBlockContract().HydrateEnum(c);
-            }
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-            if (db != null) {
-                db.close();
-            }
-        }
-        return allEB;
-    }
-
     public void syncVertices(JSONArray vcList) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(SingleVertices.TABLE_NAME, null, null);
@@ -1220,54 +1295,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Integer syncVersionApp(JSONObject VersionList) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(VersionAppContract.VersionAppTable.TABLE_NAME, null, null);
-        long count = 0;
-        try {
-            JSONObject jsonObjectCC = ((JSONArray) VersionList.get(VersionAppContract.VersionAppTable.COLUMN_VERSION_PATH)).getJSONObject(0);
-            VersionAppContract Vc = new VersionAppContract();
-            Vc.Sync(jsonObjectCC);
 
-            ContentValues values = new ContentValues();
-
-            values.put(VersionAppContract.VersionAppTable.COLUMN_PATH_NAME, Vc.getPathname());
-            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_CODE, Vc.getVersioncode());
-            values.put(VersionAppContract.VersionAppTable.COLUMN_VERSION_NAME, Vc.getVersionname());
-
-            count = db.insert(VersionAppContract.VersionAppTable.TABLE_NAME, null, values);
-            if (count > 0) count = 1;
-
-        } catch (Exception ignored) {
-        } finally {
-            db.close();
-        }
-
-        return (int) count;
-    }
-
-    public VersionAppContract getVersionApp() {
+    //Get All Districts
+    public List<Districts> getDistrictProv() {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
-        String[] columns = {
-                VersionAppTable._ID,
-                VersionAppTable.COLUMN_VERSION_CODE,
-                VersionAppTable.COLUMN_VERSION_NAME,
-                VersionAppTable.COLUMN_PATH_NAME
-        };
+        String[] columns = null;
 
         String whereClause = null;
         String[] whereArgs = null;
         String groupBy = null;
         String having = null;
 
-        String orderBy = VersionAppTable._ID + " ASC";
-
-        VersionAppContract allVC = new VersionAppContract();
+        String orderBy = DistrictTable.COLUMN_ID + " ASC";
+        List<Districts> allEB = new ArrayList<>();
         try {
             c = db.query(
-                    VersionAppTable.TABLE_NAME,  // The table to query
+                    DistrictTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
@@ -1276,53 +1321,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                allVC.Hydrate(c);
-            }
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-            if (db != null) {
-                db.close();
-            }
-        }
-        return allVC;
-    }
-
-    //New Functionality
-
-
-    //Get All EnumBlock
-    public List<EnumBlockContract> getEnumBlock() {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = null;
-        String[] columns = {
-                EnumBlockTable._ID,
-                EnumBlockTable.COLUMN_DIST_ID,
-                EnumBlockTable.COLUMN_GEO_AREA,
-                EnumBlockTable.COLUMN_CLUSTER_AREA
-        };
-
-        String whereClause = null;
-        String[] whereArgs = null;
-        String groupBy = null;
-        String having = null;
-
-        String orderBy = EnumBlockTable._ID + " ASC";
-        List<EnumBlockContract> allEB = new ArrayList<>();
-        try {
-            c = db.query(
-                    EnumBlockTable.TABLE_NAME,  // The table to query
-                    columns,                   // The columns to return
-                    whereClause,               // The columns for the WHERE clause
-                    whereArgs,                 // The values for the WHERE clause
-                    groupBy,                   // don't group the rows
-                    having,                    // don't filter by row groups
-                    orderBy                    // The sort order
-            );
-            while (c.moveToNext()) {
-                allEB.add(new EnumBlockContract().HydrateEnum(c));
+                allEB.add(new Districts().hydrate(c));
             }
         } finally {
             if (c != null) {
@@ -1335,28 +1334,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allEB;
     }
 
-    //Get All Districts
-    public List<DistrictContract> getDistrictProv() {
+    public List<Districts> getDistrictUC(String dist_id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
-        String[] columns = {
-                DistrictTable._ID,
-                DistrictTable.COLUMN_DIST_ID,
-                DistrictTable.COLUMN_DIST_NAME,
-                DistrictTable.COLUMN_PROVINCE_NAME
-        };
+        String[] columns = null;
 
-        String whereClause = null;
-        String[] whereArgs = null;
+        String whereClause = Districts.DistrictTable.COLUMN_DIST_ID + "=?";
+        String[] whereArgs = {dist_id};
         String groupBy = null;
         String having = null;
 
-        String orderBy = DistrictTable._ID + " ASC";
-        List<DistrictContract> allEB = new ArrayList<>();
+        String orderBy = Districts.DistrictTable.COLUMN_ID + " ASC";
+        List<Districts> allEB = new ArrayList<>();
         try {
             c = db.query(
-                    DistrictTable.TABLE_NAME,  // The table to query
+                    Districts.DistrictTable.TABLE_NAME,  // The table to query
                     columns,                   // The columns to return
                     whereClause,               // The columns for the WHERE clause
                     whereArgs,                 // The values for the WHERE clause
@@ -1365,7 +1358,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     orderBy                    // The sort order
             );
             while (c.moveToNext()) {
-                allEB.add(new DistrictContract().Hydrate(c));
+                allEB.add(new Districts().hydrate(c));
             }
         } finally {
             if (c != null) {

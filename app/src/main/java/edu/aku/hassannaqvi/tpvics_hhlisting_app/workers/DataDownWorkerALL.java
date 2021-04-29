@@ -48,15 +48,13 @@ public class DataDownWorkerALL extends Worker {
     private final String TAG = "DataWorkerEN()";
 
     private final int position;
-    private final Context mContext;
-    HttpsURLConnection urlConnection;
+    HttpURLConnection urlConnection;
     private final String uploadTable;
     private final String uploadWhere;
     private final NotificationUtils notify;
 
     public DataDownWorkerALL(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        mContext  = context;
         uploadTable = workerParams.getInputData().getString("table");
         position = workerParams.getInputData().getInt("position", -2);
         Timber.tag(TAG).d("DataDownWorkerALL: position %s", position);
@@ -91,8 +89,8 @@ public class DataDownWorkerALL extends Worker {
         try {
             url = new URL(MainApp._HOST_URL + MainApp._SERVER_GET_URL);
             Timber.tag(TAG).d("doWork: Connecting...");
-            urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setSSLSocketFactory(buildSslSocketFactory(mContext));
+            urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setSSLSocketFactory(buildSslSocketFactory(mContext));
             urlConnection.setReadTimeout(100000 /* milliseconds */);
             urlConnection.setConnectTimeout(150000 /* milliseconds */);
             urlConnection.setRequestMethod("POST");

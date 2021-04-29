@@ -31,8 +31,8 @@ import java.util.List;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.adapters.SyncListAdapter;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
@@ -54,11 +54,7 @@ public class SyncActivity extends AppCompatActivity {
     private ActivitySyncBinding bi;
     private List<SyncModel> uploadTables;
     private List<SyncModel> downloadTables;
-    private String distCode;
-    private int totalFiles;
-    private long tStart;
-    private String progress;
-    final Handler handler = new Handler();
+    private String ucCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +111,13 @@ public class SyncActivity extends AppCompatActivity {
                 downloadTables.clear();
                 boolean sync_flag = getIntent().getBooleanExtra(CONSTANTS.SYNC_LOGIN, false);
                 if (sync_flag) {
-                    distCode = getIntent().getStringExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN);
-                    downloadTables.add(new SyncModel(EnumBlockContract.EnumBlockTable.TABLE_NAME.toLowerCase()));
+                    ucCode = getIntent().getStringExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN);
+                    downloadTables.add(new SyncModel(Clusters.ClusterTable.TABLE_NAME.toLowerCase()));
                 } else {
                     // Set tables to DOWNLOAD
                     downloadTables.add(new SyncModel(UsersContract.UsersTable.TABLE_NAME.toLowerCase()));
                     downloadTables.add(new SyncModel(VersionAppContract.VersionAppTable.TABLE_NAME));
-                    downloadTables.add(new SyncModel(DistrictContract.DistrictTable.TABLE_NAME.toLowerCase()));
+                    downloadTables.add(new SyncModel(Districts.DistrictTable.TABLE_NAME.toLowerCase()));
                 }
                 MainApp.downloadData = new String[downloadTables.size()];
                 setAdapter(downloadTables);
@@ -142,8 +138,8 @@ public class SyncActivity extends AppCompatActivity {
                     //.putString("columns", "_id, sysdate")
                     // .putString("where", where)
                     ;
-            if (downloadTables.get(i).gettableName().equals(EnumBlockContract.EnumBlockTable.TABLE_NAME)) {
-                data.putString("where", EnumBlockContract.EnumBlockTable.COLUMN_DIST_ID + "='" + distCode + "'");
+            if (downloadTables.get(i).gettableName().equals(Clusters.ClusterTable.TABLE_NAME)) {
+                data.putString("where", Clusters.ClusterTable.COLUMN_UC_ID + "='" + ucCode + "'");
             }
             workRequests.add(new OneTimeWorkRequest.Builder(DataDownWorkerALL.class)
                     .addTag(String.valueOf(i))
@@ -190,11 +186,11 @@ public class SyncActivity extends AppCompatActivity {
                                         insertCount = db.syncVersionApp(new JSONObject(result));
                                         if (insertCount == 1) jsonArray.put("1");
                                         break;
-                                    case EnumBlockContract.EnumBlockTable.TABLE_NAME:
+                                    case Clusters.ClusterTable.TABLE_NAME:
                                         jsonArray = new JSONArray(result);
                                         insertCount = db.syncEnumBlocks(jsonArray);
                                         break;
-                                    case DistrictContract.DistrictTable.TABLE_NAME:
+                                    case Districts.DistrictTable.TABLE_NAME:
                                         jsonArray = new JSONArray(result);
                                         insertCount = db.syncDistrict(jsonArray);
                                         break;

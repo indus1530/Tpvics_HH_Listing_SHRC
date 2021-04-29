@@ -92,7 +92,7 @@ public class MenuActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
             startActivity(new Intent(MenuActivity.this, SyncActivity.class)
                     .putExtra(CONSTANTS.SYNC_LOGIN, true)
-                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.DIST_ID));
+                    .putExtra(CONSTANTS.SYNC_DISTRICTID_LOGIN, MainApp.UC_ID));
         } else {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_SHORT).show();
         }

@@ -178,7 +178,7 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     JSONObject json2 = new JSONObject();
                     try {
                         json2.put("user", "test1234");
-                        json2.put("dist_id", MainApp.DIST_ID);
+                        json2.put("dist_id", MainApp.UC_ID);
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

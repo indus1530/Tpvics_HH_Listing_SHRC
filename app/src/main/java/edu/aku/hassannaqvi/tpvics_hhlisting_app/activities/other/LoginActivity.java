@@ -73,7 +73,7 @@ import butterknife.OnClick;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.CONSTANTS;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.R;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync.SyncActivity;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.DistrictContract;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.DatabaseHelper;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.core.MainApp;
 import kotlin.Pair;
@@ -143,6 +143,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     LinearLayout spinners;
     @BindView(R.id.spinnerDistrict)
     Spinner spinnerDistrict;
+    @BindView(R.id.spinnerUC)
+    Spinner spinnerUC;
+
+
+    private List<String> uc;
+    private List<String> uc_id;
 
     public static String getDeviceId(Context context) {
 
@@ -263,14 +269,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) return;
+                if (position == 0) {
+                    spinnerDistrict.setSelection(0);
+                    spinnerDistrict.setEnabled(false);
+                    spinnerUC.setSelection(0);
+                    spinnerUC.setEnabled(false);
+                    return;
+                }
                 List<String> districts = new ArrayList<>(Collections.singletonList("...."));
-                for (Map.Entry<String, Pair<String, DistrictContract>> entry : SplashscreenActivity.districtsMap.entrySet()) {
+                for (Map.Entry<String, Pair<String, Districts>> entry : SplashscreenActivity.districtsMap.entrySet()) {
                     if (entry.getValue().getFirst().equals(spinnerProvince.getSelectedItem().toString()))
                         districts.add(entry.getKey());
                 }
                 spinnerDistrict.setAdapter(new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1
                         , districts));
+                spinnerDistrict.setEnabled(true);
             }
 
             @Override
@@ -281,8 +294,43 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         spinnerDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) return;
-                MainApp.DIST_ID = Objects.requireNonNull(SplashscreenActivity.districtsMap.get(spinnerDistrict.getSelectedItem().toString())).getSecond().getDist_id();
+                if (position == 0) {
+                    spinnerUC.setSelection(0);
+                    spinnerUC.setEnabled(false);
+                    return;
+                }
+                String distId = Objects.requireNonNull(SplashscreenActivity.districtsMap.get(spinnerDistrict.getSelectedItem().toString())).getSecond().getDist_id();
+                uc = new ArrayList<String>() {
+                    {
+                        add("....");
+                    }
+                };
+                uc_id = new ArrayList<>();
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_list_item_1, uc);
+                spinnerUC.setAdapter(
+                        adapter
+                );
+                List<Districts> selDist = db.getDistrictUC(distId);
+                for (Districts sub : selDist) {
+                    uc.add(sub.getUc_name());
+                    uc_id.add(sub.getUc_id());
+                }
+                adapter.notifyDataSetChanged();
+
+                spinnerUC.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerUC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0)
+                    return;
+                MainApp.UC_ID = uc_id.get(position - 1);
             }
 
             @Override
