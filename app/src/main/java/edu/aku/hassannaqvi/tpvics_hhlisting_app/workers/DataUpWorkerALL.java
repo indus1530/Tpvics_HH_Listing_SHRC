@@ -68,6 +68,16 @@ public class DataUpWorkerALL extends Worker {
 
     }
 
+    /*
+     * This method is responsible for doing the work
+     * so whatever work that is needed to be performed
+     * we will put it here
+     *
+     * For example, here I am calling the method displayNotification()
+     * It will display a notification
+     * So that we will understand the work is executed
+     * */
+
     private static SSLSocketFactory buildSslSocketFactory(Context context) {
         try {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -101,16 +111,6 @@ public class DataUpWorkerALL extends Worker {
         }
         return null;
     }
-
-    /*
-     * This method is responsible for doing the work
-     * so whatever work that is needed to be performed
-     * we will put it here
-     *
-     * For example, here I am calling the method displayNotification()
-     * It will display a notification
-     * So that we will understand the work is executed
-     * */
 
     @NonNull
     @Override
@@ -169,7 +169,7 @@ public class DataUpWorkerALL extends Worker {
 
             Timber.tag(TAG).d("doInBackground: %s", urlConnection.getResponseCode());
 
-            if (urlConnection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 Timber.tag(TAG).d("Connection Response: %s", urlConnection.getResponseCode());
                 notify.displayNotification(nTitle, "Start uploading data");
 

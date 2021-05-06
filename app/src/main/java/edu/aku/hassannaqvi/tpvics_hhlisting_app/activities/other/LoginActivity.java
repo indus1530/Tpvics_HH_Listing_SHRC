@@ -417,19 +417,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     break;
                 case Manifest.permission.GET_ACCOUNTS:
                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                case Manifest.permission.ACCESS_COARSE_LOCATION:
-                    break;
+                /*case Manifest.permission.ACCESS_COARSE_LOCATION:
+                    break;*/
                 case Manifest.permission.READ_PHONE_STATE:
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         doPermissionGrantedStuffs();
                     }
                     break;
-                case Manifest.permission.ACCESS_FINE_LOCATION:
+               /* case Manifest.permission.ACCESS_FINE_LOCATION:
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         requestLocationUpdate();
                     }
-                    break;
+                    break;*/
             }
 
         }
@@ -789,7 +789,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
 
         public void onStatusChanged(String s, int i, Bundle b) {
-            showCurrentLocation();
+            //showCurrentLocation();
         }
 
         public void onProviderDisabled(String s) {
@@ -862,9 +862,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask = null;
             showProgress(false);
             if (!success) return;
-            LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            /*LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             assert mlocManager != null;
-            if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {*/
                 DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
                 try {
                     if ((mEmail.equals("dmu@aku") && mPassword.equals("aku?dmu")) ||
@@ -886,7 +886,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 }
 
 
-            } else {
+            /*} else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         LoginActivity.this);
                 alertDialogBuilder
@@ -903,7 +903,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 AlertDialog alert = alertDialogBuilder.create();
                 alert.show();
 
-            }
+            }*/
 
         }
 
