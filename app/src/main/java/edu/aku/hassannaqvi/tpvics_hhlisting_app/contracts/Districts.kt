@@ -33,7 +33,7 @@ class Districts {
     }
 
     object DistrictTable {
-        const val TABLE_NAME = "districts"
+        const val TABLE_NAME = "districts_view"
         const val COLUMN_ID = "_id"
         const val COLUMN_DIST_ID = "dist_id"
         const val COLUMN_DIST_NAME = "district"

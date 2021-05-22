@@ -37,8 +37,8 @@ import timber.log.Timber;
 public class MainApp extends Application {
 
     // GPS Related Field Variables
-    public static final String _IP = "http://f38158";// .TEST server
-//    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
+//    public static final String _IP = "http://f38158";// .TEST server
+    public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
     public static final String _HOST_URL = MainApp._IP + "/tpvics_shrc/api/";
     public static final String _SERVER_URL = "syncenc.php";
     public static final String _SERVER_GET_URL = "getdataenc.php";
