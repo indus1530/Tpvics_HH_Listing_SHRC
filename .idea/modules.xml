@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tpvics_HH_Listing_SHRC.iml" filepath="$PROJECT_DIR$/.idea/Tpvics_HH_Listing_SHRC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Tpvics_HH_Listing_SHRC.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Tpvics_HH_Listing_SHRC.app.iml" />
+    </modules>
+  </component>
+</project>

@@ -5,26 +5,76 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
+    Properties versionProps = new Properties()
     def versionPropsFile = file('version.properties')
 
+    //Create a version properties file and add required properties with default values
+    if (!versionPropsFile.exists()) {
+        versionProps['VERSION_PATCH'] = "0"
+        versionProps['VERSION_BUILD'] = "0"
+        versionProps['VERSION_NUMBER'] = "0"
+
+        Writer writer = new FileWriter(versionPropsFile, false)
+        versionProps.store(versionPropsFile.newWriter(), null)
+    }
+
+    // Read existing
     if (versionPropsFile.canRead()) {
-        Properties versionProps = new Properties()
+        versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
 
-        def code = versionProps['VERSION_CODE'].toInteger() + 1
+        def value = 0
+        def versionType = "D"
 
-        versionProps['VERSION_CODE'] = code.toString()
+
+        def runTasks = gradle.startParameter.taskNames
+        if ('assemble' in runTasks || ':app:assembleRelease' in runTasks || 'aR' in runTasks) {
+            value = 1
+            versionType = "R"
+        }
+
+        def versionNumber = 1
+        //  def versionMinor = 0
+        def versionPatch = versionProps['VERSION_PATCH'].toInteger() + value
+        def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+        //def versionNumber = versionProps['VERSION_NUMBER'].toInteger() + value
+
+        versionProps['VERSION_PATCH'] = versionPatch.toString()
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
+        versionProps['VERSION_NUMBER'] = versionNumber.toString()
+
         versionProps.store(versionPropsFile.newWriter(), null)
 
         defaultConfig {
-            applicationId "edu.aku.hassannaqvi.tpvics_hhlisting_app"
-            minSdkVersion 23
-            targetSdkVersion 30
-            versionCode code
-            versionName "0.1"
-            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            applicationId "edu.aku.hassannaqvi.smk_rsd"
+            versionCode versionBuild
+            versionName "${versionNumber}.${versionPatch}${versionType}"
+            minSdkVersion 29
+            targetSdkVersion 29
         }
+
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+
+                def appName = rootProject.name
+                def date = new Date()
+                def formattedDate = date.format('yyyy_MM_dd')
+
+                def outputDir = new File("${project.buildDir.absolutePath}/outputs/apk/${variant.flavorName}/${variant.buildType.name}")
+                //def outputFileName = "app-${variant.flavorName}-${variant.buildType.name}.apk"
+                def outputFileName = "${appName}_${formattedDate}_${versionType}v${versionBuild}.apk"
+                // def outputFile = new File("$outputDir/$outputFileName")
+                variant.packageApplicationProvider.get().outputDirectory = new File("$outputDir")
+                output.outputFileName = outputFileName
+                /*  if (outputFileName != null && outputFileName.endsWith('.apk')) {
+                      //output.outputFileName = outputFileName
+                      output.outputFileName = new File("${project.buildDir.absolutePath}/outputs/apk/", "${outputDir}-${versionMajor}.${versionMinor}.${versionPatch}-${outputFileName}")
+                  }*/
+
+            }
+        }
+
     } else {
         throw new GradleException("Could not read version.properties!")
     }
@@ -44,11 +94,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    externalNativeBuild {
+  /* externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
-    }
+    }*/
 }
 
 dependencies {
@@ -58,25 +108,25 @@ dependencies {
     })
 
 
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:2.0.3'
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
 
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.media:media:1.2.0'
+    implementation 'androidx.media:media:1.3.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
     // RecyclerView
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
     //Ali Libraries
@@ -85,23 +135,23 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
     //LifeCycle
-    def lifecycle_version = "2.3.0"
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    def lifecycle_version = '2.3.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     //Date Time
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.3.1'
     implementation 'com.github.BlackBoxVision:datetimepicker-edittext:v0.4.0'
     //SDP
-    implementation 'com.intuit.sdp:sdp-android:1.0.5'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
     //Coroutine
     def coroutine_version = '1.3.9'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation "io.reactivex.rxjava3:rxjava:3.0.6"
+    implementation "io.reactivex.rxjava3:rxjava:3.0.11"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
     //Showcase
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'

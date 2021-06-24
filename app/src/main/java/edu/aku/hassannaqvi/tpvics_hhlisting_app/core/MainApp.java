@@ -27,7 +27,6 @@ import java.util.Map;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.BuildConfig;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.SignupContract;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.otherClasses.TypefaceUtil;
 import timber.log.Timber;
 
 /**
@@ -149,7 +148,7 @@ public class MainApp extends Application {
             System.exit(1);
         }
 
-        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/JameelNooriNastaleeq.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
+    // TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/JameelNooriNastaleeq.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 //        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/MBLateefi.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         // Declare and Initialize GPS collection module
