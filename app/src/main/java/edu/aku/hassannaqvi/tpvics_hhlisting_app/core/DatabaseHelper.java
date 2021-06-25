@@ -1014,6 +1014,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insertCount;
     }
 
+
     public int syncEnumBlocks(JSONArray enumList) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ClusterTable.TABLE_NAME, null, null);

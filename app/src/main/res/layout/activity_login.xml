@@ -198,16 +198,16 @@
                         <TextView
                             style="@style/i_textview"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="Province" />
 
                         <Spinner
                             android:id="@+id/spinnerProvince"
-                            style="@null"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
                             android:layout_weight="2" />
 
                     </LinearLayout>
@@ -227,15 +227,16 @@
                         <TextView
                             style="@style/i_textview"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="District" />
 
                         <Spinner
                             android:id="@+id/spinnerDistrict"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
                             android:layout_weight="2" />
 
                     </LinearLayout>
@@ -255,15 +256,16 @@
                         <TextView
                             style="@style/i_textview"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="UC" />
 
                         <Spinner
                             android:id="@+id/spinnerUC"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
                             android:layout_weight="2" />
 
                     </LinearLayout>

@@ -347,8 +347,8 @@ public class MainActivity extends MenuActivity {
                         na101a.setText(selSplit[0]);
                         na101b.setText(selSplit[1].equals("") ? "----" : selSplit[1]);
                         na101c.setText(selSplit[2].equals("") ? "----" : selSplit[2]);
-                        na101d.setText(selSplit[3]);
-                        clusterName = selSplit[3];
+                        /*na101d.setText(selSplit[3]);
+                        clusterName = selSplit[3];*/
 
                         fldGrpna101.setVisibility(View.VISIBLE);
 

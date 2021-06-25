@@ -136,7 +136,7 @@ public class SyncActivity extends AppCompatActivity {
                     .putString("table", downloadTables.get(i).gettableName())
                     .putInt("position", i)
                     //.putString("columns", "_id, sysdate")
-                    // .putString("where", where)
+                     .putString("where", "randomized=1 & colflag!=null")
                     ;
             if (downloadTables.get(i).gettableName().equals(Clusters.ClusterTable.TABLE_NAME)) {
                 data.putString("where", Clusters.ClusterTable.COLUMN_UC_ID + "='" + ucCode + "'");

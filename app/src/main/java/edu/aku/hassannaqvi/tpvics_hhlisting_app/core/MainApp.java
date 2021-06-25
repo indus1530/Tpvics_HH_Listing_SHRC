@@ -38,13 +38,13 @@ public class MainApp extends Application {
     // GPS Related Field Variables
 //    public static final String _IP = "http://f38158";// .TEST server
     public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
-    public static final String _HOST_URL = MainApp._IP + "/tpvics_shrc/api/";
+    public static final String _HOST_URL = MainApp._IP + "/tpvics_shruc/api/";
     public static final String _SERVER_URL = "syncenc.php";
     public static final String _SERVER_GET_URL = "getdataenc.php";
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1; // in Meters
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000; // in Milliseconds
     private static final int TWO_MINUTES = 1000 * 60 * 2;
-    public static String _UPDATE_URL = MainApp._IP + "/tpvics_shrc/app/listings/";
+    public static String _UPDATE_URL = MainApp._IP + "/tpvics_shruc/app/listings/";
     public static String DeviceURL = "devices.php";
 
     public static String TAG = "MainApp";
@@ -152,7 +152,7 @@ public class MainApp extends Application {
 //        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/MBLateefi.ttf"); // font from assets: "assets/fonts/Roboto-Regular.ttf
 
         // Declare and Initialize GPS collection module
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+       /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // requestPermission();
@@ -161,7 +161,7 @@ public class MainApp extends Application {
             }
         } else {
             requestLocationUpdate();
-        }
+        }*/
 
         sharedPref = getSharedPreferences("PSUCodes", Context.MODE_PRIVATE);
 
@@ -183,18 +183,18 @@ public class MainApp extends Application {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(
+        /*locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 MINIMUM_TIME_BETWEEN_UPDATES,
                 MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
                 new MyLocationListener()
-        );
+        );*/
     }
 
 
     protected void showCurrentLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -213,12 +213,12 @@ public class MainApp extends Application {
             );
             //Toast.makeText(getApplicationContext(), message,
             //Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
     public void showGPSCoordinates(View v) {
-        showCurrentLocation();
+        //showCurrentLocation();
 
 
     }
