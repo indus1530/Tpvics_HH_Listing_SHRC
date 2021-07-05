@@ -21,6 +21,8 @@ import java.util.List;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.BLRandomContract.singleRandomHH;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Clusters.ClusterTable;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts;
+import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts.DistrictTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.ListingContract.ListingEntry;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.SignupContract;
@@ -31,8 +33,6 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.UsersContract.UsersTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VersionAppContract.VersionAppTable;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts;
-import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.Districts.DistrictTable;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract;
 import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract.SingleVertices;
 
@@ -43,10 +43,10 @@ import edu.aku.hassannaqvi.tpvics_hhlisting_app.contracts.VerticesContract.Singl
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // The name of database.
-    public static final String DATABASE_NAME = "tpvics-hhl-shrc.db";
-    public static final String PROJECT_NAME = "tpvics-hhl-shrc-2021";
+    public static final String DATABASE_NAME = "tpvics-hhl-shruc.db";
+    public static final String PROJECT_NAME = "tpvics-hhl-shruc-2021";
     public static final String DB_NAME = DATABASE_NAME.replace(".db", "-copy.db");
-    public static final String FOLDER_NAME = "DMU-TPVICS_HHL";
+    public static final String FOLDER_NAME = "DMU_TPVICS_HHL_SHRUC";
     // Change this when you change the database schema.
     private static final int DATABASE_VERSION = 1;
     public static String TAG = "DatabaseHelper";

@@ -30,7 +30,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Locale;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
@@ -162,7 +161,7 @@ public class DataUpWorkerALL extends Worker {
 
             Timber.tag(TAG).d("Upload Begins Length: %s", jsonParam.length());
             Timber.tag(TAG).d("Upload Begins: %s", jsonParam);
-
+            Timber.tag(TAG).d("Upload Begins [enc]: %s", ServerSecurity.INSTANCE.encrypt(jsonParam.toString(), Keys.INSTANCE.apiKey()));
             wr.writeBytes(ServerSecurity.INSTANCE.encrypt(jsonParam.toString(), Keys.INSTANCE.apiKey()));
             wr.flush();
             wr.close();
@@ -220,17 +219,19 @@ public class DataUpWorkerALL extends Worker {
         notify.displayNotification(nTitle, String.format(Locale.ENGLISH, "Uploaded %d records", result.length()));
 
         ///BE CAREFULL DATA.BUILDER CAN HAVE ONLY 1024O BYTES. EACH CHAR HAS 8 BYTES
-        if (result.toString().length() > 10240) {
+/*        if (result.toString().length() > 10240) {
             data = new Data.Builder()
                     .putString("message", String.valueOf(result).substring(0, (10240 - 1) / 8))
                     .putInt("position", this.position)
                     .build();
-        } else {
-            data = new Data.Builder()
-                    .putString("message", String.valueOf(result))
-                    .putInt("position", this.position)
-                    .build();
-        }
+        } else {*/
+        MainApp.downloadData[position] = String.valueOf(result);
+
+        data = new Data.Builder()
+                //     .putString("message", String.valueOf(result))
+                .putInt("position", this.position)
+                .build();
+        //      }
 
         notify.displayNotification(nTitle, "Uploaded successfully");
         return Result.success(data);

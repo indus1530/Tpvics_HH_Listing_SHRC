@@ -2,7 +2,6 @@ package edu.aku.hassannaqvi.tpvics_hhlisting_app.workers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -122,10 +121,11 @@ public class DataDownWorkerALL extends Worker {
             jsonParam.put(jsonTable);
             // .put(jsonSync);
 
-            Timber.tag(TAG).d("Upload Begins: %s", jsonTable.toString());
+            Timber.tag(TAG).d("Upload Begins1: %s", ServerSecurity.INSTANCE.encrypt(String.valueOf(jsonTable), Keys.INSTANCE.apiKey()));
 
 
             wr.writeBytes(ServerSecurity.INSTANCE.encrypt(String.valueOf(jsonTable), Keys.INSTANCE.apiKey()));
+
             wr.flush();
             wr.close();
 

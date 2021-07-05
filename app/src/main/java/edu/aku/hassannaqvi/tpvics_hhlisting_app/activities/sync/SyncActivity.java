@@ -2,7 +2,6 @@ package edu.aku.hassannaqvi.tpvics_hhlisting_app.activities.sync;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -99,6 +98,8 @@ public class SyncActivity extends AppCompatActivity {
                 uploadTables.add(new SyncModel(ListingContract.ListingEntry.TABLE_NAME.toLowerCase()));
                 MainApp.uploadData.add(db.getUnsyncedListing());
 
+
+                MainApp.downloadData = new String[uploadTables.size()];
                 setAdapter(uploadTables);
                 uploadData();
                 break;
@@ -285,12 +286,16 @@ public class SyncActivity extends AppCompatActivity {
 
                 if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
 
+/*
                     String result = workInfo.getOutputData().getString("message");
+*/
 
                     int sSynced = 0;
                     int sDuplicate = 0;
                     StringBuilder sSyncedError = new StringBuilder();
                     JSONArray json;
+
+                    String result = MainApp.downloadData[position];
 
                     if (result != null) {
                         if (result.length() > 0) {
