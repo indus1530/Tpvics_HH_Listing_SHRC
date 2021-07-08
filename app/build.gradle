@@ -47,7 +47,7 @@ android {
         versionProps.store(versionPropsFile.newWriter(), null)
 
         defaultConfig {
-            applicationId "edu.aku.hassannaqvi.tpvics_hhlisting_app"
+            applicationId "edu.aku.hassannaqvi.smk_rsd"
             versionCode versionBuild
             versionName "${versionNumber}.${versionPatch}${versionType}"
             minSdkVersion 29

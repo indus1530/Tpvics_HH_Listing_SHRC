@@ -350,7 +350,7 @@ public class SyncActivity extends AppCompatActivity {
                                 e.printStackTrace();
                                 Toast.makeText(SyncActivity.this, "Sync Result:  " + result, Toast.LENGTH_SHORT).show();
 
-                                if (result.equals("No new records to sync.")) {
+                                if (result.equals("No new records to upload")) {
                                     uploadTables.get(position).setmessage(result /*+ " Open Forms" + String.format("%02d", unclosedForms.size())*/);
                                     uploadTables.get(position).setstatus("Not processed");
                                     uploadTables.get(position).setstatusID(4);

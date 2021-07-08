@@ -220,7 +220,9 @@ public class MainActivity extends MenuActivity {
         // database handler
         db = new DatabaseHelper(getApplicationContext());
 
-        msgText.setText(db.getListingCount() + " records found in Listings table.");
+        msgText.setText(db.getListingCount() + " records found in Listings table.\n"
+                + Math.round(db.getListingCountUnsynced()) + " records remaining to sync."
+        );
         spinnersFill();
 
 //        Version Checking
@@ -330,9 +332,9 @@ public class MainActivity extends MenuActivity {
             boolean loginFlag;
             int clus = Integer.parseInt(txtPSU.getText().toString().substring(0, 3));
             if (clus < 900) {
-                loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user"));
+                loginFlag = !(MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.startsWith("user"));
             } else {
-                loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.substring(0, 4).equals("user");
+                loginFlag = MainApp.userEmail.equals("test1234") || MainApp.userEmail.equals("dmu@aku") || MainApp.userEmail.startsWith("user");
             }
             if (loginFlag) {
                 DatabaseHelper db = new DatabaseHelper(this);
