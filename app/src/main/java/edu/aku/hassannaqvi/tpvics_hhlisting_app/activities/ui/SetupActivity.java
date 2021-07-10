@@ -39,7 +39,7 @@ public class SetupActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (userEmail == null || userEmail.equals("")) {
+        if (userEmail == null || userEmail.equals("") || userEmail.equals("0000")) {
             Toast.makeText(this, "Username not found. Kindly, re-start app!!", Toast.LENGTH_SHORT).show();
             finish();
             startActivity(new Intent(this, MainActivity.class)

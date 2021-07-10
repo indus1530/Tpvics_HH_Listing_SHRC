@@ -175,6 +175,14 @@ public class MainActivity extends MenuActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        msgText.setText(db.getListingCount() + " records found in Listings table.\n"
+                + Math.round(db.getListingCountUnsynced()) + " records remaining to sync."
+        );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -220,9 +228,9 @@ public class MainActivity extends MenuActivity {
         // database handler
         db = new DatabaseHelper(getApplicationContext());
 
-        msgText.setText(db.getListingCount() + " records found in Listings table.\n"
+  /*      msgText.setText(db.getListingCount() + " records found in Listings table.\n"
                 + Math.round(db.getListingCountUnsynced()) + " records remaining to sync."
-        );
+        );*/
         spinnersFill();
 
 //        Version Checking
