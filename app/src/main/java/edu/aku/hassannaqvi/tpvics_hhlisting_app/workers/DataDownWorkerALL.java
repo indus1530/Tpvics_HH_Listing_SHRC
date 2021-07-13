@@ -112,7 +112,7 @@ public class DataDownWorkerALL extends Worker {
             jsonTable.put("filter", uploadWhere);
 
             if (uploadTable.equals(VersionAppContract.VersionAppTable.TABLE_NAME)) {
-                jsonTable.put("folder", "/listings/");
+                jsonTable.put("folder", MainApp._OUTPUT_METADATA_URL);
             }
 
             //jsonTable.put("limit", "3");

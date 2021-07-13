@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -36,7 +35,7 @@ import timber.log.Timber;
 public class MainApp extends Application {
 
     // GPS Related Field Variables
-//    public static final String _IP = "http://f38158";// .TEST server
+    // public static final String _IP = "http://f38158/prosystem";// .TEST server
     public static final String _IP = "https://vcoe1.aku.edu";// .LIVE server
     public static final String _HOST_URL = MainApp._IP + "/tpvics_shruc/api/";
     public static final String _SERVER_URL = "syncenc.php";
@@ -46,6 +45,7 @@ public class MainApp extends Application {
     private static final int TWO_MINUTES = 1000 * 60 * 2;
     public static String _UPDATE_URL = MainApp._IP + "/tpvics_shruc/app/listings/";
     public static String DeviceURL = "devices.php";
+    public static final String _OUTPUT_METADATA_URL = "listings/output-metadata.json";
 
     public static String TAG = "MainApp";
     public static Boolean admin = false;

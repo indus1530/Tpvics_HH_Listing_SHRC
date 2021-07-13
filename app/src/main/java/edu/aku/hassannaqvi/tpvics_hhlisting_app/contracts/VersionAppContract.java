@@ -63,6 +63,6 @@ public class VersionAppContract {
         public static final String COLUMN_VERSION_NAME = "versionName";
         public static final String COLUMN_PATH_NAME = "outputFile";
 
-        public static final String _URI = "output.json";
+        public static final String _URI = "listings/output-metadata.json";
     }
 }
